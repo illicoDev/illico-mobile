@@ -1,0 +1,4 @@
+#Wed Aug 05 18:00:54 CEST 2020
+base.0=/Users/zelmerzouki/Desktop/dev-illico/zach-master/android/app/build/intermediates/dex/release/mergeDexRelease/out/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

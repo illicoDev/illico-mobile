@@ -1,0 +1,6 @@
+module Pods_zach_zachTests {
+  umbrella header "Pods-zach-zachTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
