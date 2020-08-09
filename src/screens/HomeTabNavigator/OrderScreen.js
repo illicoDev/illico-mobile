@@ -1,10 +1,21 @@
 import React, { Component } from 'react';
-import {View, Text, StyleSheet, ScrollView, Image, FlatList, TouchableOpacity, ImageBackground} from 'react-native';
+import {
+    View,
+    Text,
+    StyleSheet,
+    ScrollView,
+    Image,
+    FlatList,
+    TouchableOpacity,
+    ImageBackground,
+    CheckBox
+} from 'react-native';
 import {Card, Title} from "react-native-paper";
 import colors from "../../assets/colors";
 import CustomActionButton from "../../components/CustomActionButton";
 import List from "../../components/accordion/List";
 import Colors from "react-native/Libraries/NewAppScreen/components/Colors";
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 
 const list1 =  {
     name: "MENU",
@@ -17,7 +28,7 @@ const list2 =  {
     name: "ACCOMPAGNEMENT",
     items: [
         { name: "FRITE", points: "$3.45", checked:false },
-        { name: "POTATOS", points: "$3.45", checked:false },
+        { name: "POTATOS", points: "$3.45", checked:true },
         { name: "PETITE SALADE", points: "$3.45", checked:false }
     ]
 };
@@ -39,26 +50,57 @@ class OrderScreen extends Component {
         super();
         this.state ={
             count: 1,
-            price: 35
+            price: 35,
+            menu: {
+                count: 1,
+                price: 35,
+                elements: [
+                    {
+                        name: "MENU",
+                        items: [
+                            { name: "BEST OF", points: "$3.45", checked:false },
+                            { name: "MAXI BEST OF", points: "$3.45", checked:false }
+                        ]
+                    },
+                    {
+                        name: "ACCOMPAGNEMENT",
+                        items: [
+                            { name: "FRITE", points: "$3.45", checked:false },
+                            { name: "POTATOS", points: "$3.45", checked:true },
+                            { name: "PETITE SALADE", points: "$3.45", checked:false }
+                        ]
+                    },
+                    {
+                        name: "BOISSON",
+                        items: [
+                            { name: "COCA-COLA", points: "$3.45", checked:false },
+                            { name: "COCA-COLA ZERO", points: "$3.45", checked:false },
+                            { name: "SPRITE", points: "$3.45", checked:false },
+                            { name: "LIPTON ICE-TEA", points: "$3.45", checked:false },
+                            { name: "EVIAN", points: "$3.45", checked:false },
+                            { name: "JUS D'ORANGE", points: "$3.45", checked:false }
+                        ]
+                    }
+                ]
+            }
         }
     }
     subCount = () => {
         if(this.state.count > 0){
-            let oldCount = this.state.count;
+            let oldCount = this.state.menu.count;
             this.setState({
-                count: oldCount - 1,
+                menu : { count: oldCount - 1 },
             });
         }
     };
     addCount = () => {
-        let oldCount = this.state.count;
+        let oldCount = this.state.menu.count;
             this.setState({
-                count: oldCount + 1,
+                menu : { count: oldCount + 1 },
             });
     };
     render() {
         const menuItem = this.props.route.params.menu;
-        console.log(menuItem);
         return (
             <View style={styles.container}>
                 <View style={{flex:1}}>
@@ -81,7 +123,7 @@ class OrderScreen extends Component {
                                         <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={this.subCount}>
                                             <View ><Text>-</Text></View>
                                         </TouchableOpacity>
-                                        <View style={{flex:1,alignItems: 'center', justifyContent: 'center'}}><Text>{this.state.count}</Text></View>
+                                        <View style={{flex:1,alignItems: 'center', justifyContent: 'center'}}><Text>{this.state.menu.count}</Text></View>
                                         <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={this.addCount}>
                                             <View ><Text>+</Text></View>
                                         </TouchableOpacity>
@@ -89,6 +131,8 @@ class OrderScreen extends Component {
                                 </View>
                             </View>
                             <View style={{margin: 5}}>
+                                <View style={{flex: 1}}>
+                                </View>
                                 <View style={{flex: 1}}><Text style={{ fontFamily: 'Poppins-Regular'}}>Retrouvez sa recette unique : un steak haché 100% pur boeuf*, trois tranches d'emmental fondu, deux rondelles de tomate, de la salade, des oignons frais et une délicieuse sauce au goût grillé.</Text></View>
                                 <List list={list1} />
                                 <List list={list2} />
@@ -98,7 +142,7 @@ class OrderScreen extends Component {
                     </View>
                     <View style={{height:110, alignItems: 'center', justifyContent: 'center', marginBottom:50}}>
                         <View style={{flex:1}}><Text style={{ fontSize: 15, padding: 10,fontFamily: 'Poppins-Medium',}}>Total</Text></View>
-                        <View style={{flex:1}}><Text style={{ fontSize: 25,fontFamily: 'Poppins-Medium', color: colors.bgPrimary}}>{this.state.count * this.state.price} Dh</Text></View>
+                        <View style={{flex:1}}><Text style={{ fontSize: 25,fontFamily: 'Poppins-Medium', color: colors.bgPrimary}}>{this.state.menu.count * this.state.menu.price} Dh</Text></View>
                         <View style={{flex:1}}>
                             <CustomActionButton
                                 onPress={() => alert("add to cart to be")}

@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a55b8561-b765-42e9-8bb6-24bac6e9f0c0" name="Default Changelist" comment="" />
+    <list default="true" id="a55b8561-b765-42e9-8bb6-24bac6e9f0c0" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/CheckBox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/accordion/ListItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/accordion/ListItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/HomeTabNavigator/CartScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/HomeTabNavigator/CartScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/HomeTabNavigator/FoodHomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/HomeTabNavigator/FoodHomeScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/HomeTabNavigator/OrderScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/HomeTabNavigator/OrderScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/HomeTabNavigator/SearchScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/HomeTabNavigator/SearchScreen.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1fa31mE7MCc61P1CNXdEypzAbfG" />
   <component name="ProjectViewState">
@@ -15,8 +29,9 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -56,6 +71,7 @@
       <updated>1596442163595</updated>
       <workItem from="1596442164923" duration="48739000" />
       <workItem from="1596872927240" duration="3853000" />
+      <workItem from="1596897826290" duration="9825000" />
     </task>
     <servers />
   </component>
@@ -83,10 +99,14 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state width="1419" height="219" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1596453220334" />
-    <state x="1941" y="235" width="1010" height="610" key="find.popup" timestamp="1596635584663">
-      <screen x="1440" y="0" width="1920" height="1080" />
+    <state x="320" y="185" key="Vcs.Push.Dialog.v2" timestamp="1596985922313">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="320" y="185" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1596985922313" />
+    <state x="376" y="196" width="757" height="508" key="find.popup" timestamp="1596968987783">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="1941" y="235" width="1010" height="610" key="find.popup/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1596635584663" />
-    <state x="376" y="196" width="757" height="508" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1596464807452" />
+    <state x="376" y="196" width="757" height="508" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1596968987783" />
   </component>
 </project>

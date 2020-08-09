@@ -1,5 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import CheckBox from '../CheckBox';
+import colors from "../../../assets/colors";
 
 export const LIST_ITEM_HEIGHT = 54;
 const styles = StyleSheet.create({
@@ -15,7 +17,8 @@ const styles = StyleSheet.create({
         height: LIST_ITEM_HEIGHT
     },
     name: {
-        fontSize: 16
+        fontSize: 16,
+        fontFamily: "Poppins-Regular"
     },
     pointsContainer: {
         borderRadius: 8,
@@ -29,6 +32,7 @@ const styles = StyleSheet.create({
 });
 
 const ListItem = ({ item, isLast }) => {
+
     const bottomRadius = isLast ? 8 : 0;
     return (
         <View
@@ -40,9 +44,14 @@ const ListItem = ({ item, isLast }) => {
                 }
             ]}
         >
-            <Text style={styles.name}>{item.name}</Text>
-            <View style={styles.pointsContainer}>
-                <Text style={styles.points}>{item.points}</Text>
+            <View>
+                <CheckBox
+                    selected={item.checked}
+                    onPress={() => alert("changee")}
+                    text={item.name}
+                    textStyle={styles.name}
+                    checkColor={colors.bgPrimary}
+                />
             </View>
         </View>
     );

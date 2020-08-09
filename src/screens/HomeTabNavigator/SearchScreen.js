@@ -1,6 +1,9 @@
 import React, { Component } from "react";
-import { View, StyleSheet, FlatList, ScrollView, Text } from "react-native";
+import {View, StyleSheet, FlatList, ScrollView, Text, Dimensions, Image} from "react-native";
 import { Appbar, Title, Avatar, Card } from "react-native-paper";
+import * as firebase from "firebase";
+import {snapshotToArray} from "../../helpers/firebaseHelpers";
+const { width, height } = Dimensions.get('window');
 
 const dummyRestaurant = [
     {
@@ -11,15 +14,26 @@ const dummyRestaurant = [
 ];
 
 class SearchScreen extends Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
-            place: dummyRestaurant
+            place: dummyRestaurant,
+            services: []
         };
     }
-    switchTpMcdo = () => {
-        this.props.navigation.navigate('RestaurantScreen');
+    componentDidMount() {
+        this.LoadServices();
     };
+    LoadServices = () => {
+        const serviceData = firebase.firestore().collection('services').get()
+            .then(data => {
+                let array = snapshotToArray(data);
+                this.setState({services : array });
+                console.log(array);
+            })
+            .catch(error => console.error(error));
+    };
+
     render() {
         return (
             <View>
@@ -27,22 +41,11 @@ class SearchScreen extends Component {
                     showsVerticalScrollIndicator={false}
                     style={{ marginLeft: 10, marginRight: 10, marginTop: 40 }}
                 >
+
+                    <View style={{margin: 5}}>
+                        <Text style={{marginTop:15, marginLeft: 15, marginBottom: 15, fontFamily: 'Poppins-Bold', fontSize: 18}}>Nos Services</Text>
+                    </View>
                     {/*<FlatList
-                        horizontal={true}
-                        showsHorizontalScrollIndicator={false}
-                        data={this.state.data}
-                        keyExtractor={(item, index) => item.title}
-                        renderItem={({ item: rowData }) => {
-                            return (
-                                <View style={styles.popularCategories}>
-                                    <Avatar.Image size={100} source={{ uri: rowData.image }} />
-                                    <Text style={styles.popularText}>{rowData.name}</Text>
-                                </View>
-                            );
-                        }}
-                    />*/}
-                    <Title>Catégories</Title>
-                    <FlatList
                         showsVerticalScrollIndicator={false}
                         data={this.state.place}
                         keyExtractor={(item, index) => item.title}
@@ -56,6 +59,22 @@ class SearchScreen extends Component {
                                     <Card.Title title={rowData.title} style={{fontFamily:'Poppins-Medium'}}/>
                                     <Card.Cover source={{ uri: rowData.imageUrl }} />
                                 </Card>
+                            );
+                        }}
+                    />*/}
+                    <FlatList
+                        showsHorizontalScrollIndicator={false}
+                        data={this.state.services}
+                        keyExtractor={(item, index) => item.key}
+                        renderItem={({ item: rowData }) => {
+                            return (
+                                <View style={styles.cardView}>
+                                    <Image style={styles.image} source={{ uri: rowData.backgroundImage }} />
+                                    <View style={styles.textView}>
+                                        <Text style={styles.itemTitle}> {rowData.name}</Text>
+                                        <Text style={styles.itemDescription}></Text>
+                                    </View>
+                                </View>
                             );
                         }}
                     />
@@ -77,7 +96,54 @@ const styles = StyleSheet.create({
         alignItems: "center",
         margin: 7
     },
-    popularText: { marginTop: 5, fontSize: 17 }
+    popularText: { marginTop: 5, fontSize: 17 },
+    cardView: {
+        flex: 1,
+        width: width - 37,
+        height: height / 5,
+        backgroundColor: 'white',
+        margin: 10,
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0.5, height: 0.5 },
+        shadowOpacity: 0.5,
+        shadowRadius: 3,
+        elevation: 5,
+    },
+
+    textView: {
+        position: 'absolute',
+        bottom: 10,
+        margin: 10,
+        left: 5,
+    },
+    image: {
+        width: width - 37,
+        height: height / 5,
+        borderRadius: 10
+    },
+    itemTitle: {
+        color: 'white',
+        fontSize: 22,
+        shadowColor: '#000',
+        shadowOffset: { width: 0.8, height: 0.8 },
+        shadowOpacity: 1,
+        shadowRadius: 3,
+        marginBottom: 5,
+        fontWeight: "bold",
+        elevation: 5,
+        fontFamily: 'Poppins-SemiBold'
+    },
+    itemDescription: {
+        color: 'white',
+        fontSize: 12,
+        shadowColor: '#000',
+        shadowOffset: { width: 0.8, height: 0.8 },
+        shadowOpacity: 1,
+        shadowRadius: 3,
+        elevation: 5,
+        fontFamily: 'Poppins-Regular'
+    }
 });
 
 //make this component available to the app

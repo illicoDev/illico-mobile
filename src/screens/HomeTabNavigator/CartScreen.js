@@ -50,30 +50,6 @@ class CartScreen extends Component {
                       );
                     }}
                 />
-                <View style={[styles.menuCard,{marginLeft: 15, marginRight: 15}] }>
-                <View style={{flex:1, flexDirection: 'row'}}>
-                  <View  style={{width: 38, flexDirection: 'column', borderWidth: 1, borderColor: '#CCCCCC', borderRadius:5, alignItems: 'center', justifyContent: 'center'}}>
-                    <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={() => alert('add item')}>
-                      <View ><Text>+</Text></View>
-                    </TouchableOpacity>
-                    <View style={{flex:1,alignItems: 'center', justifyContent: 'center'}}><Text>1</Text></View>
-                    <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={() => alert('sub item')}>
-                      <View ><Text>-</Text></View>
-                    </TouchableOpacity>
-                  </View>
-                  <View  style={{width: 70, margin: 5}}><Image style={{width: 70, height: 70}} source = {{ uri : 'https://firebasestorage.googleapis.com/v0/b/illico-bd1e8.appspot.com/o/food_cat%2Ffrite.png?alt=media&token=d0613077-c2a2-4833-9920-1e30cfdb39af'}}/></View>
-                  <View   style={{flex: 1}}>
-                    <View   style={{flex: 1,marginBottom: 3}}><Text style={{fontFamily: 'Poppins-SemiBold'}}>Menu Choisi</Text></View>
-                    <View   style={{flex: 1, marginBottom: 5}}><Text style={{fontFamily: 'Poppins-SemiBold', color:colors.bgPrimary}}>12 Dh</Text></View>
-                    <View   style={{flex: 1, marginBottom: 5}}><Text></Text></View>
-                  </View>
-                  <View  style={{width: 20, flexDirection: 'column'}}>
-                    <TouchableOpacity style={{flex:1,alignItems: 'center'}} onPress={() => alert('add item')}>
-                      <Image source = {require('../../../assets/img/cartdelete.png')}/>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </View>
               </ScrollView>
               </SafeAreaView>
             </View>

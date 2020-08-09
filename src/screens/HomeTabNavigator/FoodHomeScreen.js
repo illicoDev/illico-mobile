@@ -53,6 +53,10 @@ const CarouselData =
 
 // create a component
 class FoodHomeScreen extends Component {
+    componentDidMount() {
+        this.checkOrders();
+    }
+
     constructor(props) {
         super(props);
         this.state = {
