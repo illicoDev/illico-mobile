@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import {View, StyleSheet, FlatList, ScrollView, Text, Dimensions, Image} from "react-native";
 import { Appbar, Title, Avatar, Card } from "react-native-paper";
-import * as firebase from "firebase";
 import {snapshotToArray} from "../../helpers/firebaseHelpers";
 const { width, height } = Dimensions.get('window');
+import firestore from '@react-native-firebase/firestore';
 
 const dummyRestaurant = [
     {
@@ -25,7 +25,7 @@ class SearchScreen extends Component {
         this.LoadServices();
     };
     LoadServices = () => {
-        const serviceData = firebase.firestore().collection('services').get()
+        const serviceData = firestore().collection('services').get()
             .then(data => {
                 let array = snapshotToArray(data);
                 this.setState({services : array });

@@ -2,15 +2,32 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a55b8561-b765-42e9-8bb6-24bac6e9f0c0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/CheckBox.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ios/GoogleService-Info.plist" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Podfile" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Podfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Podfile.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Pods/Manifest.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Pods/Manifest.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Pods/Pods.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Pods/Pods.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Pods/Pods.xcodeproj/xcuserdata/zelmerzouki.xcuserdatad/xcschemes/xcschememanagement.plist" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Pods/Pods.xcodeproj/xcuserdata/zelmerzouki.xcuserdatad/xcschemes/xcschememanagement.plist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach-tvOS/Pods-zach-tvOS.debug.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach-tvOS/Pods-zach-tvOS.debug.xcconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach-tvOS/Pods-zach-tvOS.release.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach-tvOS/Pods-zach-tvOS.release.xcconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach-tvOSTests/Pods-zach-tvOSTests.debug.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach-tvOSTests/Pods-zach-tvOSTests.debug.xcconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach-tvOSTests/Pods-zach-tvOSTests.release.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach-tvOSTests/Pods-zach-tvOSTests.release.xcconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach-zachTests/Pods-zach-zachTests-acknowledgements.markdown" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach-zachTests/Pods-zach-zachTests-acknowledgements.markdown" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach-zachTests/Pods-zach-zachTests-acknowledgements.plist" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach-zachTests/Pods-zach-zachTests-acknowledgements.plist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach-zachTests/Pods-zach-zachTests-resources.sh" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach-zachTests/Pods-zach-zachTests-resources.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach-zachTests/Pods-zach-zachTests.debug.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach-zachTests/Pods-zach-zachTests.debug.xcconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach-zachTests/Pods-zach-zachTests.release.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach-zachTests/Pods-zach-zachTests.release.xcconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach/Pods-zach-acknowledgements.markdown" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach/Pods-zach-acknowledgements.markdown" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach/Pods-zach-acknowledgements.plist" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach/Pods-zach-acknowledgements.plist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach/Pods-zach-resources.sh" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach/Pods-zach-resources.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach/Pods-zach.debug.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach/Pods-zach.debug.xcconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach/Pods-zach.release.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Pods/Target Support Files/Pods-zach/Pods-zach.release.xcconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/zach.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/zach.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/zach.xcodeproj/xcshareddata/xcschemes/zach.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/ios/zach.xcodeproj/xcshareddata/xcschemes/zach.xcscheme" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/zach/AppDelegate.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/zach/AppDelegate.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/zach/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/ios/zach/Info.plist" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/accordion/ListItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/accordion/ListItem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/HomeTabNavigator/CartScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/HomeTabNavigator/CartScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/HomeTabNavigator/FoodHomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/HomeTabNavigator/FoodHomeScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/HomeTabNavigator/OrderScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/HomeTabNavigator/OrderScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/HomeTabNavigator/SearchScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/HomeTabNavigator/SearchScreen.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -72,6 +89,9 @@
       <workItem from="1596442164923" duration="48739000" />
       <workItem from="1596872927240" duration="3853000" />
       <workItem from="1596897826290" duration="9825000" />
+      <workItem from="1596994456608" duration="3264000" />
+      <workItem from="1597001350619" duration="16000" />
+      <workItem from="1597001567446" duration="1304000" />
     </task>
     <servers />
   </component>
@@ -83,30 +103,30 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="458" y="203" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1440.900@0.0.1440.900" timestamp="1596452741655" />
-    <state width="1419" height="219" key="GridCell.Tab.0.bottom" timestamp="1596453220334">
+    <state width="1419" height="219" key="GridCell.Tab.0.bottom" timestamp="1596993937996">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1419" height="219" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1596453220334" />
-    <state width="1419" height="219" key="GridCell.Tab.0.center" timestamp="1596453220333">
+    <state width="1419" height="219" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1596993937996" />
+    <state width="1419" height="219" key="GridCell.Tab.0.center" timestamp="1596993937994">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1419" height="219" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1596453220333" />
-    <state width="1419" height="219" key="GridCell.Tab.0.left" timestamp="1596453220332">
+    <state width="1419" height="219" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1596993937994" />
+    <state width="1419" height="219" key="GridCell.Tab.0.left" timestamp="1596993937993">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1419" height="219" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1596453220332" />
-    <state width="1419" height="219" key="GridCell.Tab.0.right" timestamp="1596453220334">
+    <state width="1419" height="219" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1596993937993" />
+    <state width="1419" height="219" key="GridCell.Tab.0.right" timestamp="1596993937995">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1419" height="219" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1596453220334" />
+    <state width="1419" height="219" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1596993937995" />
     <state x="320" y="185" key="Vcs.Push.Dialog.v2" timestamp="1596985922313">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="320" y="185" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1596985922313" />
-    <state x="376" y="196" width="757" height="508" key="find.popup" timestamp="1596968987783">
+    <state x="376" y="196" width="757" height="508" key="find.popup" timestamp="1597000626992">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="1941" y="235" width="1010" height="610" key="find.popup/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1596635584663" />
-    <state x="376" y="196" width="757" height="508" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1596968987783" />
+    <state x="376" y="196" width="757" height="508" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1597000626992" />
   </component>
 </project>
