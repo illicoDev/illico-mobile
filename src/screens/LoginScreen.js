@@ -9,9 +9,7 @@ import {
 
 import colors from "../assets/colors";
 import CustomActionButton from "../components/CustomActionButton";
-import * as firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/database";
+import auth from "@react-native-firebase/auth";
 import { connect } from "react-redux";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -28,8 +26,7 @@ class LoginScreen extends Component {
     if (this.state.email && this.state.password) {
       this.setState({ isLoading: true });
       try {
-        const response = await firebase
-          .auth()
+        const response = await auth()
           .signInWithEmailAndPassword(this.state.email, this.state.password);
         if (response) {
           this.setState({ isLoading: false });
@@ -40,10 +37,20 @@ class LoginScreen extends Component {
         this.setState({ isLoading: false });
         switch (error.code) {
           case "auth/user-not-found":
-            alert("A user with that email does not exist. Try signing Up");
+            alert("Un utilisateur avec cette identifiant n'existe pas");
             break;
           case "auth/invalid-email":
-            alert("Please enter an email address");
+            alert("Veuillez entrer une adresse mail valide");
+            break;
+          case "auth/weak-password":
+            alert("le mot de passe doit contenir au moins 6 caractères!");
+            break;
+          case "auth/wrong-password":
+            alert("Mot de passe erroné");
+            break;
+          default:
+            console.log("Sign in unknown error :  "+error.code);
+            alert("Une erreur est survenue");
         }
       }
     }
@@ -52,8 +59,7 @@ class LoginScreen extends Component {
     if (this.state.email && this.state.password) {
       this.setState({ isLoading: true });
       try {
-        const response = await firebase
-          .auth()
+        const response = await auth()
           .createUserWithEmailAndPassword(
             this.state.email,
             this.state.password
@@ -65,6 +71,20 @@ class LoginScreen extends Component {
         }
       } catch (error) {
         this.setState({ isLoading: false });
+        switch (error.code) {
+          case "auth/email-already-in-use":
+            alert("Ce nom d'utilisateur existe déjà");
+            break;
+          case "auth/invalid-email":
+            alert("Veuillez entrer une adresse mail valide");
+            break;
+          case "auth/weak-password":
+            alert("le mot de passe doit contenir au moins 6 caractères!");
+            break;
+          default:
+            console.log("Sign in unknown error :  "+error.code);
+            alert("Une erreur est survenue");
+        }
         if (error.code === "auth/email-already-in-use") {
           alert("User already exists.Try loggin in");
         }

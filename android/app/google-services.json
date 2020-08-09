@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "1035517718664",
+    "firebase_url": "https://illico-bd1e8.firebaseio.com",
+    "project_id": "illico-bd1e8",
+    "storage_bucket": "illico-bd1e8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035517718664:android:be178ac9b8a5293665ef3d",
+        "android_client_info": {
+          "package_name": "com.zach"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1035517718664-vj8ju2ncsgt8anvvra58a41pdvgkn6k0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBR60nsA-fKI5QE5Bkv_qYQqsLWTDJllf0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1035517718664-vj8ju2ncsgt8anvvra58a41pdvgkn6k0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035517718664:android:66573fc8c4814c7565ef3d",
+        "android_client_info": {
+          "package_name": "com.zach.illico"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1035517718664-vj8ju2ncsgt8anvvra58a41pdvgkn6k0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBR60nsA-fKI5QE5Bkv_qYQqsLWTDJllf0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1035517718664-vj8ju2ncsgt8anvvra58a41pdvgkn6k0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

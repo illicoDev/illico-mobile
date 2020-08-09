@@ -3,13 +3,12 @@ import { View, Text, StyleSheet } from "react-native";
 
 import CustomActionButton from "../components/CustomActionButton";
 import colors from "../assets/colors";
-import * as firebase from "firebase/app";
-import "firebase/auth";
+import auth from "@react-native-firebase/auth";
 import { connect } from "react-redux";
 class SettingScreen extends Component {
   signOut = async () => {
     try {
-      await firebase.auth().signOut();
+      await auth().signOut();
       this.props.signOut();
       // this.props.navigation.navigate('WelcomeScreen');
     } catch (error) {

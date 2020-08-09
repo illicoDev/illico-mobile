@@ -5,7 +5,7 @@ import Carousel from "react-native-snap-carousel";
 import CarouselContainer from "../../components/Carousel";
 import { snapshotToArray } from "../../helpers/firebaseHelpers";
 import colors from "../../assets/colors";
-import * as firebase from "firebase";
+import firestore from '@react-native-firebase/firestore';
 
 const dummyData = [
     {
@@ -53,15 +53,21 @@ const CarouselData =
 
 // create a component
 class FoodHomeScreen extends Component {
+    componentDidMount() {
+        this.checkOrders();
+        this.getPlaces();
+    }
+
     constructor(props) {
         super(props);
         this.state = {
-            data: dummyData,
-            place: dummyRestaurant
+            data : [],
+            place: []
         };
     }
     checkOrders = () => {
-        const orderData = firebase.firestore().collection('categories').get()
+        /*firestore().collection('Users')*/
+        const orderData = firestore().collection('categories').get()
             .then(data => {
                 let booksArray = snapshotToArray(data);
                 console.log("::: ORDERS :: " + booksArray[0].image);
@@ -69,6 +75,19 @@ class FoodHomeScreen extends Component {
             })
             .catch(error => console.error(error));
     };
+
+    getPlaces = () => {
+        /*firestore().collection('Users')*/
+        const placesData = firestore().collection('resto').get()
+            .then(data => {
+                let placesArray = snapshotToArray(data);
+                console.log("::: PLACES :: " + placesArray[0].image);
+                this.setState({place : placesArray })
+            })
+            .catch(error => console.error(error));
+    };
+
+
 
     switchToMerchant = () => {
         this.props.navigation.push('RestaurantScreen');

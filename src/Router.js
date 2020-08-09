@@ -12,9 +12,9 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import * as firebase from "firebase/app";
-import "firebase/auth";
+import auth from "@react-native-firebase/auth";
 import { connect } from "react-redux";
+
 
 const Stack = createStackNavigator();
 const FoodStack = createStackNavigator();
@@ -41,7 +41,7 @@ class Router extends Component {
     checkIfLoggedIn = () => {
         let unsubscribe;
         try {
-            unsubscribe = firebase.auth().onAuthStateChanged(user => {
+            unsubscribe = auth().onAuthStateChanged(user => {
                 if (user) {
                     //sign in the user
                     this.props.signIn(user);
