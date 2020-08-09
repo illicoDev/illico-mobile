@@ -55,10 +55,7 @@ const CarouselData =
 class FoodHomeScreen extends Component {
     componentDidMount() {
         this.checkOrders();
-<<<<<<< HEAD
-=======
         this.getPlaces();
->>>>>>> 7bf35788bfba7c544466fbfc809da850b54503ea
     }
 
     constructor(props) {
@@ -72,9 +69,9 @@ class FoodHomeScreen extends Component {
         /*firestore().collection('Users')*/
         const orderData = firestore().collection('categories').get()
             .then(data => {
-                let booksArray = snapshotToArray(data);
-                console.log("::: ORDERS :: " + booksArray[0].image);
-                this.setState({data : booksArray })
+                let catArray = snapshotToArray(data);
+                console.log("::: ORDERS :: " + catArray[0].image);
+                this.setState({data : catArray })
             })
             .catch(error => console.error(error));
     };
@@ -181,5 +178,4 @@ const styles = StyleSheet.create({
     popularText: { marginTop: 5, fontSize: 17 }
 });
 
-//make this component available to the app
 export default FoodHomeScreen;
