@@ -49,7 +49,7 @@ class LoginScreen extends Component {
             alert("Mot de passe erroné");
             break;
           default:
-            console.log("Sign in unknown error :  "+error.code);
+            console.log("SignIn unknown error :  "+error.code);
             alert("Une erreur est survenue");
         }
       }
@@ -82,11 +82,8 @@ class LoginScreen extends Component {
             alert("le mot de passe doit contenir au moins 6 caractères!");
             break;
           default:
-            console.log("Sign in unknown error :  "+error.code);
+            console.log("SignUp unknown error :  "+error.code);
             alert("Une erreur est survenue");
-        }
-        if (error.code === "auth/email-already-in-use") {
-          alert("User already exists.Try loggin in");
         }
         console.log(error);
       }

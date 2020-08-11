@@ -6,6 +6,7 @@ import CarouselContainer from "../../components/Carousel";
 import { snapshotToArray } from "../../helpers/firebaseHelpers";
 import colors from "../../assets/colors";
 import firestore from '@react-native-firebase/firestore';
+import AddressComponent from "../../components/AddressComponent";
 
 const dummyData = [
     {
@@ -95,9 +96,10 @@ class FoodHomeScreen extends Component {
     render() {
         return (
             <View>
+                <AddressComponent />
                 <ScrollView
                     showsVerticalScrollIndicator={false}
-                    style={{ marginLeft: 10, marginRight: 10, marginTop: 40 }}
+                    style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
                 >
                     {/*<FlatList
                         horizontal={true}
