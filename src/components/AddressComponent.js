@@ -1,45 +1,83 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, Modal, Button} from 'react-native';
-import { stringify } from "javascript-stringify";
-
+import {stringify} from "javascript-stringify";
+import {useSelector, useDispatch} from 'react-redux';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-import LogBoxButton from 'react-native/Libraries/LogBox/UI/LogBoxButton';
-import {TextInput} from "react-native-paper";
+import {googlePlacesAPI} from '../../config/config'
+import colors from '../../assets/colors'
+import AsyncStorage from '@react-native-community/async-storage';
+import {string} from "react-native-redash";
 
 navigator.geolocation = require('@react-native-community/geolocation');
 const emptyAddress = 'Choisissez une adresse de livraison ';
 
-const AddressComponent = () => {
+let addressOnModal = '';
+const AddressComponent = props => {
+    const cachedAddress = useSelector(state => state.addressBook.currentAddress);
     const [modalVisible, setModalVisible] = useState(false);
     const [address, setAddress] = useState('');
-    const [addressOnModal, setAddressOnModal] = useState('');
-    const [isAddressSet, setIsAddressSet] = useState(false);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        console.log('## Address from redux : '+stringify(cachedAddress));
+        setAddress(cachedAddress.address);
+    }, [cachedAddress])
+
 
     // On result row Pressed
     const onPressAddress = () => {
         console.log('Address Modal is now Visible');
         setModalVisible(true);
     };
-    //
-    const onChangeModalAddress = () => { }
-    const renderModalAddress = () => {return isAddressSet?address:""}
 
-    let addressDetails={address:address,location:{}};
+    let addressDetails = {address: address, location: {}};
 
+    const saveAddress = (savedAddress) => {
+        if (savedAddress.length > 1) {
+            setAddress(() => savedAddress);
+            setAddressLocal(savedAddress).then(()=>{console.log('# ADDRESS saved to LOCAL')});
+        }
+    }
+    const setAddressLocal = async (savedAddress) => {
+        try{
+            dispatch({type: 'SET_CURRENT_ADDRESS', address: savedAddress});
+            await AsyncStorage.setItem('currentAddress',savedAddress)
+        }
+        catch(err) {
+            console.log(err);
+        }
+
+
+    }
+    console.log("## Function body running");
     return (
         <View
             style={{
-                marginTop:20
+                paddingTop: 15,
+                paddingBottom:10,
+                backgroundColor:colors.logoColor,
+                textColor:'white',
+                borderBottomRightRadius:30,
+                borderBottomLeftRadius:30
+
             }}>
             <View
                 style={{
-                    flexDirection:'row',
+                    flexDirection: 'row',
                     justifyContent: 'center',
-                    alignItems: 'center'
+                    alignItems: 'center',
                 }}>
-                <Text style={{ fontSize: 20, textDecorationLine:'underline', paddingLeft:20, paddingRight:20 }}
+                <Text
+                    style={{
+                        fontSize: 20,
+                        textDecorationLine: 'underline',
+                        paddingLeft: 30,
+                        paddingRight: 30,
+                        color:'white'
+
+                    }}
                       numberOfLines={1}
-                      onPress={onPressAddress}>{isAddressSet?address:emptyAddress}</Text>
+                      onPress={onPressAddress}>{address ? address : emptyAddress}</Text>
             </View>
             <Modal
                 visible={modalVisible}
@@ -58,7 +96,7 @@ const AddressComponent = () => {
                 }}>
                     <View
                         style={{
-                            backgroundColor:'white',
+                            backgroundColor: 'white',
                             borderWidth: 1,
                             height: 210,
                             width: 300,
@@ -72,12 +110,12 @@ const AddressComponent = () => {
                         <GooglePlacesAutocomplete
                             placeholder="Saisir votre adresse ici"
                             currentLocation={true}
-                            getDefaultValue={renderModalAddress}
+                            getDefaultValue={() => addressOnModal}
                             minLength={2}
                             currentLocationLabel="Nearby places"
                             returnKeyType={'search'}
                             query={{
-                                key: 'AIzaSyB7G7hGU8j-x_cE8oUX5drtfCHGMuqTCpU',
+                                key: googlePlacesAPI,
                                 language: 'fr', // language of the results
                                 types: 'address',
                             }}
@@ -85,19 +123,22 @@ const AddressComponent = () => {
                             nearbyPlacesAPI="GoogleReverseGeocoding"
                             onPress={(data, details = null) => {
                                 // 'details' is provided when fetchDetails = true
-                                console.log(data, details);
-
-                                if(data.formatted_address){addressDetails.address = data.formatted_address;}
-                                else if(data.description){addressDetails.address = data.description;}
-
-                                if(data.geometry){addressDetails.location = data.geometry.location;}
-                                setAddressOnModal(()=>addressDetails.address);
-                                console.log(stringify(addressDetails))
-                                console.log(stringify(addressOnModal))
+                                if (data.formatted_address) {
+                                    addressDetails.address = data.formatted_address;
+                                } else if (data.description) {
+                                    addressDetails.address = data.description;
+                                }
+                                if (data.geometry) {
+                                    addressDetails.location = data.geometry.location;
+                                }
+                                addressOnModal = addressDetails.address;
+                                console.log(stringify("Address on Modal: " + addressOnModal))
                             }}
                             textInputProps=
                                 {{
-                                    onChangeText:(text)=>{setAddressOnModal(()=>text);}
+                                    onChangeText: (text) => {
+                                        addressOnModal = text;
+                                    }
                                 }}
                         />
                         <View
@@ -108,14 +149,7 @@ const AddressComponent = () => {
                                 <Button
                                     onPress={() => {
                                         setModalVisible(false);
-                                        console.log("Address in modal field : " + addressOnModal);
-                                        console.log("Address in field : " + address);
-
-                                        if(addressOnModal.length <= 1){ setIsAddressSet(false); }
-                                        else{ setAddress(()=>addressOnModal); setIsAddressSet(true);}
-                                        console.log(stringify(addressDetails))
-
-                                        //setAddress(addressDetails.address);
+                                        saveAddress(addressOnModal);
                                     }}
                                     title="Valider"
                                 />

@@ -99,7 +99,7 @@ class FoodHomeScreen extends Component {
                 <AddressComponent />
                 <ScrollView
                     showsVerticalScrollIndicator={false}
-                    style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
+                    style={{ marginLeft: 10, marginRight: 10, marginTop: 0 }}
                 >
                     {/*<FlatList
                         horizontal={true}
