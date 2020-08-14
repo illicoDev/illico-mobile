@@ -10,10 +10,10 @@ const cart = (state = initialState, action) => {
     switch (action.type) {
         case "ADD_TO_CART":
             return {
+                ...state,
                 cart : {
                     items : [
-                        ...state.cart.items,
-                        { title : action.item.title, qte:action.item.qte}
+                        { title : 'BIG TASTY'}
                     ]
                 }
             };

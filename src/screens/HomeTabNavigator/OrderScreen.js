@@ -16,8 +16,6 @@ import CustomActionButton from "../../components/CustomActionButton";
 import List from "../../components/accordion/List";
 import Colors from "react-native/Libraries/NewAppScreen/components/Colors";
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
-import {connect} from "react-redux";
-import {stringify} from "javascript-stringify";
 
 const list1 =  {
     name: "MENU",
@@ -101,20 +99,6 @@ class OrderScreen extends Component {
             return {...oldState ,menu:{...oldState.menu,count:oldState.menu.count + 1}} ;
         });
     };
-
-    addToCart = () => {
-        //let {,qte} = {menuItem.}this.state.menu.count
-        let item = {
-            title: this.props.route.params.menu.title ,
-            imageUrl: this.props.route.params.menu.imageUrl,
-            qte: this.state.menu.count
-        }
-        if(item.qte > 0){
-            this.props.addToCartDispatcher(item);
-            console.log("Adding to cart " + stringify(item));
-        }
-        else{ alert('La quantité doit être supérieure à 0');}
-    }
     render() {
         const menuItem = this.props.route.params.menu;
         return (
@@ -161,7 +145,7 @@ class OrderScreen extends Component {
                         <View style={{flex:1}}><Text style={{ fontSize: 25,fontFamily: 'Poppins-Medium', color: colors.bgPrimary}}>{this.state.menu.count * this.state.menu.price} Dh</Text></View>
                         <View style={{flex:1}}>
                             <CustomActionButton
-                                onPress={() => this.addToCart()}
+                                onPress={() => alert("add to cart to be")}
                                 style={[styles.loginButtons, { borderColor: colors.bgError }]}
                             >
                                 <Text style={{ color: "white",fontFamily: 'Poppins-SemiBold' }}>Add to Cart</Text>
@@ -173,22 +157,7 @@ class OrderScreen extends Component {
         );
     }
 }
-
-const mapStateToProps = state => {
-    return {
-        auth: state.auth,
-        addressBook: state.addressBook
-
-    };
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-        addToCartDispatcher: item => dispatch({type: "ADD_TO_CART", item:item})
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(OrderScreen);
+export default OrderScreen;
 
 const styles = StyleSheet.create({
     container: {
