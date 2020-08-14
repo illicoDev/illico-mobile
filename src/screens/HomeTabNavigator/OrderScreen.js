@@ -85,19 +85,19 @@ class OrderScreen extends Component {
             }
         }
     }
-
     subCount = () => {
-        this.setState(oldState =>{
-            if(oldState.menu.count >=1){
-                return {...oldState ,menu:{...oldState.menu, count:oldState.menu.count - 1}} ;
-            }
-        })
+        if(this.state.count > 0){
+            let oldCount = this.state.menu.count;
+            this.setState({
+                menu : { count: oldCount - 1 },
+            });
+        }
     };
-
     addCount = () => {
-        this.setState( oldState =>{
-            return {...oldState ,menu:{...oldState.menu,count:oldState.menu.count + 1}} ;
-        });
+        let oldCount = this.state.menu.count;
+            this.setState({
+                menu : { count: oldCount + 1 },
+            });
     };
     render() {
         const menuItem = this.props.route.params.menu;
@@ -120,7 +120,7 @@ class OrderScreen extends Component {
                                         <View   style={{flex: 1}}><Text style={{ fontSize: 15,fontFamily: 'Poppins-SemiBold', color: colors.bgPrimary}}>{this.state.price} Dh</Text></View>
                                     </View>
                                     <View style={{width:100, flexDirection: 'row', borderWidth: 1, borderColor: '#CCCCCC', borderRadius:5, alignItems: 'center', justifyContent: 'center'}}>
-                                        <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={this.subCount} >
+                                        <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={this.subCount}>
                                             <View ><Text>-</Text></View>
                                         </TouchableOpacity>
                                         <View style={{flex:1,alignItems: 'center', justifyContent: 'center'}}><Text>{this.state.menu.count}</Text></View>
