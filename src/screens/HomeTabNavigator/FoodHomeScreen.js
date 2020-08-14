@@ -7,6 +7,8 @@ import { snapshotToArray } from "../../helpers/firebaseHelpers";
 import colors from "../../assets/colors";
 import firestore from '@react-native-firebase/firestore';
 import AddressComponent from "../../components/AddressComponent";
+import { getDistance, getPreciseDistance } from 'geolib';
+import {stringify} from "javascript-stringify";
 
 const dummyData = [
     {
@@ -53,10 +55,13 @@ const CarouselData =
         }]
 
 // create a component
+navigator.geolocation = require('@react-native-community/geolocation');
+
 class FoodHomeScreen extends Component {
     componentDidMount() {
         this.checkOrders();
         this.getPlaces();
+        //this.getPlacesInRadius(10000);
     }
 
     constructor(props) {
@@ -78,7 +83,6 @@ class FoodHomeScreen extends Component {
     };
 
     getPlaces = () => {
-        /*firestore().collection('Users')*/
         const placesData = firestore().collection('resto').get()
             .then(data => {
                 let placesArray = snapshotToArray(data);
@@ -86,6 +90,52 @@ class FoodHomeScreen extends Component {
                 this.setState({place : placesArray })
             })
             .catch(error => console.error(error));
+    };
+
+    getPlacesInRadius = async(radius) => {
+        let currentLocation;
+        await navigator.geolocation.getCurrentPosition(
+            position => {
+                currentLocation = {latitude:position.coords.latitude,longitude:position.coords.longitude};
+                console.log("##Current location : "+ stringify(currentLocation));
+                const placesData = firestore().collection('resto').get()
+                    .then(data => {
+                        let placesArray = snapshotToArray(data).filter((dataRow)=>{
+                            console.log({latitude:dataRow.location._latitude,longitude:dataRow.location._longitude});
+                            console.log(stringify(currentLocation));
+                            console.log(radius);
+                            if(this._isInRadius({latitude:dataRow.location._latitude,longitude:dataRow.location._longitude},currentLocation,radius)){
+                                return true;
+                            }
+                        });
+                        this.setState({place : placesArray });
+                        console.log("::: PLACES IN RADIUS "+ radius +" :: " + placesArray.size);
+                    })
+                    .catch(error => console.error(error));
+                },
+            position => console.log("#ERROR# Could not retrieve current location"),
+            {enableHighAccuracy: false, timeout: 5000, maximumAge: 1000,});
+
+
+    };
+
+    _isInRadius = (locA,locB,radius) => {
+        let distance = getDistance(locA,locB);
+        console.log("Distance | radius : "+ distance +" | "+ radius);
+        if(distance > radius){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    _getDistance = () => {
+        var dis = getDistance(
+            { latitude: 20.0504188, longitude: 64.4139099 },
+            { latitude: 51.528308, longitude: -0.3817765 }
+        );
+        alert(`Distance\n${dis} Meter\nor\n${dis / 1000} KM`);
     };
 
 

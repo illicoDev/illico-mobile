@@ -9,4 +9,4 @@ export const firebaseConfig = {
   measurementId: "G-N94DKRCBVQ"
 };
 
-export const googlePlacesAPI='AIzaSyB7G7hGU8j-x_cE8oUX5drtfCHGMuqTCpU';
+export const googlePlacesAPI = 'AIzaSyB7G7hGU8j-x_cE8oUX5drtfCHGMuqTCpU';
