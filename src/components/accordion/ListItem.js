@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import { StyleSheet, Text, View } from "react-native";
 import CheckBox from '../CheckBox';
 import colors from "../../../assets/colors";
+import {connect, useDispatch} from "react-redux";
 
 export const LIST_ITEM_HEIGHT = 54;
 const styles = StyleSheet.create({
@@ -31,9 +32,10 @@ const styles = StyleSheet.create({
     }
 });
 
-const ListItem = ({ item, isLast }) => {
+const ListItem = ({ elementKey, item, isLast }) => {
 
     const bottomRadius = isLast ? 8 : 0;
+    const dispatch = useDispatch();
     return (
         <View
             style={[
@@ -47,7 +49,7 @@ const ListItem = ({ item, isLast }) => {
             <View>
                 <CheckBox
                     selected={item.checked}
-                    onPress={() => alert("changee")}
+                    onPress={() => dispatch({ type: "CHECK_ITEM", payload: { elementKey : elementKey, itemKey : item.key, checked : item.checked} })}
                     text={item.name}
                     textStyle={styles.name}
                     checkColor={colors.bgPrimary}
@@ -56,4 +58,11 @@ const ListItem = ({ item, isLast }) => {
         </View>
     );
 };
+
+/*const mapDispatchToProps = dispatch => {
+    return {
+        checkItem: ( elementKey, itemKey) => dispatch({ type: "CHECK_ITEM", payload: { elementKey : elementKey, itemKey : itemKey} })
+    };
+};*/
 export default ListItem;
+//export default connect(null, mapDispatchToProps)(ListItem);

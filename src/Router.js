@@ -18,6 +18,7 @@ import { connect } from "react-redux";
 
 const Stack = createStackNavigator();
 const FoodStack = createStackNavigator();
+const CartStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -27,8 +28,11 @@ import CartScreen from "./screens/HomeTabNavigator/CartScreen";
 import RestaurantScreen from "./screens/HomeTabNavigator/RestaurantScreen";
 import UserScreen from "./screens/HomeTabNavigator/UserScreen";
 import SearchScreen from "./screens/HomeTabNavigator/SearchScreen";
-
+import TrackScreen from "./screens/HomeTabNavigator/TrackScreen";
+import ConfirmScreen from "./screens/HomeTabNavigator/ConfirmScreen";
 import SplashScreen from 'react-native-splash-screen';
+
+import ShoppingCartIcon from './components/ShoppingCartIcon';
 
 import colors from "../assets/colors";
 
@@ -108,7 +112,7 @@ const HomeTabNavigator = () => (
                     case "Search":
                         return <MaterialCommunityIcons name="magnify" color={color} size={size} />;
                     case "Cart":
-                        return <MaterialCommunityIcons name="cart-outline" color={color} size={size} />;
+                        return <ShoppingCartIcon color={color} size={size} />;
                     case "Profil":
                         return <MaterialCommunityIcons name="account-outline" color={color} size={size} />;
                 }
@@ -117,7 +121,7 @@ const HomeTabNavigator = () => (
     >
         <Tab.Screen options={{ tabBarLabel: "Accueil" }} name="home" component={FoodStackNavigator} />
         <Tab.Screen options={{ tabBarLabel: "Recherche" }} name="Search" component={SearchScreen}/>
-        <Tab.Screen options={{ tabBarLabel: "Panier" }} name="Cart" component={CartScreen}/>
+        <Tab.Screen options={{ tabBarLabel: "Panier" }} name="Cart" component={CartStackNavigator}/>
         <Tab.Screen options={{ tabBarLabel: "Profil" }} name="Profil" component={UserScreen}/>
     </Tab.Navigator>
 );
@@ -132,6 +136,18 @@ const FoodStackNavigator = ({ navigation }) => (
         <FoodStack.Screen name="RestaurantScreen" component={RestaurantScreen}/>
         <FoodStack.Screen name="OrderScreen" component={OrderScreen}/>
     </FoodStack.Navigator>
+);
+
+const CartStackNavigator = ({ navigation }) => (
+    <CartStack.Navigator
+        screenOptions={{
+            headerShown : false
+        }}
+    >
+        <CartStack.Screen name="CartScreen" component={CartScreen}/>
+        <CartStack.Screen name="ConfirmScreen" component={ConfirmScreen}/>
+        <CartStack.Screen name="TrackScreen" component={TrackScreen}/>
+    </CartStack.Navigator>
 );
 
 const HomeStackNavigator = ({ navigation }) => (

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {View, StyleSheet, FlatList, ScrollView, Text, Dimensions, Image} from "react-native";
+import {View, StyleSheet, FlatList, ScrollView, Text, Dimensions, Image, TextInput} from "react-native";
 import { Appbar, Title, Avatar, Card } from "react-native-paper";
 import {snapshotToArray} from "../../helpers/firebaseHelpers";
 const { width, height } = Dimensions.get('window');
@@ -43,8 +43,14 @@ class SearchScreen extends Component {
                 >
 
                     <View style={{margin: 5}}>
-                        <Text style={{marginTop:15, marginLeft: 15, marginBottom: 15, fontFamily: 'Poppins-Bold', fontSize: 18}}>Nos Services</Text>
+                        <Text style={{marginTop:15, marginLeft: 15, marginBottom: 15, fontFamily: 'Poppins-Bold', fontSize: 18}}>Recherche</Text>
                     </View>
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder="Où Manger ?"
+                        placeholderTextColor='#CCCCCC'
+                        onChangeText={password => this.setState({ password })}
+                    />
                     {/*<FlatList
                         showsVerticalScrollIndicator={false}
                         data={this.state.place}
@@ -61,7 +67,7 @@ class SearchScreen extends Component {
                                 </Card>
                             );
                         }}
-                    />*/}
+                    />
                     <FlatList
                         showsHorizontalScrollIndicator={false}
                         data={this.state.services}
@@ -77,7 +83,7 @@ class SearchScreen extends Component {
                                 </View>
                             );
                         }}
-                    />
+                    />*/}
                 </ScrollView>
             </View>
         );
@@ -143,6 +149,17 @@ const styles = StyleSheet.create({
         shadowRadius: 3,
         elevation: 5,
         fontFamily: 'Poppins-Regular'
+    },
+    textInput: {
+        height: 50,
+        borderWidth: 0.4,
+        borderColor: '#9B9B9B',
+        marginHorizontal: 10,
+        marginBottom: 10,
+        color: 'black',
+        paddingHorizontal: 10,
+        borderRadius: 8,
+        backgroundColor: '#FAFAFA'
     }
 });
 

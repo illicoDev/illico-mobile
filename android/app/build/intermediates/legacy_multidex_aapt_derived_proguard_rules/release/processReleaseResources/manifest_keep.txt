@@ -1,0 +1,4 @@
+# Referenced at /Users/zelmerzouki/Desktop/dev-illico/illico/android/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:18
+-keep class androidx.core.app.CoreComponentFactory { <init>(); }
+# Referenced at /Users/zelmerzouki/Desktop/dev-illico/illico/android/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:18
+-keep class com.zach.MainApplication { <init>(); }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, SafeAreaView, ScrollView, StyleSheet, Image} from 'react-native';
+import {View, Text, SafeAreaView, ScrollView, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import colors from "../../assets/colors";
 
@@ -13,29 +13,44 @@ class UserScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-            <View style={{flex:1}}>
                 <View style={{flex:1}}>
-                    <SafeAreaView style={{flex:1}}>
-                        <ScrollView>
-                            <View style={{margin: 5}}>
-                                <Text style={{marginTop:15, marginLeft: 15, marginBottom: 15, fontFamily: 'Poppins-Bold', fontSize: 18}}>Votre Profil</Text>
-                            </View>
-                            <View style={styles.menuCard}>
-                                <View style={{flex:1, flexDirection: 'row', }}>
-                                    <View  style={{width: 70, margin: 8}}><Image style={{borderRadius: 40}} source = {require('../../../assets/img/placeholder.png')}/></View>
-                                    <View   style={{flex: 1}}>
-                                        <View   style={{flex: 1,marginBottom: 3}}><Text style={{fontFamily: 'Poppins-SemiBold', fontSize: 18}}>{this.props.currentUser.email}</Text></View>
-                                        <View   style={{flex: 1, marginBottom: 5}}><Text style={{color: colors.bgPrimary}}>Modifer</Text></View>
-                                        <View   style={{flex: 1, marginBottom: 5}}><Text style={{fontWeight: "bold", color:colors.bgPrimary, textAlign: 'right', alignSelf: 'stretch'}}></Text></View>
-                                    </View>
+                    <View style={{flex:1}}>
+                        <SafeAreaView style={{flex:1}}>
+                            <ScrollView>
+                                <View style={{margin: 5}}>
+                                    <Text style={{marginTop:15, marginLeft: 15, marginBottom: 15, fontFamily: 'Poppins-Bold', fontSize: 18}}>Votre Profil</Text>
                                 </View>
-                            </View>
-                        </ScrollView>
-                    </SafeAreaView>
+                                <View style={[styles.menuCard, {margin: 15}]}>
+                                    <View style={{flex:1, flexDirection: 'row', }}>
+                                        <View   style={{flex: 1}}>
+                                            <View   style={{flex: 1,marginBottom: 3}}><Text style={{fontFamily: 'Poppins-SemiBold', fontSize: 18}}>Nom Complet</Text></View>
+                                            <View   style={{flex: 1, marginBottom: 5}}><Text style={{color: colors.bgPrimary}}>Modifer</Text></View>
+                                            <View   style={{flex: 1, marginBottom: 5}}><Text style={{fontWeight: "bold", color:colors.bgPrimary, textAlign: 'right', alignSelf: 'stretch'}}></Text></View>
+                                        </View>
+                                    </View>
+                                    <View style={{borderBottomColor: '#D8D8D8', borderBottomWidth: 1}}/>
+                                    <Text style={{marginTop: 7, marginLeft: 7, marginBottom: 7, fontFamily: 'Poppins-Bold'}}>E-mail :</Text>
+                                    <Text style={{marginLeft: 7, marginBottom: 7,color: 'grey', fontFamily: 'Poppins-Medium'}}>{this.props.currentUser.email}</Text>
+                                    <View style={{borderBottomColor: '#D8D8D8', borderBottomWidth: 1}}/>
+                                    <Text style={{marginTop: 7, marginLeft: 7, marginBottom: 7, fontFamily: 'Poppins-Bold'}}>Téléphone :</Text>
+                                    <Text style={{marginLeft: 7, marginBottom: 7,color: 'grey', fontFamily: 'Poppins-Medium'}}>0 6 XX XX XX XX</Text>
+                                    <View style={{borderBottomColor: '#D8D8D8', borderBottomWidth: 1}}/>
+                                    <Text style={{marginTop: 7, marginLeft: 7, marginBottom: 7, fontFamily: 'Poppins-Bold'}}>Adresse de Récuperation :</Text>
+                                    <Text style={{marginLeft: 7, marginBottom: 7,color: 'grey', fontFamily: 'Poppins-Medium'}}>27 Rue Jules Parent, Rueil-Malmaison 92500</Text>
+                                    <View style={{borderBottomColor: '#D8D8D8', borderBottomWidth: 1}}/>
+                                    <Text style={{marginTop: 7, marginLeft: 7, marginBottom: 7, fontFamily: 'Poppins-Bold'}}>Adresse de Livraison :</Text>
+                                    <Text style={{marginLeft: 7, marginBottom: 7,color: 'grey', fontFamily: 'Poppins-Medium'}}>27 Rue Jules Parent, Rueil-Malmaison 92500</Text>
+
+
+                                    <TouchableOpacity style={{marginTop: 50, marginBottom: 15}}>
+                                        <Text style={{fontSize: 18,color: 'red',fontFamily: 'Poppins-Bold'}}>Se Déconnecter</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </ScrollView>
+                        </SafeAreaView>
+                    </View>
                 </View>
             </View>
-            </View>
-
         );
     }
 }

@@ -3,23 +3,75 @@ import {View, Text, StyleSheet, ScrollView, Image, FlatList, ImageBackground, To
 import {Card, Title} from "react-native-paper";
 import colors from "../../assets/colors";
 import Colors from "react-native/Libraries/NewAppScreen/components/Colors";
+import {connect} from "react-redux";
 
 const dummyRestaurant = [
     {
+        uid: "000000001",
         imageUrl: "http://lorempixel.com/400/200/nightlife",
-        title: "BIG TASTY"
+        title: "BIG TASTY",
+        qte: 1,
+        price: 53,
+        UnitPrice: 53,
+        supp: 0
     },
     {
+        uid: "000000003",
         imageUrl: "http://lorempixel.com/400/200/nightlife",
-        title: "FILLET-O-FISH"
+        title: "FILLET-O-FISH",
+        qte: 1,
+        price: 54,
+        UnitPrice: 54,
+        supp: 0
     },
     {
+        uid: "000000004",
         imageUrl: "http://lorempixel.com/400/200/nightlife",
-        title: "Pizza"
+        title: "Le 280",
+        qte: 1,
+        price: 55,
+        UnitPrice: 55,
+        elements: [
+            {
+                key: "ff46bde4-dd70-11ea-87d0-0242ac130003",
+                name: "MENU",
+                items: [
+                    { key: "10549b9c-dd71-11ea-87d0-0242ac130003", name: "BEST OF", points: "$3.45", checked:false, supp : 0 },
+                    { key: "1551575c-dd71-11ea-87d0-0242ac130003", name: "MAXI BEST OF", points: "$3.45", checked:false, supp : 7 }
+                ]
+            },
+            {
+                key: "06a5fc12-dd71-11ea-87d0-0242ac130003",
+                name: "ACCOMPAGNEMENT",
+                items: [
+                    { key: "1a85000c-dd71-11ea-87d0-0242ac130003", name: "FRITE", points: "$3.45", checked:false, supp : 0 },
+                    { key: "21e8cbbc-dd71-11ea-87d0-0242ac130003", name: "POTATOS", points: "$3.45", checked:true, supp : 0 },
+                    { key: "2bd71656-dd71-11ea-87d0-0242ac130003", name: "PETITE SALADE", points: "$3.45", checked:false, supp : 0 }
+                ]
+            },
+            {
+                key: "0ba18254-dd71-11ea-87d0-0242ac130003",
+                name: "BOISSON",
+                items: [
+                    { key: "3432bc06-dd71-11ea-87d0-0242ac130003", name: "COCA-COLA", points: "$3.45", checked:false, supp : 0 },
+                    { key: "3a82227c-dd71-11ea-87d0-0242ac130003", name: "COCA-COLA ZERO", points: "$3.45", checked:false, supp : 0 },
+                    { key: "40dd1d2a-dd71-11ea-87d0-0242ac130003", name: "SPRITE", points: "$3.45", checked:false, supp : 0 },
+                    { key: "4530e104-dd71-11ea-87d0-0242ac130003", name: "LIPTON ICE-TEA", points: "$3.45", checked:false, supp : 0 },
+                    { key: "4952cb8a-dd71-11ea-87d0-0242ac130003", name: "EVIAN", points: "$3.45", checked:false, supp : 0 },
+                    { key: "4d4eba14-dd71-11ea-87d0-0242ac130003", name: "JUS D'ORANGE", points: "$3.45", checked:false, supp : 0 }
+                ]
+            }
+        ],
+        supp: 0
     },
     {
+        uid: "000000002",
         imageUrl: "http://lorempixel.com/400/200/nightlife",
-        title: "BIG MAC"
+        title: "BIG MAC",
+        qte: 1,
+        price: 56,
+        UnitPrice: 56,
+        supp: 0
     }
 ];
 
@@ -42,7 +94,8 @@ class RestaurantScreen extends Component {
 
     switchToOrder = (rowData) => {
         console.log(" push to orderScreen", rowData);
-        this.props.navigation.push('OrderScreen', { menu : rowData });
+        this.props.pushOrderToCache(rowData);
+        this.props.navigation.push('OrderScreen');
     };
 
   render() {
@@ -81,7 +134,7 @@ class RestaurantScreen extends Component {
                                 <View   style={{flex: 1}}>
                                     <View   style={{flex: 1,marginBottom: 3}}><Text style={{fontFamily: 'Poppins-SemiBold'}}>{rowData.title}</Text></View>
                                     <View   style={{flex: 1, marginBottom: 5}}><Text>desc desc desc desc desc </Text></View>
-                                    <View   style={{flex: 1, marginBottom: 5}}><Text style={{fontWeight: "bold", color:colors.bgPrimary, textAlign: 'right', alignSelf: 'stretch'}}>35 Dh</Text></View>
+                                    <View   style={{flex: 1, marginBottom: 5}}><Text style={{fontWeight: "bold", color:colors.bgPrimary, textAlign: 'right', alignSelf: 'stretch'}}>{rowData.price} Dh</Text></View>
                                 </View>
                             </View>
                         </View>
@@ -90,7 +143,7 @@ class RestaurantScreen extends Component {
                 }}
             />
            </View>
-            <View>
+            {/*<View>
                 <Title style={{marginTop:15, marginLeft: 15, marginBottom: 5}}>NOS FRITES ET SAUCES</Title>
                 <FlatList
                     showsVerticalScrollIndicator={false}
@@ -111,13 +164,20 @@ class RestaurantScreen extends Component {
                         );
                     }}
                 />
-            </View>
+            </View>*/}
         </ScrollView>
       </View>
     );
   }
 }
-export default RestaurantScreen;
+
+const mapDispatchToProps = dispatch => {
+    return {
+        pushOrderToCache: item => dispatch({ type: "PUSH_ORDER_CACHE", payload: item })
+    };
+};
+
+export default connect(null, mapDispatchToProps)(RestaurantScreen);
 
 const styles = StyleSheet.create({
   container: {

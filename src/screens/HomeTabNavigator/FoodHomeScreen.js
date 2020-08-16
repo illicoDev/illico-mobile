@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import { View, StyleSheet, FlatList, ScrollView, Text } from "react-native";
+import {View, StyleSheet, FlatList, ScrollView, Text, Image, Dimensions} from "react-native";
 import { Appbar, Title, Avatar, Card } from "react-native-paper";
 import Carousel from "react-native-snap-carousel";
 import CarouselContainer from "../../components/Carousel";
 import { snapshotToArray } from "../../helpers/firebaseHelpers";
 import colors from "../../assets/colors";
 import firestore from '@react-native-firebase/firestore';
+
+const { width, height } = Dimensions.get('window');
 
 const dummyData = [
     {
@@ -56,13 +58,15 @@ class FoodHomeScreen extends Component {
     componentDidMount() {
         this.checkOrders();
         this.getPlaces();
+        this.LoadServices();
     }
 
     constructor(props) {
         super(props);
         this.state = {
             data : [],
-            place: []
+            place: [],
+            services: []
         };
     }
     checkOrders = () => {
@@ -83,6 +87,15 @@ class FoodHomeScreen extends Component {
                 let placesArray = snapshotToArray(data);
                 console.log("::: PLACES :: " + placesArray[0].image);
                 this.setState({place : placesArray })
+            })
+            .catch(error => console.error(error));
+    };
+    LoadServices = () => {
+        const serviceData = firestore().collection('services').get()
+            .then(data => {
+                let array = snapshotToArray(data);
+                this.setState({services : array });
+                console.log("::: services :: " + array[0].backgroundImage);
             })
             .catch(error => console.error(error));
     };
@@ -114,8 +127,8 @@ class FoodHomeScreen extends Component {
                         }}
                     />*/}
                     <CarouselContainer data = {CarouselData}/>
-                    <Title>Catégories</Title>
-                    <Carousel
+                    <Title>Nos Services</Title>
+                    {/*<Carousel
                         enableMomentum={true}
                         activeSlideAlignment={"start"}
                         ref={c => {
@@ -124,7 +137,7 @@ class FoodHomeScreen extends Component {
                         layout={"default"}
                         data={this.state.data}
                         inactiveSlideScale={0.95}
-                        inactiveSlideOpacity={1}
+                        inactiveSlideOpacity={0.6}
                         renderItem={({ item: rowData }) => {
                             return (
                                 <View>
@@ -138,6 +151,30 @@ class FoodHomeScreen extends Component {
                         }}
                         sliderWidth={500}
                         itemWidth={200}
+                    />*/}
+                    <Carousel
+                        enableMomentum={true}
+                        activeSlideAlignment={"start"}
+                        ref={c => {
+                            this._carousel = c;
+                        }}
+                        layout={"default"}
+                        data={this.state.services}
+                        inactiveSlideScale={0.95}
+                        inactiveSlideOpacity={0.6}
+                        renderItem={({ item: rowData }) => {
+                            return (
+                                <View style={styles.cardView}>
+                                    <Image style={styles.image} source={{ uri: rowData.backgroundImage }} />
+                                    <View style={styles.textView}>
+                                        <Text style={styles.itemTitle}> {rowData.name}</Text>
+                                        <Text style={styles.itemDescription}></Text>
+                                    </View>
+                                </View>
+                            );
+                        }}
+                        sliderWidth={width}
+                        itemWidth={width - 80}
                     />
                     <Title style={{marginTop:15, fontFamily: 'Poppins-SemiBold'}}>Les plus populaires</Title>
                     <FlatList
@@ -175,7 +212,54 @@ const styles = StyleSheet.create({
         alignItems: "center",
         margin: 7
     },
-    popularText: { marginTop: 5, fontSize: 17 }
+    popularText: { marginTop: 5, fontSize: 17 },
+    cardView: {
+        flex: 1,
+        width: width - 80,
+        height: height / 5,
+        backgroundColor: 'white',
+        margin: 10,
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0.5, height: 0.5 },
+        shadowOpacity: 0.5,
+        shadowRadius: 3,
+        elevation: 5,
+    },
+
+    textView: {
+        position: 'absolute',
+        bottom: 10,
+        margin: 10,
+        left: 5,
+    },
+    image: {
+        width: width - 80,
+        height: height / 5,
+        borderRadius: 10
+    },
+    itemTitle: {
+        color: 'white',
+        fontSize: 22,
+        shadowColor: '#000',
+        shadowOffset: { width: 0.8, height: 0.8 },
+        shadowOpacity: 1,
+        shadowRadius: 3,
+        marginBottom: 5,
+        fontWeight: "bold",
+        elevation: 5,
+        fontFamily: 'Poppins-SemiBold'
+    },
+    itemDescription: {
+        color: 'white',
+        fontSize: 12,
+        shadowColor: '#000',
+        shadowOffset: { width: 0.8, height: 0.8 },
+        shadowOpacity: 1,
+        shadowRadius: 3,
+        elevation: 5,
+        fontFamily: 'Poppins-Regular'
+    }
 });
 
 export default FoodHomeScreen;

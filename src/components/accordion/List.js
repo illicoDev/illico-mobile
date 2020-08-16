@@ -60,7 +60,7 @@ const List = ({ list }) => {
             </TouchableWithoutFeedback>
             <Animated.View style={[styles.items, { height }]}>
                 {list.items.map((item, key) => (
-                    <Item {...{ item, key }} isLast={key === list.items.length - 1} />
+                    <Item elementKey={list.key} {...{ item, key }} isLast={key === list.items.length - 1} />
                 ))}
             </Animated.View>
         </>
