@@ -9,8 +9,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {string} from "react-native-redash";
 import LocationPicker from "./LocationPicker";
 import AddressAutocomplete from "./AddressAutocomplete";
-import KeyboardListener from 'react-native-keyboard-listener'
-import MaterialCommunityIcons from "react-native-vector-icons";
 import Icon from "react-native-vector-icons/Ionicons";
 
 navigator.geolocation = require('@react-native-community/geolocation');
