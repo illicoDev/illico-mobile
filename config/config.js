@@ -8,3 +8,5 @@ export const firebaseConfig = {
   appId: "1:1035517718664:web:b1c7847739001ba765ef3d",
   measurementId: "G-N94DKRCBVQ"
 };
+
+export const googlePlacesAPI = 'AIzaSyB7G7hGU8j-x_cE8oUX5drtfCHGMuqTCpU';

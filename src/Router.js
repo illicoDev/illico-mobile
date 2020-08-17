@@ -11,6 +11,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import AsyncStorage from '@react-native-community/async-storage';
+
 
 import auth from "@react-native-firebase/auth";
 import { connect } from "react-redux";
@@ -40,6 +42,7 @@ class Router extends Component {
     componentDidMount() {
         this.checkIfLoggedIn();
         SplashScreen.hide();
+        this.setLocalStorageToRedux().then(()=>{console.log("#success# setLocalStorageToRedux")}).catch(()=>{console.log("#fail# setLocalStorageToRedux")});
     }
 
     checkIfLoggedIn = () => {
@@ -62,6 +65,20 @@ class Router extends Component {
         }
     };
 
+    setLocalStorageToRedux = async () => {
+        try {
+            const address = await AsyncStorage.getItem('currentAddress')
+            console.log("## Address retrived from local storage : "+address);
+            if(address !== null) {
+                // value previously stored
+                this.props.setCurrentAddress(address);
+                console.log("this is the address on local : "+address);
+                console.log("this is the address on redux : "+this.props.addressBook.currentAddress.address);
+            }
+        } catch(e) {
+            console.log("error during setLocalStorageToRedux");
+        }
+    }
     render() {
         return (
             <NavigationContainer>
@@ -179,14 +196,17 @@ const AppDrawerNavigator = ({ navigation }) => (
 
 const mapStateToProps = state => {
     return {
-        auth: state.auth
+        auth: state.auth,
+        addressBook: state.addressBook
+
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         signIn: user => dispatch({ type: "SIGN_IN", payload: user }),
-        signOut: () => dispatch({ type: "SIGN_OUT" })
+        signOut: () => dispatch({ type: "SIGN_OUT" }),
+        setCurrentAddress: address => dispatch({type: "SET_CURRENT_ADDRESS", address:address})
     };
 };
 
