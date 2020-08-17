@@ -39,10 +39,11 @@ import ShoppingCartIcon from './components/ShoppingCartIcon';
 import colors from "../assets/colors";
 
 class Router extends Component {
-    componentDidMount() {
+
+    async componentDidMount() {
+        await this.setLocalStorageToRedux().then(()=>{console.log("#success# setLocalStorageToRedux")}).catch(()=>{console.log("#fail# setLocalStorageToRedux")});
         this.checkIfLoggedIn();
         SplashScreen.hide();
-        this.setLocalStorageToRedux().then(()=>{console.log("#success# setLocalStorageToRedux")}).catch(()=>{console.log("#fail# setLocalStorageToRedux")});
     }
 
     checkIfLoggedIn = () => {
@@ -80,6 +81,7 @@ class Router extends Component {
         }
     }
     render() {
+
         return (
             <NavigationContainer>
                 {!this.props.auth.isSignedIn ? (
