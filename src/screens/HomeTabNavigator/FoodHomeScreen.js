@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {View, StyleSheet, FlatList, ScrollView, Text, Image, Dimensions} from "react-native";
+import {View, StyleSheet, FlatList, ScrollView, Text, Image, Dimensions, SafeAreaView} from "react-native";
 import { Appbar, Title, Avatar, Card } from "react-native-paper";
 import Carousel from "react-native-snap-carousel";
 import CarouselContainer from "../../components/Carousel";
@@ -159,7 +159,8 @@ class FoodHomeScreen extends Component {
     render() {
         return (
             <View>
-                <AddressComponent />
+
+                <SafeAreaView>
                 <ScrollView
                     showsVerticalScrollIndicator={false}
                     style={{ marginLeft: 10, marginRight: 10, marginTop: 0 }}
@@ -178,6 +179,7 @@ class FoodHomeScreen extends Component {
                             );
                         }}
                     />*/}
+                    <AddressComponent />
                     <CarouselContainer data = {CarouselData}/>
                     <Title>Nos Services</Title>
                     {/*<Carousel
@@ -247,6 +249,7 @@ class FoodHomeScreen extends Component {
                         }}
                     />
                 </ScrollView>
+                </SafeAreaView>
             </View>
         );
     }

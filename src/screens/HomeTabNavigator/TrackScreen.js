@@ -25,8 +25,8 @@ class TrackScreen extends Component {
                 if (doc.data().status === 'CONFIRMED'){
                         this.setState( {
                             order : doc.data(),
-                            confirmed : {status : true, timestamp: ''},
-                            prepared : {status : false, timestamp: ''},
+                            confirmed : {status : true, timestamp: '--:-- PM'},
+                            prepared : {status : false, timestamp: 'EnCours'},
                             onItWay : {status : false, timestamp: ''},
                             delivered : {status : false, timestamp: ''}
                         });
@@ -34,28 +34,28 @@ class TrackScreen extends Component {
                 if (doc.data().status === 'PREPARED') {
                     this.setState({
                         order: doc.data(),
-                        confirmed : {status : true, timestamp: ''},
-                        prepared : {status : true, timestamp: ''},
-                        onItWay : {status : false, timestamp: ''},
+                        confirmed : {status : true, timestamp: '--:-- PM'},
+                        prepared : {status : true, timestamp: '--:-- PM'},
+                        onItWay : {status : false, timestamp: 'EnCours'},
                         delivered : {status : false, timestamp: ''},
                     });
                 }
                 if (doc.data().status === 'ONITWAY') {
                     this.setState({
                         order: doc.data(),
-                        confirmed : {status : true, timestamp: ''},
-                        prepared : {status : true, timestamp: ''},
-                        onItWay : {status : true, timestamp: ''},
-                        delivered : {status : false, timestamp: ''},
+                        confirmed : {status : true, timestamp: '--:-- PM'},
+                        prepared : {status : true, timestamp: '--:-- PM'},
+                        onItWay : {status : true, timestamp: '--:-- PM'},
+                        delivered : {status : false, timestamp: 'EnCours'},
                     });
                 }
                 if (doc.data().status === 'DELIVERED'){
                         this.setState( {
                             order : doc.data(),
-                            confirmed : {status : true, timestamp: ''},
-                            prepared : {status : true, timestamp: ''},
-                            onItWay : {status : true, timestamp: ''},
-                            delivered : {status : true, timestamp: ''},
+                            confirmed : {status : true, timestamp: '--:-- PM'},
+                            prepared : {status : true, timestamp: '--:-- PM'},
+                            onItWay : {status : true, timestamp: '--:-- PM'},
+                            delivered : {status : true, timestamp: '--:-- PM'},
                         });
                 }
             }));
@@ -101,7 +101,7 @@ class TrackScreen extends Component {
                                                 <View   style={{flex: 1,marginBottom: 3, justifyContent: 'center'}}><Text style={this.state.confirmed.status ? styles.activeText : styles.inactiveText}>Commande confirmée</Text></View>
                                             </View>
                                             <View  style={{width: 70, flexDirection: 'column'}}>
-                                                <View   style={{flex: 1,marginBottom: 3}}><Text style={{color : 'grey', fontFamily: 'Poppins-Regular'}}>--:-- PM</Text></View>
+                                                <View   style={{flex: 1,marginBottom: 3}}><Text style={{color : 'grey', fontFamily: 'Poppins-Regular'}}>{this.state.confirmed.timestamp}</Text></View>
                                             </View>
                                         </View>
 
@@ -113,7 +113,7 @@ class TrackScreen extends Component {
                                                 <View   style={{flex: 1,marginBottom: 3, justifyContent: 'center'}}><Text style={this.state.prepared.status ? styles.activeText : styles.inactiveText}>Encours de préparation</Text></View>
                                             </View>
                                             <View  style={{width: 70, flexDirection: 'column'}}>
-                                                <View   style={{flex: 1,marginBottom: 3}}><Text style={{color : 'grey', fontFamily: 'Poppins-Regular'}}>--:-- PM</Text></View>
+                                                <View   style={{flex: 1,marginBottom: 3}}><Text style={{color : 'grey', fontFamily: 'Poppins-Regular'}}>{this.state.prepared.timestamp}</Text></View>
                                             </View>
                                         </View>
 
@@ -125,7 +125,7 @@ class TrackScreen extends Component {
                                                 <View   style={{flex: 1,marginBottom: 3, justifyContent: 'center'}}><Text style={this.state.onItWay.status ? styles.activeText : styles.inactiveText}>Livreur en chemin</Text></View>
                                             </View>
                                             <View  style={{width: 70, flexDirection: 'column'}}>
-                                                <View   style={{flex: 1,marginBottom: 3}}><Text style={{color : 'grey', fontFamily: 'Poppins-Regular'}}>--:-- PM</Text></View>
+                                                <View   style={{flex: 1,marginBottom: 3}}><Text style={{color : 'grey', fontFamily: 'Poppins-Regular'}}>{this.state.onItWay.timestamp}</Text></View>
                                             </View>
                                         </View>
 
@@ -137,7 +137,7 @@ class TrackScreen extends Component {
                                                 <View   style={{flex: 1,marginBottom: 3, justifyContent: 'center'}}><Text style={this.state.delivered.status ? styles.activeText : styles.inactiveText}>Commande Livrée</Text></View>
                                             </View>
                                             <View  style={{width: 70, flexDirection: 'column'}}>
-                                                <View   style={{flex: 1,marginBottom: 3}}><Text style={{color : 'grey', fontFamily: 'Poppins-Regular'}}>Encours</Text></View>
+                                                <View   style={{flex: 1,marginBottom: 3}}><Text style={{color : 'grey', fontFamily: 'Poppins-Regular'}}>{this.state.delivered.timestamp}</Text></View>
                                             </View>
                                         </View>
 

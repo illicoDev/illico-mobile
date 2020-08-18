@@ -22,6 +22,30 @@ const cart = (state = initialState, action) => {
                 total : state.total - action.payload.price,
                 totalPrice : state.totalPrice - action.payload.price
             };
+        case 'ADD_QT_ITEM':
+            return {
+                ...state,
+                items : state.items.map( item => {
+                        if(item.uid === action.payload.uid){
+                            return { ...item, qte: item.qte + 1 };
+                        }
+                        return item;
+                }),
+                total : state.total + action.payload.price,
+                totalPrice : state.totalPrice + action.payload.price
+            };
+        case 'SUB_QT_ITEM':
+            return {
+                ...state,
+                items : state.items.map( item => {
+                    if(item.uid === action.payload.uid && (item.qte > 1)){
+                        return { ...item, qte: item.qte - 1 };
+                    }
+                    return item;
+                }),
+                total : action.payload.qte > 1 ? state.total - action.payload.price : state.total,
+                totalPrice : action.payload.qte > 1 ? state.totalPrice - action.payload.price : state.totalPrice
+            };
         case 'EMPTY_CART':
             return {
                 ...state,

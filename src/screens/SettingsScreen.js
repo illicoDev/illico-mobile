@@ -12,7 +12,7 @@ class SettingScreen extends Component {
       this.props.signOut();
       // this.props.navigation.navigate('WelcomeScreen');
     } catch (error) {
-      alert("Unable to sign out right now");
+      alert("Erreur : Impossible de se déconnecter");
     }
   };
 
