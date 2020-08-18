@@ -66,4 +66,6 @@ node_modules/
 
 android/app/build/
 
-.idea/
+/.idea/
+/android/.gradle/
+/ios/Pods/

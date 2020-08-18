@@ -2,8 +2,18 @@ import React, {Component} from 'react';
 import {View, Text, SafeAreaView, ScrollView, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import colors from "../../assets/colors";
+import auth from "@react-native-firebase/auth";
 
 class UserScreen extends Component {
+    signOut = async () => {
+        try {
+            await auth().signOut();
+            this.props.signOut();
+            // this.props.navigation.navigate('WelcomeScreen');
+        } catch (error) {
+            alert("Erreur : Impossible de se déconnecter");
+        }
+    };
     constructor() {
         super();
         this.state = {
@@ -42,7 +52,7 @@ class UserScreen extends Component {
                                     <Text style={{marginLeft: 7, marginBottom: 7,color: 'grey', fontFamily: 'Poppins-Medium'}}>27 Rue Jules Parent, Rueil-Malmaison 92500</Text>
 
 
-                                    <TouchableOpacity style={{marginTop: 50, marginBottom: 15}}>
+                                    <TouchableOpacity onPress={this.signOut} style={{marginTop: 50, marginBottom: 15}}>
                                         <Text style={{fontSize: 18,color: 'red',fontFamily: 'Poppins-Bold'}}>Se Déconnecter</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -55,11 +65,7 @@ class UserScreen extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        currentUser: state.auth.currentUser
-    };
-};
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -95,4 +101,14 @@ const styles = StyleSheet.create({
         shadowRadius: 8,
     }
 });
-export default connect(mapStateToProps,null)(UserScreen);
+const mapStateToProps = state => {
+    return {
+        currentUser: state.auth.currentUser
+    };
+};
+const mapDispatchToProps = dispatch => {
+    return {
+        signOut: () => dispatch({ type: "SIGN_OUT" })
+    };
+};
+export default connect(mapStateToProps,mapDispatchToProps)(UserScreen);

@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {string} from "react-native-redash";
 import LocationPicker from "./LocationPicker";
 import AddressAutocomplete from "./AddressAutocomplete";
+import MaterialCommunityIcons from "react-native-vector-icons";
 import Icon from "react-native-vector-icons/Ionicons";
 
 navigator.geolocation = require('@react-native-community/geolocation');
@@ -101,8 +102,7 @@ class AddressComponent extends React.Component {
                     paddingBottom:10,
                     backgroundColor:colors.logoColor,
                     textColor:'white',
-                    borderBottomRightRadius:30,
-                    borderBottomLeftRadius:30
+                    borderRadius : 8
 
                 }}>
                 <View
@@ -114,7 +114,7 @@ class AddressComponent extends React.Component {
                     <Text
                         style={{
                             fontFamily:'Poppins-SemiBold',
-                            fontSize: 20,
+                            fontSize: 15,
                             // textDecorationLine: 'underline',
                             paddingLeft: 30,
                             paddingRight: 30,

@@ -6,11 +6,26 @@ import colors from "../../assets/colors";
 import { connect } from "react-redux";
 import firestore from '@react-native-firebase/firestore';
 import uuid from 'react-native-uuid';
+import Item from "../../components/accordion/ListItem";
 
 class CartScreen extends Component {
   deleteItem = async (selectedItem, index) => {
     try {
       await this.props.deleteItem(selectedItem);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  addQtyItem = async (selectedItem, index) => {
+    try {
+      await this.props.addQtItem(selectedItem);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  subQtyItem = async (selectedItem, index) => {
+    try {
+      await this.props.subQtItem(selectedItem);
     } catch (error) {
       console.log(error);
     }
@@ -55,11 +70,11 @@ class CartScreen extends Component {
                           <View style={[styles.menuCard,{marginLeft: 15, marginRight: 15}] }>
                             <View style={{flex:1, flexDirection: 'row'}}>
                               <View  style={{width: 38, flexDirection: 'column', borderWidth: 1, borderColor: '#CCCCCC', borderRadius:5, alignItems: 'center', justifyContent: 'center'}}>
-                                <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={() => alert(' add item')}>
+                                <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={() => this.addQtyItem(rowData, index)}>
                                   <View ><Text>+</Text></View>
                                 </TouchableOpacity>
                                 <View style={{flex:1,alignItems: 'center', justifyContent: 'center'}}><Text>{rowData.qte}</Text></View>
-                                <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={() => alert('sub item')}>
+                                <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={() => this.subQtyItem(rowData, index)}>
                                   <View ><Text>-</Text></View>
                                 </TouchableOpacity>
                               </View>
@@ -171,6 +186,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     deleteItem: item => dispatch({ type: "DELETE_ITEM", payload: item }),
+    addQtItem: item => dispatch({ type: "ADD_QT_ITEM", payload: item }),
+    subQtItem: item => dispatch({ type: "SUB_QT_ITEM", payload: item }),
     emptyCart: () => dispatch({ type: "EMPTY_CART", payload: null})
   };
 };
