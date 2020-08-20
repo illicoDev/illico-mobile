@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 
 import auth from "@react-native-firebase/auth";
-import admin from 'firebase-admin';
 import colors from '../../assets/colors';
-import {firestore} from "firebase";
+import {stringify} from "javascript-stringify";
 class LoadingScreen extends Component {
   componentDidMount() {
     this.checkIfLoggedIn();
@@ -13,6 +12,7 @@ class LoadingScreen extends Component {
   checkIfLoggedIn = () => {
     this.unsubscribe = auth().onAuthStateChanged(user => {
       if (user) {
+        console.log(":: LOGGED USER :: " + stringify(user));
         //navigate to home screen
         this.props.navigation.navigate('HomeScreen', { user });
       } else {

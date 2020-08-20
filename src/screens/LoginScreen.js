@@ -12,6 +12,30 @@ import CustomActionButton from "../components/CustomActionButton";
 import auth from "@react-native-firebase/auth";
 import { connect } from "react-redux";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { LoginManager, AccessToken } from 'react-native-fbsdk';
+import {stringify} from "javascript-stringify";
+
+async function onFacebookButtonPress() {
+  // Attempt login with permissions
+  const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+
+  if (result.isCancelled) {
+    throw 'User cancelled the login process';
+  }
+  // Once signed in, get the users AccesToken
+  const data = await AccessToken.getCurrentAccessToken();
+  if (!data) {
+    throw 'Something went wrong obtaining access token';
+  }
+  // Create a Firebase credential with the AccessToken
+  const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
+  // Sign-in the user with the credential
+  const response = auth().signInWithCredential(facebookCredential);
+  if(response){
+    this.setState({ isLoading: false });
+    console.log(":: LOGGED USER :: " + stringify(response.user));
+  }
+}
 
 class LoginScreen extends Component {
   constructor() {
@@ -141,13 +165,13 @@ class LoginScreen extends Component {
             >
               <Text style={{ color: 'white', fontSize: 20, fontFamily: 'Poppins-Medium'}}>S'inscrire</Text>
             </CustomActionButton>
-            {/*<CustomActionButton
-                onPress={this.onSignUp}
+            <CustomActionButton
+                onPress={() => onFacebookButtonPress()}
                 style={[styles.loginButtons, { backgroundColor: '#3b5998' }]}
             >
-              <Text style={{ color: 'white', fontSize: 20, fontFamily: 'Poppins-Medium'}}>S'inscrire avec <MaterialCommunityIcons name="facebook" color='white' size={20}/> </Text>
+              <Text style={{ color: 'white', fontSize: 20, fontFamily: 'Poppins-Medium'}}>Continuer avec <MaterialCommunityIcons name="facebook" color='white' size={20}/> </Text>
             </CustomActionButton>
-            <CustomActionButton
+            {/*<CustomActionButton
                 onPress={this.onSignUp}
                 style={[styles.loginButtons, { backgroundColor: '#E5E5E5' }]}
             >
