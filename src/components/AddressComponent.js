@@ -39,13 +39,8 @@ class AddressComponent extends React.Component {
         address?this.setState((currentState) => { return {address:address} }):console.log("NO address");
         additionalInfo?this.setState((currentState) => { return {additionalInfo:additionalInfo} }):console.log("NO additionalInfo");
 
-        this.setState(()=>{
-            return {chooseAddressModalVisible:false,
-                addAddressModalVisible:false,
-                mapAddressModalVisible:false}});
-
-        redux?this.setDeliveryAddressOnRedux():console.log();
-        localStorage?this.setDeliveryAddressOnDevice():console.log();
+        //redux?this.setDeliveryAddressOnRedux():console.log();
+        //localStorage?this.setDeliveryAddressOnDevice():console.log();
     }
     setDeliveryAddressOnRedux = () => {
         //this.props.setCurrentAddress()
@@ -110,7 +105,8 @@ class AddressComponent extends React.Component {
                         flexDirection: 'row',
                         justifyContent: 'center',
                         alignItems: 'center',
-                    }}>
+                    }}
+                >
                     <Text
                         style={{
                             fontFamily:'Poppins-SemiBold',
@@ -121,163 +117,9 @@ class AddressComponent extends React.Component {
                             color:'white'
                         }}
                           numberOfLines={1}
-                          onPress={this.toggleChooseAddressModalVisible}>{this.state.address ? this.state.address : emptyAddress}</Text>
+                          onPress={()=>this.props.onClickAction()}
+                          >{this.state.address ? this.state.address : emptyAddress}</Text>
                 </View>
-
-                {/*Choose a delivery address*/}
-                <Modal
-                    transparent={true}
-                    animationType="fade"
-                    visible={this.state.chooseAddressModalVisible}
-                    style={{
-                        height:'100%',
-                    }}>
-                    <TouchableOpacity
-                        activeOpacity={1}
-                        style={{
-                            flex:1,
-                            flexDirection:'column',
-                            justifyContent:'center',
-                            alignItems:'center',
-                            backgroundColor:'#00000099'}}
-                        onPress={()=>this.toggleChooseAddressModalVisible()}
-                    >
-                        <TouchableWithoutFeedback>
-                            <View
-                                style={{
-                                    height:160,
-                                    width:300,
-                                    borderWidth:1,
-                                    backgroundColor:'white'
-                            }}>
-                                <Text style={{
-                                    fontFamily: 'Poppins-SemiBold',
-                                    fontSize: 20,
-                                    textAlign: 'center',
-                                    borderBottomWidth: 1,
-                                    borderColor: 'rgba(158, 150, 150, .5)',
-                                    paddingBottom: 10,
-                                    paddingTop: 10
-                                }}>Choose a delivery address</Text>
-
-                                <Text onPress={this.toggleMapAddressModalVisible} style={{
-                                    height:50,
-                                    fontFamily:'Poppins-Light',
-                                    fontSize: 20,
-                                    padding:5,
-                                    paddingTop:8,
-                                    borderBottomWidth:1,
-                                    borderColor: 'rgba(158, 150, 150, .5)'
-                                }}>
-                                    <Icon name="location-outline" size={25} color="black" style={{marginLeft:10}}/>
-                                    <Text>  Current location</Text>
-                                </Text>
-                                <Text onPress={this.toggleAddAddressModalVisible} style={{
-                                    height:50,
-                                    fontFamily:'Poppins-Light',
-                                    fontSize: 20,
-                                    padding:5,
-                                    paddingTop:8,
-                                }}>
-                                    <Icon name="add-circle-outline" size={25} color="black" onPress={()=>console.log('ggggggg')}/>
-                                    <Text>  Add an address</Text>
-                                </Text>
-                            </View>
-                        </TouchableWithoutFeedback>
-                    </TouchableOpacity>
-                </Modal>
-
-                {/*Modal places*/}
-                <Modal
-                    visible={this.state.addAddressModalVisible}
-                    animationType="fade"
-                    transparent={true}
-                    onRequestClose={() => {
-                        this.toggleAddAddressModalVisible();
-                    }}
-                >
-                    <View
-                        style={{
-                            backgroundColor:'white',
-                            flex:1
-                        }}>
-                        <View
-                            style={{
-                                height:50,
-                                flexDirection: 'row',
-                            }}>
-                            <TouchableOpacity
-                                activeOpacity={1}
-                                onPress={()=>this.toggleAddAddressModalVisible()}
-                                style={{
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    width:'20%'
-                                }}>
-                                <Icon name="return-up-back" size={40} color="black" />
-                            </TouchableOpacity>
-                            <View style={{
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                width:'65%',
-                            }}>
-                                <Text
-                                    style={{
-                                        fontSize: 20,
-                                    }}>
-                                    Enter Address
-                                </Text>
-                            </View>
-                        </View>
-                        <AddressAutocomplete
-                            ref={(map) => {this.addressAC=map;}}
-                            address={this.state.address}
-                            toggleAddressModal={this.toggleAddAddressModalVisible}
-
-                            // for the map modal inside
-                            setDeliveryAddress={this.setDeliveryAddress}
-                            currentCoords={this.state.coords}
-                        />
-
-                    </View>
-                    {/*<View*/}
-                    {/*    style={{*/}
-                    {/*        flexDirection: 'row'*/}
-                    {/*    }}>*/}
-                    {/*    <View style={{width: '50%', borderWidth: 1, borderColor: 'white'}}>*/}
-                    {/*        <Button*/}
-                    {/*            onPress={this.onValidateAddress}*/}
-                    {/*            title="Valider"*/}
-                    {/*        />*/}
-                    {/*    </View>*/}
-                    {/*    <View style={{width: '50%', borderWidth: 1, borderColor: 'white'}}>*/}
-                    {/*        <Button*/}
-                    {/*            onPress={() => this.toggleAddAddressModalVisible()}*/}
-                    {/*            title="Annuler"*/}
-
-                    {/*        />*/}
-                    {/*    </View>*/}
-                    {/*</View>*/}
-                </Modal>
-
-                {/*maps modal*/}
-                <Modal
-                    visible={this.state.mapAddressModalVisible}
-                    onRequestClose={() => {
-                        this.toggleMapAddressModalVisible();
-
-                }}>
-                    <View style={{height:'100%'}}>
-                        <LocationPicker
-                            //ref={(map) => {this.locationPicker=map;}}
-                            //style={{height:300}}
-                            defaultToCurrentLocation={true}
-                           // hideModal={this.toggleMapAddressModalVisible()}
-
-                            setDeliveryAddress={this.setDeliveryAddress}
-                            currentCoords={this.state.coords} />
-                    </View>
-                </Modal>
             </View>
         );
     }
@@ -300,4 +142,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(AddressComponent)
+export default connect(mapStateToProps,mapDispatchToProps,null,{ forwardRef: true })(AddressComponent)
