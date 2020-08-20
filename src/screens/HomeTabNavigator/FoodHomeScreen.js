@@ -9,6 +9,7 @@ import firestore from '@react-native-firebase/firestore';
 import AddressComponent from "../../components/AddressComponent";
 import { getDistance, getPreciseDistance } from 'geolib';
 import {stringify} from "javascript-stringify";
+import AddressModalRouter from "../../components/AddressModalRouter";
 
 const { width, height } = Dimensions.get('window');
 
@@ -65,6 +66,10 @@ class FoodHomeScreen extends Component {
         this.getPlaces();
         this.LoadServices();
         //this.getPlacesInRadius(10000);
+        this.addressModalRouter = React.createRef();
+        this.addressComponent = React.createRef();
+
+
     }
 
     constructor(props) {
@@ -74,6 +79,7 @@ class FoodHomeScreen extends Component {
             place: [],
             services: []
         };
+
     }
     checkOrders = () => {
         /*firestore().collection('Users')*/
@@ -143,24 +149,26 @@ class FoodHomeScreen extends Component {
         }
     }
 
-    _getDistance = () => {
-        var dis = getDistance(
-            { latitude: 20.0504188, longitude: 64.4139099 },
-            { latitude: 51.528308, longitude: -0.3817765 }
-        );
-        alert(`Distance\n${dis} Meter\nor\n${dis / 1000} KM`);
-    };
-
-
-
     switchToMerchant = () => {
         this.props.navigation.push('RestaurantScreen');
     };
+
+    // address
+    toggleAddressModalRouterActive = () => {
+        this.addressModalRouter.current.toggleChooseAddressModalVisible();
+    }
+    setDeliveryAddress = (address,additionalInfo,coords) => {
+        this.addressComponent.current.setDeliveryAddress(address,additionalInfo,coords);
+    }
+
     render() {
         return (
             <View>
-
                 <SafeAreaView>
+                    <AddressModalRouter
+                        ref={this.addressModalRouter}
+                        setAddress={this.setDeliveryAddress}
+                    />
                 <ScrollView
                     showsVerticalScrollIndicator={false}
                     style={{ marginLeft: 10, marginRight: 10, marginTop: 0 }}
@@ -179,7 +187,10 @@ class FoodHomeScreen extends Component {
                             );
                         }}
                     />*/}
-                    <AddressComponent />
+                    <AddressComponent
+                        ref={this.addressComponent}
+                        onClickAction={this.toggleAddressModalRouterActive}
+                    />
                     <CarouselContainer data = {CarouselData}/>
                     <Title>Nos Services</Title>
                     {/*<Carousel

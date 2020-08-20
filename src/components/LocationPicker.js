@@ -12,7 +12,6 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import CustomActionButton from "./CustomActionButton";
 import FullScreenInputModal from "./FullScreenInputModal";
 
-
 const latitudeDelta = 0.005
 const longitudeDelta = 0.005
 
@@ -32,7 +31,8 @@ export default class LocationPicker extends React.Component {
       additionalInfo:this.props.currentAdditionalInfo?this.props.currentAdditionalInfo:null,
       additionalInfoModalVisible:false,
     }
-
+    console.log("maps constructor"+ stringify(this.props.currentCoords));
+    console.log("maps state +"+stringify(this.state));
     Geocoder.init(googlePlacesAPI);
   }
 
@@ -52,15 +52,15 @@ export default class LocationPicker extends React.Component {
     });
   };
 
-  setAdditionalInfo = (newAdditionalInfo) =>{
+  setAdditionalInfo = (newAdditionalInfo) => {
     this.setState(()=> {
       return {additionalInfo:newAdditionalInfo}
     })
   }
 
   setDeliveryAddress = () => {
-      this.props.setDeliveryAddress(this.state.address,this.state.additionalInfo,this.state.region);
-      //this.props.hideModal();
+      this.props.setAddress(this.state.address,this.state.additionalInfo,this.state.region);
+      this.props.closeAllModals();
   }
 
   onRegionChange = region => {

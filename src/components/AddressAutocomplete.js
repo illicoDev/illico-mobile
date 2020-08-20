@@ -10,6 +10,7 @@ import {string} from "react-native-redash";
 import LocationPicker from "./LocationPicker";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import CustomActionButton from "./CustomActionButton";
+import {getAnyCurrentPosition} from "../helpers/locationHelpers";
 
 
 
@@ -26,12 +27,10 @@ const workPlace = {
 
 
 navigator.geolocation = require('@react-native-community/geolocation');
-const emptyAddress = 'Choisissez une adresse de livraison ';
-let addressOnModal = '';
-let additionalInfoOnModal = '';
-let coordsOnModal = {};
 
-let defaultToCurrentLocation = true;
+let address = '';
+let additionalInfo = '';
+let currentLocation = {};
 class AddressAutocomplete extends React.Component{
 
     constructor(props) {
@@ -45,14 +44,63 @@ class AddressAutocomplete extends React.Component{
         if(this.props.ref != null){
             this.props.ref(this);
         }
-        coordsOnModal=this.props.currentCoords;
     }
 
-    toggleMapModalVisible = () => {
-        this.setState(()=>{return{mapModalVisible:!this.state.mapModalVisible}})
+    setAddress = (text) =>{
+        this.googlePlacesAC.setAddressText(text);
+    }
+    triggerFocus = () =>{
+        this.googlePlacesAC.triggerFocus();
     }
     getModalAddress=()=>{
-        return addressOnModal;
+        return address;
+    }
+
+    goToMap = async(data) => {
+        console.log(data)
+        if(data.formatted_address || data.description){
+            let tmpAddress;
+            let tmpAdditionalInfo;
+            let tmpCoords = {};
+            if (data.formatted_address) {
+                tmpAddress = data.formatted_address;
+            } else if (data.description) {
+                tmpAddress = data.description;
+            }
+            if(data.geometry&&data.geometry.location){
+                if(data.geometry.location.latitude&&data.geometry.location.longitude){
+                    tmpCoords = data.geometry.location;
+
+                    data.additionalInfo?tmpAdditionalInfo=data.additionalInfo:tmpAdditionalInfo
+                }
+                else if(data.geometry.location.lat&&data.geometry.location.lng){
+                    tmpCoords = {latitude:data.geometry.location.lat,longitude:data.geometry.location.lng}
+                }
+
+            }
+            address = tmpAddress;
+            additionalInfo = tmpAdditionalInfo;
+            currentLocation = tmpCoords;
+            if(currentLocation.latitude&&currentLocation.longitude){
+                this.props.toggleMapModal(currentLocation,address,additionalInfo);
+            }
+            else{
+                this.triggerFocus();
+                alert("Votre adresse est incomplète");
+            }
+        }
+        else{
+            this.props.toggleLoadingModal();
+            let pos=await getAnyCurrentPosition();
+            this.props.toggleLoadingModal();
+            if(pos.coords){
+                currentLocation={longitude:pos.coords.longitude,latitude:pos.coords.latitude};
+                this.props.toggleMapModal(currentLocation);
+            }
+
+            console.log(stringify("Address on Modal: " + address))
+        }
+
     }
 
     renderCityCountry = (rowData) =>{
@@ -75,6 +123,7 @@ class AddressAutocomplete extends React.Component{
                 <View style={{
                     flexDirection:'row',
                     height:'100%',
+                    width:'100%',
                     justifyItems:'center',
                     alignItems: 'center'
                 }}>
@@ -113,11 +162,6 @@ class AddressAutocomplete extends React.Component{
                 </View>
         )
     }
-    // renderRowText=(rowData)=>{
-    //     return (
-    //
-    //     )
-    // }
 
     render(){
         return (
@@ -165,7 +209,7 @@ class AddressAutocomplete extends React.Component{
                             backgroundColor: '#FFFFFF',
                         },
                         powered: {},
-                        listView: {},
+                        listView: {flex:1},
                         row: {
                             padding: 13,
                             height: 65,
@@ -209,7 +253,7 @@ class AddressAutocomplete extends React.Component{
                     ref={(ref) => this.googlePlacesAC=ref }
                     placeholder="Saisir votre adresse ici"
                     predefinedPlacesAlwaysVisible={true}
-                    currentLocation={true}
+                    //currentLocation={true}
                     //getDefaultValue={()=>this.props.address}
                     minLength={3}
                     currentLocationLabel="Nearby places"
@@ -224,43 +268,12 @@ class AddressAutocomplete extends React.Component{
                     nearbyPlacesAPI="GoogleReverseGeocoding"
                     onPress={(data, details = null) => {
                         // 'details' is provided when fetchDetails = true
-                        console.log(data);
-
-                        coordsOnModal={};
-                        let tmpAddress;
-                        let tmpAdditionalInfo;
-                        let tmpCoords = {};
-                        if (data.formatted_address) {
-                            tmpAddress = data.formatted_address;
-                        } else if (data.description) {
-                            tmpAddress = data.description;
-                        }
-                        if(data.geometry&&data.geometry.location){
-                            if(data.geometry.location.latitude&&data.geometry.location.longitude){
-                                tmpCoords = data.geometry.location;
-
-                                data.additionalInfo?tmpAdditionalInfo=data.additionalInfo:tmpAdditionalInfo
-                            }
-                            else if(data.geometry.location.lat&&data.geometry.location.lng){
-                                tmpCoords = {latitude:data.geometry.location.lat,longitude:data.geometry.location.lng}
-                            }
-
-                        }
-                        addressOnModal = tmpAddress;
-                        additionalInfoOnModal = tmpAdditionalInfo;
-                        coordsOnModal = tmpCoords;
-                        if(coordsOnModal.latitude&&coordsOnModal.longitude){
-                            defaultToCurrentLocation=false;
-                            this.toggleMapModalVisible();
-                        }
-
-
-                        console.log(stringify("Address on Modal: " + addressOnModal))
+                        this.goToMap(data);
                     }}
                     textInputProps=
                         {{
                             onChangeText: (text) => {
-                                addressOnModal = text;
+                                address = text;
                             }
                         }}
                 />
@@ -276,37 +289,12 @@ class AddressAutocomplete extends React.Component{
 
                             //borderWidth:2
                         }}
-                        onPress={() => {
-                            defaultToCurrentLocation=true;
-                            this.toggleMapModalVisible();
-                        }}
+                        onPress={this.goToMap}
                     >
                         <Text style={{ color: '#3BC14A',fontFamily: 'Poppins-SemiBold',fontSize:16}}>Montrer sur la map</Text>
                     </CustomActionButton>
-                    {/*<Button style={{borderRadius:50}} onPress={()=>console.log('do stupid shit')} title='Confirmer Adresse'/>*/}
 
                 </View>
-                <Modal
-                    visible={this.state.mapModalVisible}
-                    onRequestClose={() => {
-                        this.toggleMapModalVisible();
-                        this.googlePlacesAC.setAddressText('');
-                        this.googlePlacesAC.triggerFocus();
-                    }}>
-                    <View style={{height:'100%'}}>
-                        <LocationPicker
-                            //ref={(map) => {this.locationPicker=map;}}
-                            //style={{height:300}}
-                            updateAddressOnMarkerChange={true}
-                            // hideModal={this.toggleMapAddressModalVisible()}
-
-                            defaultToCurrentLocation={defaultToCurrentLocation}
-                            setDeliveryAddress={this.props.setDeliveryAddress}
-                            currentAddress={addressOnModal}
-                            currentAdditionalInfo={additionalInfoOnModal}
-                            currentCoords={coordsOnModal} />
-                    </View>
-                </Modal>
             </View>
         );
     }
