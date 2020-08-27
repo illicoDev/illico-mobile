@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">illico</string>
+    <string name="google_api_token">AIzaSyBR60nsA-fKI5QE5Bkv_qYQqsLWTDJllf0</string>
     <string name="facebook_app_id">301719114378311</string>
 </resources>
