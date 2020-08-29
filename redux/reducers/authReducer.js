@@ -1,7 +1,20 @@
 const initialState = {
   isLoading: true,
   isSignedIn: false,
-  currentUser: null
+  currentUser: null,
+  addresses:
+      {
+        pickupAddress:{
+          address:null,
+          coords:{latitude:null,longitude:null},
+          additionalInfo:null,
+        },
+        deliveryAddress:{
+          address:null,
+          coords:{latitude:null,longitude:null},
+          additionalInfo:null,
+        },
+      }
 };
 
 const auth = (state = initialState, action) => {
@@ -20,6 +33,24 @@ const auth = (state = initialState, action) => {
         isSignedIn: false,
         currentUser: null,
         isLoading: false
+      };
+    case "SET_DELIVERY_ADDRESS":
+      return {
+        ...state,
+        addresses:
+            {
+              ...state.addresses,
+              deliveryAddress:action.payload,
+            }
+      };
+    case "SET_PICKUP_ADDRESS":
+      return {
+        ...state,
+        addresses:
+            {
+              ...state.addresses,
+              pickupAddress:action.payload,
+            }
       };
     default:
       return state;

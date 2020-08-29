@@ -3,6 +3,8 @@ import {View, Text, SafeAreaView, ScrollView, StyleSheet, Image, TouchableOpacit
 import {connect} from 'react-redux';
 import colors from "../../assets/colors";
 import auth from "@react-native-firebase/auth";
+import AddressModalRouter from "../../components/AddressModalRouter";
+import firestore from "@react-native-firebase/firestore";
 
 class UserScreen extends Component {
     signOut = async () => {
@@ -17,15 +19,97 @@ class UserScreen extends Component {
     constructor() {
         super();
         this.state = {
-            currentUser: {}
+            currentUser: {},
+            addresses: {
+                deliveryAddress:{
+                    address:null,
+                    coords:{latitude:null,longitude:null},
+                    additionalInfo:null,
+                },
+                pickupAddress:{
+                    address:null,
+                    coords:{latitude:null,longitude:null},
+                    additionalInfo:null,
+                },
+            }
         };
     }
+
+    componentDidMount() {
+        this.setState((currentState) => {
+            return {...currentState, addresses:{...this.props.currentUser.addresses}}
+        });
+        //console.log("hhhhhh");
+
+        this.deliveryAddressModalRouter = React.createRef();
+        this.pickupAddressModalRouter = React.createRef();
+    }
+
+    toggleDeliveryAddressModalRouterActive = () => {
+        this.deliveryAddressModalRouter.current.toggleChooseAddressModalVisible();
+    }
+    togglePickupAddressModalRouterActive = () => {
+        this.pickupAddressModalRouter.current.toggleChooseAddressModalVisible();
+    }
+    setDeliveryAddress = (address,additionalInfo,coords) => {
+        this.setState((currentState) => {
+            return {
+                ...currentState,
+                addresses: {
+                        ...currentState.addresses,
+                        deliveryAddress:{coords:coords,address:address,additionalInfo:additionalInfo}
+                }} });
+        this.props.setDeliveryAddress({coords:coords,address:address,additionalInfo:additionalInfo});
+        firestore().collection('users')
+            .doc(this.props.auth.currentUser.uid)
+            .set(
+                {addresses:
+                        {deliveryAddress:{
+                                address:address,
+                                coords:coords,
+                                additionalInfo:additionalInfo
+
+                            }}}
+                ,{ merge: true });
+    }
+    setPickupAddress = (address,additionalInfo,coords) => {
+        this.setState((currentState) => {
+            return {
+                ...currentState,
+                addresses: {
+                    ...currentState.addresses,
+                    pickupAddress:{coords:coords,address:address,additionalInfo:additionalInfo}
+                }} });
+        this.props.setPickupAddress({coords:coords,address:address,additionalInfo:additionalInfo});
+        firestore().collection('users')
+            .doc(this.props.auth.currentUser.uid)
+            .set(
+                {addresses:
+                        {pickupAddress:{
+                                address:address,
+                                coords:coords,
+                                additionalInfo:additionalInfo
+
+                            }}}
+                ,{ merge: true });
+    }
+
     render() {
         return (
             <View style={styles.container}>
                 <View style={{flex:1}}>
                     <View style={{flex:1}}>
                         <SafeAreaView style={{flex:1}}>
+                            <AddressModalRouter
+                                ref={this.deliveryAddressModalRouter}
+                                setAddress={this.setDeliveryAddress}
+                                chooseModalTitle={"Adresse de Livraison"}
+                            />
+                            <AddressModalRouter
+                                ref={this.pickupAddressModalRouter}
+                                setAddress={this.setPickupAddress}
+                                chooseModalTitle={"Adresse de Recupération"}
+                            />
                             <ScrollView>
                                 <View style={{margin: 5}}>
                                     <Text style={{marginTop:15, marginLeft: 15, marginBottom: 15, fontFamily: 'Poppins-Bold', fontSize: 18}}>Votre Profil</Text>
@@ -46,10 +130,16 @@ class UserScreen extends Component {
                                     <Text style={{marginLeft: 7, marginBottom: 7,color: 'grey', fontFamily: 'Poppins-Medium'}}>0 6 XX XX XX XX</Text>
                                     <View style={{borderBottomColor: '#D8D8D8', borderBottomWidth: 1}}/>
                                     <Text style={{marginTop: 7, marginLeft: 7, marginBottom: 7, fontFamily: 'Poppins-Bold'}}>Adresse de Récuperation :</Text>
-                                    <Text style={{marginLeft: 7, marginBottom: 7,color: 'grey', fontFamily: 'Poppins-Medium'}}>27 Rue Jules Parent, Rueil-Malmaison 92500</Text>
+                                    <Text style={{marginLeft: 7, marginBottom: 7,color: 'grey', fontFamily: 'Poppins-Medium'}}
+                                          onPress={this.togglePickupAddressModalRouterActive}>
+                                        {this.props.currentUser.addresses.pickupAddress.address}
+                                    </Text>
                                     <View style={{borderBottomColor: '#D8D8D8', borderBottomWidth: 1}}/>
                                     <Text style={{marginTop: 7, marginLeft: 7, marginBottom: 7, fontFamily: 'Poppins-Bold'}}>Adresse de Livraison :</Text>
-                                    <Text style={{marginLeft: 7, marginBottom: 7,color: 'grey', fontFamily: 'Poppins-Medium'}}>27 Rue Jules Parent, Rueil-Malmaison 92500</Text>
+                                    <Text style={{marginLeft: 7, marginBottom: 7,color: 'grey', fontFamily: 'Poppins-Medium'}}
+                                          onPress={this.toggleDeliveryAddressModalRouterActive}>
+                                        {this.props.currentUser.addresses.deliveryAddress.address}
+                                    </Text>
 
 
                                     <TouchableOpacity onPress={this.signOut} style={{marginTop: 50, marginBottom: 15}}>
@@ -103,12 +193,14 @@ const styles = StyleSheet.create({
 });
 const mapStateToProps = state => {
     return {
-        currentUser: state.auth.currentUser
+        currentUser: state.auth
     };
 };
 const mapDispatchToProps = dispatch => {
     return {
-        signOut: () => dispatch({ type: "SIGN_OUT" })
+        signOut: () => dispatch({ type: "SIGN_OUT" }),
+        setDeliveryAddress: location => dispatch({type: "SET_DELIVERY_ADDRESS", payload:location}),
+        setPickupAddress: location => dispatch({type: "SET_PICKUP_ADDRESS", payload:location}),
     };
 };
 export default connect(mapStateToProps,mapDispatchToProps)(UserScreen);

@@ -40,8 +40,8 @@ import colors from "../assets/colors";
 
 class Router extends Component {
 
-    async componentDidMount() {
-        await this.setLocalStorageToRedux().then(()=>{console.log("#success# setLocalStorageToRedux")}).catch(()=>{console.log("#fail# setLocalStorageToRedux")});
+    /*async*/ componentDidMount() {
+        //await this.setLocalStorageToRedux().then(()=>{console.log("#success# setLocalStorageToRedux")}).catch(()=>{console.log("#fail# setLocalStorageToRedux")});
         this.checkIfLoggedIn();
         SplashScreen.hide();
     }

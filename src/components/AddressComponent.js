@@ -1,61 +1,82 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useRef} from 'react';
 import {View, Text, StyleSheet, Modal, Button, ScrollView, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
-import {stringify} from "javascript-stringify";
-import {useSelector, useDispatch, connect} from 'react-redux';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-import {googlePlacesAPI} from '../../config/config'
+import {connect} from 'react-redux';
 import colors from '../../assets/colors'
 import AsyncStorage from '@react-native-community/async-storage';
-import {string} from "react-native-redash";
-import LocationPicker from "./LocationPicker";
-import AddressAutocomplete from "./AddressAutocomplete";
-import MaterialCommunityIcons from "react-native-vector-icons";
+import firestore from '@react-native-firebase/firestore';
 import Icon from "react-native-vector-icons/Ionicons";
 
-navigator.geolocation = require('@react-native-community/geolocation');
-const emptyAddress = 'Choisissez une adresse de livraison ';
+const emptyDeliveryAddress = 'Choisissez une adresse de livraison ';
+const emptyPickupAddress = 'Choisissez une adresse de récupération ';
 
 class AddressComponent extends React.Component {
 
     constructor(props) {
         super(props);
         this.state={
-            chooseAddressModalVisible:false,
-            addAddressModalVisible:false,
-            mapAddressModalVisible:false,
-            address:'',
-            additionalInfo:null,
-            coords:{longitude:null,latitude:null},
+            addresses :{
+                deliveryAddress:{
+                    address:null,
+                    additionalInfo:null,
+                    coords:{longitude:null,latitude:null}
+                },
+                pickupAddress:{
+                    address:null,
+                    additionalInfo:null,
+                    coords:{longitude:null,latitude:null}
+                },
+            }
         }
     }
     componentDidMount(prevProps) {
         this.setState( currentState => {
-            return{...currentState,address:this.props.addressBook.currentAddress.address};
+            return{...currentState,...this.props.auth.addresses.deliveryAddress};
         });
     }
 
-    setDeliveryAddress = (address,additionalInfo,coords,redux,localStorage) => {
-        coords.longitude&&coords.latitude?this.setState((currentState) => { return {coords:coords} }):console.log("NO coords");
-        address?this.setState((currentState) => { return {address:address} }):console.log("NO address");
-        additionalInfo?this.setState((currentState) => { return {additionalInfo:additionalInfo} }):console.log("NO additionalInfo");
+    setDeliveryAddress = (address,additionalInfo,coords) => {
+        this.setState((currentState) => {
+            return {
+                ...currentState,
+                addresses: {
+                    ...currentState.addresses,
+                    deliveryAddress:{coords:coords,address:address,additionalInfo:additionalInfo}
+                }} });
+        this.props.setDeliveryAddress({coords:coords,address:address,additionalInfo:additionalInfo});
+        firestore().collection('users')
+            .doc(this.props.auth.currentUser.uid)
+            .set(
+                {addresses:
+                        {deliveryAddress:{
+                            address:address,
+                            coords:coords,
+                            additionalInfo:additionalInfo
 
-        //redux?this.setDeliveryAddressOnRedux():console.log();
-        //localStorage?this.setDeliveryAddressOnDevice():console.log();
+                        }}}
+                            ,{ merge: true });
     }
-    setDeliveryAddressOnRedux = () => {
-        //this.props.setCurrentAddress()
-    }
-    setDeliveryAddressOnDevice = () => {}
+    setPickupAddress = (address,additionalInfo,coords) => {
+        this.setState((currentState) => {
+            return {
+                ...currentState,
+                addresses: {
+                    ...currentState.addresses,
+                    pickupAddress:{coords:coords,address:address,additionalInfo:additionalInfo}
+                }} });
+        this.props.setPickupAddress({coords:coords,address:address,additionalInfo:additionalInfo});
+        firestore().collection('users')
+            .doc(this.props.auth.currentUser.uid)
+            .set(
+                {addresses:
+                        {pickupAddress:{
+                                address:address,
+                                coords:coords,
+                                additionalInfo:additionalInfo
 
-    saveCoords = (savedCoords) => {
-        this.setDeliveryAddress(null,null,savedCoords);
+                            }}}
+                ,{ merge: true })
     }
-    saveAddress = (savedAddress) => {
-        if (savedAddress.length > 1) {
-            this.setDeliveryAddress(savedAddress);
-            this.saveAddressOnDevice(savedAddress).then(()=>{console.log('# ADDRESS saved to LOCAL')});
-        }
-    };
+
     saveAddressOnDevice = async (savedAddress) => {
         try{
             this.props.setCurrentAddress(savedAddress);
@@ -65,29 +86,7 @@ class AddressComponent extends React.Component {
             console.log(err.message);
         }
     };
-    // onValidateAddress = () =>{
-    //     this.toggleAddAddressModalVisible();
-    //     this.saveAddress(this.addressAC.getModalAddress());
-    //     this.saveCoords(this.locationPicker.getRegion());
-    // };
 
-    toggleAddAddressModalVisible = () => {
-        this.setState((currentState) => {
-            return {addAddressModalVisible: !currentState.addAddressModalVisible}
-        });
-    };
-    toggleChooseAddressModalVisible = () => {
-        this.setState((currentState) => {
-            return {chooseAddressModalVisible: !currentState.chooseAddressModalVisible}
-        });
-    };
-    toggleMapAddressModalVisible = () => {
-        this.setState((currentState) => {
-            return {mapAddressModalVisible: !currentState.mapAddressModalVisible}
-        });
-    };
-
-    //addressDetails = {address: address, location: {}};
 
     render(){
         return (
@@ -117,8 +116,28 @@ class AddressComponent extends React.Component {
                             color:'white'
                         }}
                           numberOfLines={1}
-                          onPress={()=>this.props.onClickAction()}
-                          >{this.state.address ? this.state.address : emptyAddress}</Text>
+                          onPress={()=>this.props.onDeliveryAddressClicked()}
+                          >{this.state.addresses.deliveryAddress.address ? this.state.addresses.deliveryAddress.address : emptyDeliveryAddress}</Text>
+                </View>
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Text
+                        style={{
+                            fontFamily:'Poppins-SemiBold',
+                            fontSize: 15,
+                            // textDecorationLine: 'underline',
+                            paddingLeft: 30,
+                            paddingRight: 30,
+                            color:'white'
+                        }}
+                        numberOfLines={1}
+                        onPress={()=>this.props.onPickupAddressClicked()}
+                    >{this.state.addresses.pickupAddress.address ? this.state.addresses.pickupAddress.address : emptyPickupAddress}</Text>
                 </View>
             </View>
         );
@@ -136,9 +155,8 @@ const mapDispatchToProps = dispatch => {
     return {
         signIn: user => dispatch({ type: "SIGN_IN", payload: user }),
         signOut: () => dispatch({ type: "SIGN_OUT" }),
-        setCurrentAddress: address => dispatch({type: "SET_CURRENT_ADDRESS", address:address}),
-        setCurrentAdditionalInfo: additionalInfo => dispatch({type: "SET_CURRENT_ADDITIONALINFO", additionalInfo:additionalInfo}),
-        setCurrentCoords: coords => dispatch({type: "SET_CURRENT_COORDS", address:address}),
+        setDeliveryAddress: location => dispatch({type: "SET_DELIVERY_ADDRESS", payload:location}),
+        setPickupAddress: location => dispatch({type: "SET_PICKUP_ADDRESS", payload:location}),
     };
 };
 

@@ -10,6 +10,7 @@ import AddressComponent from "../../components/AddressComponent";
 import { getDistance, getPreciseDistance } from 'geolib';
 import {stringify} from "javascript-stringify";
 import AddressModalRouter from "../../components/AddressModalRouter";
+import {getAnyCurrentPosition} from "../../helpers/locationHelpers";
 
 const { width, height } = Dimensions.get('window');
 
@@ -65,11 +66,10 @@ class FoodHomeScreen extends Component {
         this.checkOrders();
         this.getPlaces();
         this.LoadServices();
-        //this.getPlacesInRadius(10000);
-        this.addressModalRouter = React.createRef();
+
         this.addressComponent = React.createRef();
-
-
+        this.deliveryAddressModalRouter = React.createRef();
+        this.pickupAddressModalRouter = React.createRef();
     }
 
     constructor(props) {
@@ -113,8 +113,8 @@ class FoodHomeScreen extends Component {
 
     getPlacesInRadius = async(radius) => {
         let currentLocation;
-        await navigator.geolocation.getCurrentPosition(
-            position => {
+        await getAnyCurrentPosition()
+            .then(position =>{
                 currentLocation = {latitude:position.coords.latitude,longitude:position.coords.longitude};
                 console.log("##Current location : "+ stringify(currentLocation));
                 const placesData = firestore().collection('resto').get()
@@ -131,11 +131,7 @@ class FoodHomeScreen extends Component {
                         console.log("::: PLACES IN RADIUS "+ radius +" :: " + placesArray.size);
                     })
                     .catch(error => console.error(error));
-                },
-            position => console.log("#ERROR# Could not retrieve current location"),
-            {enableHighAccuracy: false, timeout: 5000, maximumAge: 1000,});
-
-
+            });
     };
 
     _isInRadius = (locA,locB,radius) => {
@@ -154,11 +150,17 @@ class FoodHomeScreen extends Component {
     };
 
     // address
-    toggleAddressModalRouterActive = () => {
-        this.addressModalRouter.current.toggleChooseAddressModalVisible();
+    toggleDeliveryAddressModalRouterActive = () => {
+        this.deliveryAddressModalRouter.current.toggleChooseAddressModalVisible();
+    }
+    togglePickupAddressModalRouterActive = () => {
+        this.pickupAddressModalRouter.current.toggleChooseAddressModalVisible();
     }
     setDeliveryAddress = (address,additionalInfo,coords) => {
         this.addressComponent.current.setDeliveryAddress(address,additionalInfo,coords);
+    }
+    setPickupAddress = (address,additionalInfo,coords) => {
+        this.addressComponent.current.setPickupAddress(address,additionalInfo,coords);
     }
 
     render() {
@@ -166,8 +168,14 @@ class FoodHomeScreen extends Component {
             <View>
                 <SafeAreaView>
                     <AddressModalRouter
-                        ref={this.addressModalRouter}
+                        ref={this.deliveryAddressModalRouter}
                         setAddress={this.setDeliveryAddress}
+                        chooseModalTitle={"Adresse de Livraison"}
+                    />
+                    <AddressModalRouter
+                        ref={this.pickupAddressModalRouter}
+                        setAddress={this.setPickupAddress}
+                        chooseModalTitle={"Adresse de Recupération"}
                     />
                 <ScrollView
                     showsVerticalScrollIndicator={false}
@@ -189,7 +197,8 @@ class FoodHomeScreen extends Component {
                     />*/}
                     <AddressComponent
                         ref={this.addressComponent}
-                        onClickAction={this.toggleAddressModalRouterActive}
+                        onDeliveryAddressClicked={this.toggleDeliveryAddressModalRouterActive}
+                        onPickupAddressClicked={this.togglePickupAddressModalRouterActive}
                     />
                     <CarouselContainer data = {CarouselData}/>
                     <Title>Nos Services</Title>
