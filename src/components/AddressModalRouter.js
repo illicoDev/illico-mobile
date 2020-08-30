@@ -74,6 +74,7 @@ export default class AddressComponent extends React.Component {
                     toggleMapModal={this.toggleMapAddressModalVisible}
                     toggleAddModal={this.toggleAddAddressModalVisible}
                     toggleLoadingModal={this.toggleLoadingModalVisible}
+                    chooseModalTitle={this.props.chooseModalTitle}
                 />
                 <AddAddressModal
                     ref={this.addAddressModal}

@@ -63,7 +63,7 @@ export default class ChooseAddressModal extends React.Component{
                                 borderColor: 'rgba(158, 150, 150, .5)',
                                 paddingBottom: 10,
                                 paddingTop: 10
-                            }}>Choisir une adresse</Text>
+                            }} numberOfLines={1} >{this.props.chooseModalTitle?this.props.chooseModalTitle:"Choisir une adresse"}</Text>
 
                             <Text onPress={this.currentLocation} style={{
                                 height:50,

@@ -1,3 +1,4 @@
+
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 
@@ -70,4 +71,16 @@ exports.sendNotification = functions.firestore
             console.log(error);
             return error;
         }
+    });
+
+exports.onCreateUser = functions.auth
+    .user()
+    .onCreate((user) => {
+        admin.firestore()
+            .collection('users')
+            .doc(user.uid)
+            .set({email: user.email,addresses:{deliveryAddress:null,pickupAddress:null}})
+            .then(r => console.log("User Created : "+JSON.stringify(r)))
+            .catch(e => console.log(e))
+
     });
