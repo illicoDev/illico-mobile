@@ -46,7 +46,6 @@ import {snapshotToArray} from "./helpers/firebaseHelpers";
 class Router extends Component {
 
     componentDidMount() {
-
         this.checkIfLoggedIn();
         SplashScreen.hide();
     }
@@ -62,15 +61,15 @@ class Router extends Component {
                     firestore().collection('users')
                         .doc(user.uid)
                         .get()
-                        .then( data => {
-                            this.props.setPickupAddress(data._data.addresses.pickupAddress);
-                            this.props.setDeliveryAddress(data._data.addresses.deliveryAddress);
-                            console.log(data._data.role);
-                            this.props.setRole(data._data.role);
-                            this.props.setPhoneNumber(data._data.phoneNumber);
-                            this.props.setName(data._data.name);
+                        .then( documentSnapshot => {
+
+                            this.props.setPickupAddress(documentSnapshot.data().addresses.pickupAddress);
+                            this.props.setDeliveryAddress(documentSnapshot.data().addresses.deliveryAddress);
+                            this.props.setPhoneNumber(documentSnapshot.data().phoneNumber);
+                            this.props.setName(documentSnapshot.data().name);
+                            this.props.setRole(documentSnapshot.data().role);
                         })
-                        .catch(e=>{console.log(e)})
+                        .catch( error =>{console.error(error)})
                 } else {
                     console.log("No user signed in");
                     //sign out the user
@@ -85,7 +84,6 @@ class Router extends Component {
     };
 
     render() {
-
         return (
             <NavigationContainer>
                 {!this.props.auth.isSignedIn ? (

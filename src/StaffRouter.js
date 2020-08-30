@@ -63,13 +63,13 @@ const HomeTabNavigator = () => (
 );
 
 const HomeStackNavigator = ({ navigation }) => (
-    <Stack.Navigator
+    <FoodStack.Navigator
         screenOptions={{
             headerShown : false
         }}
     >
-        <Stack.Screen name="illico" component={HomeTabNavigator}/>
-    </Stack.Navigator>
+        <FoodStack.Screen name="StaffHome" component={HomeTabNavigator}/>
+    </FoodStack.Navigator>
 );
 const mapStateToProps = state => {
     return {

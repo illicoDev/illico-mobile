@@ -59,11 +59,12 @@ class LoginScreen extends Component {
           firestore().collection('users')
               .doc(response.user.uid)
               .get()
-              .then( data => {
-                this.props.setPickupAddress(data._data.addresses.pickupAddress);
-                this.props.setDeliveryAddress(data._data.addresses.deliveryAddress);
-                console.log(data._data.role);
-                this.props.setRole(data._data.role);
+              .then( documentSnapshot => {
+                this.props.setPickupAddress(documentSnapshot.data().addresses.pickupAddress);
+                this.props.setDeliveryAddress(documentSnapshot.data().addresses.deliveryAddress);
+                this.props.setPhoneNumber(documentSnapshot.data().phoneNumber);
+                this.props.setName(documentSnapshot.data().name);
+                this.props.setRole(documentSnapshot.data().role);
               })
               .catch(e=>{console.log(e)})
           // this.props.navigation.navigate('LoadingScreen');
@@ -105,11 +106,12 @@ class LoginScreen extends Component {
           firestore().collection('users')
               .doc(response.user.uid)
               .get()
-              .then( data => {
-                this.props.setPickupAddress(data._data.addresses.pickupAddress);
-                this.props.setDeliveryAddress(data._data.addresses.deliveryAddress);
-                console.log(data._data.role);
-                this.props.setRole(data._data.role);
+              .then( documentSnapshot => {
+                this.props.setPickupAddress(documentSnapshot.data().addresses.pickupAddress);
+                this.props.setDeliveryAddress(documentSnapshot.data().addresses.deliveryAddress);
+                this.props.setPhoneNumber(documentSnapshot.data().phoneNumber);
+                this.props.setName(documentSnapshot.data().name);
+                this.props.setRole(documentSnapshot.data().role);
               })
               .catch(e=>{console.log(e)})
           // this.props.navigation.navigate('LoadingScreen');
