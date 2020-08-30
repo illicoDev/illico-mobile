@@ -67,6 +67,8 @@ class Router extends Component {
                             this.props.setDeliveryAddress(data._data.addresses.deliveryAddress);
                             console.log(data._data.role);
                             this.props.setRole(data._data.role);
+                            this.props.setPhoneNumber(data._data.phoneNumber);
+                            this.props.setName(data._data.name);
                         })
                         .catch(e=>{console.log(e)})
                 } else {
@@ -209,6 +211,8 @@ const mapDispatchToProps = dispatch => {
         signOut: () => dispatch({ type: "SIGN_OUT" }),
         setDeliveryAddress: location => dispatch({type: "SET_DELIVERY_ADDRESS", payload:location}),
         setPickupAddress: location => dispatch({type: "SET_PICKUP_ADDRESS", payload:location}),
+        setPhoneNumber: phoneNumber => dispatch({type: "SET_PHONE_NUMBER", payload:phoneNumber}),
+        setName: name => dispatch({type: "SET_NAME", payload:name}),
     };
 };
 
