@@ -22,26 +22,24 @@ class AddressComponent extends React.Component {
         firestore().collection('users')
             .doc(this.props.auth.currentUser._user.uid)
             .update(
-                {addresses:
-                        {deliveryAddress:{
+                {'addresses.deliveryAddress':{
                             address:address,
                             coords:coords,
                             additionalInfo:additionalInfo
 
-                        }}});
+                        }});
     }
     setPickupAddress = (address,additionalInfo,coords) => {
         this.props.setPickupAddress({coords:coords,address:address,additionalInfo:additionalInfo});
         firestore().collection('users')
             .doc(this.props.auth.currentUser._user.uid)
             .update(
-                {addresses:
-                        {pickupAddress:{
+                {'addresses.pickupAddress':{
                                 address:address,
                                 coords:coords,
                                 additionalInfo:additionalInfo
 
-                            }}});
+                            }});
     }
 
     saveAddressOnDevice = async (savedAddress) => {

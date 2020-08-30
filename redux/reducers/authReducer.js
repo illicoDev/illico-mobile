@@ -40,7 +40,11 @@ const auth = (state = initialState, action) => {
         addresses:
             {
               ...state.addresses,
-              deliveryAddress:action.payload,
+              deliveryAddress:{
+                  address:action.payload.address,
+                  coords:{latitude:action.payload.coords.latitude,longitude:action.payload.coords.longitude},
+                  additionalInfo:action.payload.additionalInfo,
+              },
             }
       };
     case "SET_PICKUP_ADDRESS":
@@ -49,7 +53,11 @@ const auth = (state = initialState, action) => {
         addresses:
             {
               ...state.addresses,
-              pickupAddress:action.payload,
+              pickupAddress:{
+                  address:action.payload.address,
+                  coords:{latitude:action.payload.coords.latitude,longitude:action.payload.coords.longitude},
+                  additionalInfo:action.payload.additionalInfo,
+              },
             }
       };
       case "SET_PHONE_NUMBER":

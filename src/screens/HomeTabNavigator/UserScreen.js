@@ -68,16 +68,17 @@ class UserScreen extends Component {
                         deliveryAddress:{coords:coords,address:address,additionalInfo:additionalInfo}
                 }} });
         this.props.setDeliveryAddress({coords:coords,address:address,additionalInfo:additionalInfo});
+        console.log("uid is: "+this.props.currentUser.currentUser._user.uid)
         firestore().collection('users')
             .doc(this.props.currentUser.currentUser._user.uid)
             .update(
-                {addresses:
-                        {deliveryAddress:{
+                {'addresses.deliveryAddress':
+                        {
                                 address:address,
                                 coords:coords,
                                 additionalInfo:additionalInfo
 
-                            }}});
+                            }});
     }
     setPickupAddress = (address,additionalInfo,coords) => {
         this.setState((currentState) => {
@@ -91,12 +92,11 @@ class UserScreen extends Component {
         firestore().collection('users')
             .doc(this.props.currentUser.currentUser._user.uid)
             .update(
-                {addresses:
-                        {pickupAddress:{
+                {'addresses.pickupAddress':{
                                 address:address,
                                 coords:coords,
                                 additionalInfo:additionalInfo,
-                            }}});
+                            }});
     }
     togglePhoneNumberModal = ()=>{
         this.phoneNumberInputModal.current.toggleModalVisible();
