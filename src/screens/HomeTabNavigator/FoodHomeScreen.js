@@ -117,7 +117,7 @@ class FoodHomeScreen extends Component {
             .then(position =>{
                 currentLocation = {latitude:position.coords.latitude,longitude:position.coords.longitude};
                 console.log("##Current location : "+ stringify(currentLocation));
-                const placesData = firestore().collection('resto').get()
+                firestore().collection('resto').get()
                     .then(data => {
                         let placesArray = snapshotToArray(data).filter((dataRow)=>{
                             console.log({latitude:dataRow.location._latitude,longitude:dataRow.location._longitude});

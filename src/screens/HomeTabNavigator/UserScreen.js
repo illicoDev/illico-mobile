@@ -6,6 +6,8 @@ import auth from "@react-native-firebase/auth";
 import AddressModalRouter from "../../components/AddressModalRouter";
 import firestore from "@react-native-firebase/firestore";
 
+const emptyPickupAddress = 'Veuillez choisir une adresse de récupération';
+const emptyDeliveryAddress = 'Veuillez choisir une adresse de livraison';
 class UserScreen extends Component {
     signOut = async () => {
         try {
@@ -39,7 +41,6 @@ class UserScreen extends Component {
         this.setState((currentState) => {
             return {...currentState, addresses:{...this.props.currentUser.addresses}}
         });
-        //console.log("hhhhhh");
 
         this.deliveryAddressModalRouter = React.createRef();
         this.pickupAddressModalRouter = React.createRef();
@@ -61,7 +62,7 @@ class UserScreen extends Component {
                 }} });
         this.props.setDeliveryAddress({coords:coords,address:address,additionalInfo:additionalInfo});
         firestore().collection('users')
-            .doc(this.props.auth.currentUser.uid)
+            .doc(this.props.currentUser.uid)
             .set(
                 {addresses:
                         {deliveryAddress:{
@@ -82,7 +83,7 @@ class UserScreen extends Component {
                 }} });
         this.props.setPickupAddress({coords:coords,address:address,additionalInfo:additionalInfo});
         firestore().collection('users')
-            .doc(this.props.auth.currentUser.uid)
+            .doc(this.props.currentUser.uid)
             .set(
                 {addresses:
                         {pickupAddress:{
@@ -132,13 +133,17 @@ class UserScreen extends Component {
                                     <Text style={{marginTop: 7, marginLeft: 7, marginBottom: 7, fontFamily: 'Poppins-Bold'}}>Adresse de Récuperation :</Text>
                                     <Text style={{marginLeft: 7, marginBottom: 7,color: 'grey', fontFamily: 'Poppins-Medium'}}
                                           onPress={this.togglePickupAddressModalRouterActive}>
-                                        {this.props.currentUser.addresses.pickupAddress.address}
+                                        {this.props.currentUser.addresses.pickupAddress.address?
+                                            this.props.currentUser.addresses.pickupAddress.address
+                                            :emptyPickupAddress}
                                     </Text>
                                     <View style={{borderBottomColor: '#D8D8D8', borderBottomWidth: 1}}/>
                                     <Text style={{marginTop: 7, marginLeft: 7, marginBottom: 7, fontFamily: 'Poppins-Bold'}}>Adresse de Livraison :</Text>
                                     <Text style={{marginLeft: 7, marginBottom: 7,color: 'grey', fontFamily: 'Poppins-Medium'}}
                                           onPress={this.toggleDeliveryAddressModalRouterActive}>
-                                        {this.props.currentUser.addresses.deliveryAddress.address}
+                                        {this.props.currentUser.addresses.deliveryAddress.address?
+                                            this.props.currentUser.addresses.deliveryAddress.address
+                                            :emptyDeliveryAddress}
                                     </Text>
 
 

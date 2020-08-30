@@ -30,7 +30,7 @@ class AddressComponent extends React.Component {
     }
     componentDidMount(prevProps) {
         this.setState( currentState => {
-            return{...currentState,...this.props.auth.addresses.deliveryAddress};
+            return{...currentState,addresses:{...currentState.addresses,...this.props.auth.addresses.deliveryAddress}};
         });
     }
 
@@ -99,26 +99,7 @@ class AddressComponent extends React.Component {
                     borderRadius : 8
 
                 }}>
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}
-                >
-                    <Text
-                        style={{
-                            fontFamily:'Poppins-SemiBold',
-                            fontSize: 15,
-                            // textDecorationLine: 'underline',
-                            paddingLeft: 30,
-                            paddingRight: 30,
-                            color:'white'
-                        }}
-                          numberOfLines={1}
-                          onPress={()=>this.props.onDeliveryAddressClicked()}
-                          >{this.state.addresses.deliveryAddress.address ? this.state.addresses.deliveryAddress.address : emptyDeliveryAddress}</Text>
-                </View>
+
                 <View
                     style={{
                         flexDirection: 'row',
@@ -137,8 +118,38 @@ class AddressComponent extends React.Component {
                         }}
                         numberOfLines={1}
                         onPress={()=>this.props.onPickupAddressClicked()}
-                    >{this.state.addresses.pickupAddress.address ? this.state.addresses.pickupAddress.address : emptyPickupAddress}</Text>
+                    >
+                        {this.props.auth.addresses.pickupAddress.address?
+                            this.props.auth.addresses.pickupAddress.address
+                            :emptyPickupAddress}
+                    </Text>
                 </View>
+
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Text
+                        style={{
+                            fontFamily:'Poppins-SemiBold',
+                            fontSize: 15,
+                            // textDecorationLine: 'underline',
+                            paddingLeft: 30,
+                            paddingRight: 30,
+                            color:'white'
+                        }}
+                          numberOfLines={1}
+                          onPress={()=>this.props.onDeliveryAddressClicked()}
+                    >
+                        {this.props.auth.addresses.deliveryAddress.address?
+                        this.props.auth.addresses.deliveryAddress.address
+                        :emptyDeliveryAddress}
+                    </Text>
+                </View>
+
             </View>
         );
     }

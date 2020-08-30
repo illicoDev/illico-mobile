@@ -12,6 +12,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-community/async-storage';
+import firestore from "@react-native-firebase/firestore";
 
 
 import auth from "@react-native-firebase/auth";
@@ -37,11 +38,13 @@ import SplashScreen from 'react-native-splash-screen';
 import ShoppingCartIcon from './components/ShoppingCartIcon';
 
 import colors from "../assets/colors";
+import {stringify} from "javascript-stringify";
+import {snapshotToArray} from "./helpers/firebaseHelpers";
 
 class Router extends Component {
 
-    /*async*/ componentDidMount() {
-        //await this.setLocalStorageToRedux().then(()=>{console.log("#success# setLocalStorageToRedux")}).catch(()=>{console.log("#fail# setLocalStorageToRedux")});
+    componentDidMount() {
+        
         this.checkIfLoggedIn();
         SplashScreen.hide();
     }
@@ -53,6 +56,15 @@ class Router extends Component {
                 if (user) {
                     //sign in the user
                     this.props.signIn(user);
+                    console.log("Signing in the user:"+JSON.stringify(user.uid));
+                    firestore().collection('users')
+                        .doc(user.uid)
+                        .get()
+                        .then(data => {
+                            this.props.setPickupAddress(data._data.addresses.pickupAddress);
+                            this.props.setDeliveryAddress(data._data.addresses.deliveryAddress);
+                        })
+                        .catch(e=>{console.log(e)})
                 } else {
                     console.log("No user signed in");
                     //sign out the user
@@ -66,20 +78,6 @@ class Router extends Component {
         }
     };
 
-    setLocalStorageToRedux = async () => {
-        try {
-            const address = await AsyncStorage.getItem('currentAddress')
-            console.log("## Address retrived from local storage : "+address);
-            if(address !== null) {
-                // value previously stored
-                this.props.setCurrentAddress(address);
-                console.log("this is the address on local : "+address);
-                console.log("this is the address on redux : "+this.props.addressBook.currentAddress.address);
-            }
-        } catch(e) {
-            console.log("error during setLocalStorageToRedux");
-        }
-    }
     render() {
 
         return (
@@ -208,7 +206,8 @@ const mapDispatchToProps = dispatch => {
     return {
         signIn: user => dispatch({ type: "SIGN_IN", payload: user }),
         signOut: () => dispatch({ type: "SIGN_OUT" }),
-        setCurrentAddress: address => dispatch({type: "SET_CURRENT_ADDRESS", address:address})
+        setDeliveryAddress: location => dispatch({type: "SET_DELIVERY_ADDRESS", payload:location}),
+        setPickupAddress: location => dispatch({type: "SET_PICKUP_ADDRESS", payload:location}),
     };
 };
 
