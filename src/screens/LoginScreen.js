@@ -14,6 +14,7 @@ import { connect } from "react-redux";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import {stringify} from "javascript-stringify";
+import firestore from "@react-native-firebase/firestore";
 
 async function onFacebookButtonPress() {
   // Attempt login with permissions
@@ -55,6 +56,16 @@ class LoginScreen extends Component {
         if (response) {
           this.setState({ isLoading: false });
           this.props.signIn(response.user);
+          firestore().collection('users')
+              .doc(response.user.uid)
+              .get()
+              .then( data => {
+                this.props.setPickupAddress(data._data.addresses.pickupAddress);
+                this.props.setDeliveryAddress(data._data.addresses.deliveryAddress);
+                console.log(data._data.role);
+                this.props.setRole(data._data.role);
+              })
+              .catch(e=>{console.log(e)})
           // this.props.navigation.navigate('LoadingScreen');
         }
       } catch (error) {
@@ -91,6 +102,16 @@ class LoginScreen extends Component {
         if (response) {
           this.setState({ isLoading: false });
           this.props.signIn(response.user);
+          firestore().collection('users')
+              .doc(response.user.uid)
+              .get()
+              .then( data => {
+                this.props.setPickupAddress(data._data.addresses.pickupAddress);
+                this.props.setDeliveryAddress(data._data.addresses.deliveryAddress);
+                console.log(data._data.role);
+                this.props.setRole(data._data.role);
+              })
+              .catch(e=>{console.log(e)})
           // this.props.navigation.navigate('LoadingScreen');
         }
       } catch (error) {
@@ -187,7 +208,10 @@ class LoginScreen extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    signIn: user => dispatch({ type: "SIGN_IN", payload: user })
+    signIn: user => dispatch({ type: "SIGN_IN", payload: user }),
+    setRole: role => dispatch({ type: "SET_ROLE", payload: role }),
+    setDeliveryAddress: location => dispatch({type: "SET_DELIVERY_ADDRESS", payload:location}),
+    setPickupAddress: location => dispatch({type: "SET_PICKUP_ADDRESS", payload:location}),
   };
 };
 export default connect(null, mapDispatchToProps)(LoginScreen);

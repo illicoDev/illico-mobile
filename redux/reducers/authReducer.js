@@ -34,6 +34,11 @@ const auth = (state = initialState, action) => {
         currentUser: null,
         isLoading: false
       };
+      case "SET_ROLE":
+          return {
+              ...state,
+              currentUser: {...state.currentUser, role: action.payload }
+          };
     case "SET_DELIVERY_ADDRESS":
       return {
         ...state,

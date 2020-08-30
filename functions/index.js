@@ -79,7 +79,7 @@ exports.onCreateUser = functions.auth
         admin.firestore()
             .collection('users')
             .doc(user.uid)
-            .set({email: user.email,addresses:{deliveryAddress:null,pickupAddress:null}})
+            .set({role:'customer',email: user.email,addresses:{deliveryAddress:null,pickupAddress:null}})
             .then(r => console.log("User Created : "+JSON.stringify(r)))
             .catch(e => console.log(e))
 

@@ -5,6 +5,7 @@ import LoginScreen from "./screens/LoginScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import CustomDrawerComponent from "./screens/DrawerNavigator/CustomDrawerComponent";
 //import LoadingScreen from "./screens/AppSwitchNavigator/LoadingScreen";
+import StaffRouter from "./StaffRouter";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -20,6 +21,7 @@ import { connect } from "react-redux";
 
 
 const Stack = createStackNavigator();
+const DeliveryStack = createStackNavigator();
 const FoodStack = createStackNavigator();
 const CartStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -44,7 +46,7 @@ import {snapshotToArray} from "./helpers/firebaseHelpers";
 class Router extends Component {
 
     componentDidMount() {
-        
+
         this.checkIfLoggedIn();
         SplashScreen.hide();
     }
@@ -60,9 +62,11 @@ class Router extends Component {
                     firestore().collection('users')
                         .doc(user.uid)
                         .get()
-                        .then(data => {
+                        .then( data => {
                             this.props.setPickupAddress(data._data.addresses.pickupAddress);
                             this.props.setDeliveryAddress(data._data.addresses.deliveryAddress);
+                            console.log(data._data.role);
+                            this.props.setRole(data._data.role);
                         })
                         .catch(e=>{console.log(e)})
                 } else {
@@ -91,19 +95,15 @@ class Router extends Component {
                             headerTintColor: "white"
                         }}
                     >
-                        <Stack.Screen
-                            name="WelcomeScreen"
-                            component={WelcomeScreen}
-                            options={{ headerShown: false }}
-                        />
-                        <Stack.Screen
-                            name="LoginScreen"
-                            component={LoginScreen}
-                            options={{ headerBackTitleVisible: false }}
-                        />
+                        <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} options={{ headerShown: false }}/>
+                        <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerBackTitleVisible: false }}/>
                     </Stack.Navigator>
                 ) :
-                        <AppDrawerNavigator />
+                    (this.props.auth.currentUser.role === 'deliveryboy' ? (
+                            <StaffRouter/>
+                        ) : <AppDrawerNavigator />
+                        )
+
                 }
             </NavigationContainer>
         );
@@ -205,6 +205,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         signIn: user => dispatch({ type: "SIGN_IN", payload: user }),
+        setRole: role => dispatch({ type: "SET_ROLE", payload: role }),
         signOut: () => dispatch({ type: "SIGN_OUT" }),
         setDeliveryAddress: location => dispatch({type: "SET_DELIVERY_ADDRESS", payload:location}),
         setPickupAddress: location => dispatch({type: "SET_PICKUP_ADDRESS", payload:location}),
