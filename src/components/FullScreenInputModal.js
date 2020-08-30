@@ -16,17 +16,46 @@ export default class FullScreenInputModal extends React.Component{
     constructor(props) {
         super(props);
         this.state={
-            textInputContent:this.props.currentText?this.props.currentText:''
+            textInputContent:this.props.currentText?this.props.currentText:'',
+            modalVisible:this.props.isVisible?this.props.isVisible:false,
         }
     }
 
+    toggleModalVisible= () => {
+        this.setState((currentState)=>{ return{...currentState,modalVisible:!currentState.modalVisible}})
+    }
+
+    submitText = () => {
+        if(this.props.validation != null)
+        {
+            if(this.props.validation(this.state.textInputContent))
+            {
+                this.props.submitText(this.state.textInputContent);
+                this.toggleModalVisible();
+            }
+            else
+            {
+                if(this.props.validationFailedMsg){
+                    alert(this.props.validationFailedMsg);
+                }
+                else{
+                    alert("La validation a échoué ");
+                }
+            }
+        }
+        else
+        {
+            this.props.submitText(this.state.textInputContent);
+            this.toggleModalVisible();
+        }
+    }
     render(){
         return(
             <Modal
-                visible={this.props.isVisible}
+                visible={this.state.modalVisible}
                 animation={'fade'}
                 onRequestClose={() => {
-                    this.props.toggleVisibility();
+                    this.toggleModalVisible();
                 }}>
 
                 <View
@@ -36,7 +65,7 @@ export default class FullScreenInputModal extends React.Component{
                     }}>
                     <TouchableOpacity
                         activeOpacity={1}
-                        onPress={()=>this.props.toggleVisibility()}
+                        onPress={this.toggleModalVisible}
                         style={{
                             justifyContent: 'center',
                             alignItems: 'center',
@@ -63,6 +92,7 @@ export default class FullScreenInputModal extends React.Component{
                 <View style={{flex:1}}>
                     <TextInput
                         ref={(ref) => { this.textInput = ref; }}
+                        keyboardType={this.props.keyboardType?this.props.keyboardType:'default'}
                         autoFocus={true}
                         multiline={false}
                         style={{
@@ -77,8 +107,7 @@ export default class FullScreenInputModal extends React.Component{
                             this.setState(()=>{return {textInputContent:newText?newText:''}})
                         }}
                         onSubmitEditing={()=>{
-                            this.props.submitText(this.state.textInputContent);
-                            this.props.toggleVisibility();
+                            this.submitText();
                         }}>
                         {this.state.textInputContent}
                     </TextInput>
@@ -95,8 +124,7 @@ export default class FullScreenInputModal extends React.Component{
                                 //borderRadius: 20,
                             }}
                             onPress={() => {
-                                this.props.submitText(this.state.textInputContent);
-                                this.props.toggleVisibility();
+                                this.submitText();
                             }}
                         >
                             <Text style={{ color: '#3BC14A',fontFamily: 'Poppins-SemiBold' }}>Continuer</Text>

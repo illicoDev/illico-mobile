@@ -52,6 +52,24 @@ const auth = (state = initialState, action) => {
               pickupAddress:action.payload,
             }
       };
+      case "SET_PHONE_NUMBER":
+          return {
+              ...state,
+              currentUser:
+                  {
+                      ...state.currentUser,
+                      phoneNumber:action.payload,
+                  }
+          };
+      case "SET_NAME":
+          return {
+              ...state,
+              currentUser:
+                  {
+                      ...state.currentUser,
+                      name:action.payload,
+                  }
+          };
     default:
       return state;
   }

@@ -20,30 +20,28 @@ class AddressComponent extends React.Component {
     setDeliveryAddress = (address,additionalInfo,coords) => {
         this.props.setDeliveryAddress({coords:coords,address:address,additionalInfo:additionalInfo});
         firestore().collection('users')
-            .doc(this.props.auth.currentUser.uid)
-            .set(
+            .doc(this.props.auth.currentUser._user.uid)
+            .update(
                 {addresses:
                         {deliveryAddress:{
                             address:address,
                             coords:coords,
                             additionalInfo:additionalInfo
 
-                        }}}
-                            ,{ merge: true });
+                        }}});
     }
     setPickupAddress = (address,additionalInfo,coords) => {
         this.props.setPickupAddress({coords:coords,address:address,additionalInfo:additionalInfo});
         firestore().collection('users')
-            .doc(this.props.auth.currentUser.uid)
-            .set(
+            .doc(this.props.auth.currentUser._user.uid)
+            .update(
                 {addresses:
                         {pickupAddress:{
                                 address:address,
                                 coords:coords,
                                 additionalInfo:additionalInfo
 
-                            }}}
-                ,{ merge: true })
+                            }}});
     }
 
     saveAddressOnDevice = async (savedAddress) => {

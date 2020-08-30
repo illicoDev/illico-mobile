@@ -29,11 +29,12 @@ export default class LocationPicker extends React.Component {
         longitude: this.props.currentCoords.longitude?this.props.currentCoords.longitude:-7.623688},
       address:this.props.currentAddress?this.props.currentAddress:null,
       additionalInfo:this.props.currentAdditionalInfo?this.props.currentAdditionalInfo:null,
-      additionalInfoModalVisible:false,
     }
     console.log("maps constructor"+ stringify(this.props.currentCoords));
     console.log("maps state +"+stringify(this.state));
-    Geocoder.init(googlePlacesAPI);
+    Geocoder.init(googlePlacesAPI,{language : "fr"});
+
+    this.additionalInfoInputModal = React.createRef();
   }
 
   componentDidMount() {
@@ -47,9 +48,7 @@ export default class LocationPicker extends React.Component {
   }
 
   toggleAdditionalInfoModalVisible = () => {
-    this.setState((currentState) => {
-      return {additionalInfoModalVisible: !currentState.additionalInfoModalVisible}
-    });
+    this.additionalInfoInputModal.current.toggleModalVisible();
   };
 
   setAdditionalInfo = (newAdditionalInfo) => {
@@ -183,9 +182,8 @@ export default class LocationPicker extends React.Component {
             </View>
           </View>
           <FullScreenInputModal
-              toggleVisibility={this.toggleAdditionalInfoModalVisible}
+              ref={this.additionalInfoInputModal}
               submitText={this.setAdditionalInfo}
-              isVisible={this.state.additionalInfoModalVisible}
               placeholderText={'Immeuble, etage, porte...'}
               currentText={''}
               headerText={'Detail'}

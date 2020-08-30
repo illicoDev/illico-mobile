@@ -4,6 +4,8 @@ import {stringify} from "javascript-stringify";
 import {useSelector, useDispatch} from 'react-redux';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import {googlePlacesAPI} from '../../config/config'
+import Geocoder from 'react-native-geocoding';
+
 import colors from '../../assets/colors'
 import AsyncStorage from '@react-native-community/async-storage';
 import {string} from "react-native-redash";
@@ -38,6 +40,7 @@ class AddressAutocomplete extends React.Component{
         this.state={
             mapModalVisible:false
         }
+        Geocoder.init(googlePlacesAPI,{language : "fr"});
     }
 
     componentDidMount = () => {
@@ -85,8 +88,29 @@ class AddressAutocomplete extends React.Component{
                 this.props.toggleMapModal(currentLocation,address,additionalInfo);
             }
             else{
-                this.triggerFocus();
-                alert("Votre adresse est incomplète");
+                //this.triggerFocus();
+                this.props.toggleLoadingModal();
+                await Geocoder.from(data.description)
+                    .then(json => {
+                        let location = json.results[0].geometry.location;
+                        console.log(location);
+                        if(location.lat && location.lng)
+                        {
+                            currentLocation={latitude:location.lat,longitude:location.lng}
+                        }
+                        if(currentLocation.latitude && currentLocation.longitude){
+                            this.props.toggleMapModal(currentLocation,address,additionalInfo);
+                        }
+                    })
+                    .catch(error => {
+                        console.warn(error);
+                        this.triggerFocus();
+                        alert("Votre adresse est incomplète");
+                    });
+                this.props.toggleLoadingModal();
+                console.log("address incomplete "+stringify(data));
+
+
             }
         }
         else{

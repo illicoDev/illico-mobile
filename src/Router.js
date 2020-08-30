@@ -44,7 +44,7 @@ import {snapshotToArray} from "./helpers/firebaseHelpers";
 class Router extends Component {
 
     componentDidMount() {
-        
+
         this.checkIfLoggedIn();
         SplashScreen.hide();
     }
@@ -63,6 +63,9 @@ class Router extends Component {
                         .then(data => {
                             this.props.setPickupAddress(data._data.addresses.pickupAddress);
                             this.props.setDeliveryAddress(data._data.addresses.deliveryAddress);
+                            this.props.setPhoneNumber(data._data.phoneNumber);
+                            this.props.setName(data._data.name);
+
                         })
                         .catch(e=>{console.log(e)})
                 } else {
@@ -208,6 +211,8 @@ const mapDispatchToProps = dispatch => {
         signOut: () => dispatch({ type: "SIGN_OUT" }),
         setDeliveryAddress: location => dispatch({type: "SET_DELIVERY_ADDRESS", payload:location}),
         setPickupAddress: location => dispatch({type: "SET_PICKUP_ADDRESS", payload:location}),
+        setPhoneNumber: phoneNumber => dispatch({type: "SET_PHONE_NUMBER", payload:phoneNumber}),
+        setName: name => dispatch({type: "SET_NAME", payload:name}),
     };
 };
 
