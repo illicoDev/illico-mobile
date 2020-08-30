@@ -75,6 +75,11 @@ const cart = (state = initialState, action) => {
                                              })
                 }
             };
+        case 'UPDATE_PRICE':
+            return {
+                ...state,
+                cacheMenu: {...state.cacheMenu, supp: action.payload.supplements }
+            };
         default:
             return state;
     }

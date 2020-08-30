@@ -8,7 +8,6 @@ import {connect} from "react-redux";
 const dummyRestaurant = [
     {
         uid: "000000001",
-        imageUrl: "http://lorempixel.com/400/200/nightlife",
         title: "BIG TASTY",
         qte: 1,
         price: 53,
@@ -17,7 +16,6 @@ const dummyRestaurant = [
     },
     {
         uid: "000000003",
-        imageUrl: "http://lorempixel.com/400/200/nightlife",
         title: "FILLET-O-FISH",
         qte: 1,
         price: 54,
@@ -26,41 +24,57 @@ const dummyRestaurant = [
     },
     {
         uid: "000000004",
-        imageUrl: "http://lorempixel.com/400/200/nightlife",
         title: "Le 280",
         qte: 1,
         price: 55,
         UnitPrice: 55,
+        elementsItems: [
+            { key:"ff46bde4-dd70-11ea-87d0-0242ac130003", name:"MENU"},
+            { key:"06a5fc12-dd71-11ea-87d0-0242ac130003", name:"ACCOMPAGNEMENT"},
+            { key:"0ba18254-dd71-11ea-87d0-0242ac130003", name:"BOISSON"}
+        ],
+        items: [
+            { elementKey:"0ba18254-dd71-11ea-87d0-0242ac130003", key: "10549b9c-dd71-11ea-87d0-0242ac130003", name:"BEST OF", checked:false, supp : 0},
+            { elementKey:"0ba18254-dd71-11ea-87d0-0242ac130003", key: "10549b9c-dd71-11ea-87d0-0242ac130003", name:"MAXI BEST OF", checked:false, supp : 7},
+            { elementKey:"06a5fc12-dd71-11ea-87d0-0242ac130003", key: "1a85000c-dd71-11ea-87d0-0242ac130003", name: "FRITE", checked:false, supp : 0},
+            { elementKey:"06a5fc12-dd71-11ea-87d0-0242ac130003", key: "21e8cbbc-dd71-11ea-87d0-0242ac130003", name: "POTATOS", checked:false, supp : 0},
+            { elementKey:"06a5fc12-dd71-11ea-87d0-0242ac130003", key: "2bd71656-dd71-11ea-87d0-0242ac130003", name: "PETITE SALADE", checked:false, supp : 0},
+            { elementKey:"0ba18254-dd71-11ea-87d0-0242ac130003", key: "3432bc06-dd71-11ea-87d0-0242ac130003", name: "COCA-COLA", checked:false, supp : 0 },
+            { elementKey:"0ba18254-dd71-11ea-87d0-0242ac130003", key: "3a82227c-dd71-11ea-87d0-0242ac130003", name: "COCA-COLA ZERO", checked:false, supp : 0 },
+            { elementKey:"0ba18254-dd71-11ea-87d0-0242ac130003", key: "40dd1d2a-dd71-11ea-87d0-0242ac130003", name: "SPRITE", checked:false, supp : 0 },
+            { elementKey:"0ba18254-dd71-11ea-87d0-0242ac130003", key: "4530e104-dd71-11ea-87d0-0242ac130003", name: "LIPTON ICE-TEA", checked:false, supp : 0 },
+        ],
         elements: [
             {
                 key: "ff46bde4-dd70-11ea-87d0-0242ac130003",
                 name: "MENU",
                 items: [
-                    { key: "10549b9c-dd71-11ea-87d0-0242ac130003", name: "BEST OF", points: "$3.45", checked:false, supp : 0 },
-                    { key: "1551575c-dd71-11ea-87d0-0242ac130003", name: "MAXI BEST OF", points: "$3.45", checked:false, supp : 7 }
+                    { key: "10549b9c-dd71-11ea-87d0-0242ac130003", name: "BEST OF", checked:false, supp : 0 },
+                    { key: "1551575c-dd71-11ea-87d0-0242ac130003", name: "MAXI BEST OF", checked:false, supp : 7 }
                 ]
             },
             {
                 key: "06a5fc12-dd71-11ea-87d0-0242ac130003",
                 name: "ACCOMPAGNEMENT",
                 items: [
-                    { key: "1a85000c-dd71-11ea-87d0-0242ac130003", name: "FRITE", points: "$3.45", checked:false, supp : 0 },
-                    { key: "21e8cbbc-dd71-11ea-87d0-0242ac130003", name: "POTATOS", points: "$3.45", checked:true, supp : 0 },
-                    { key: "2bd71656-dd71-11ea-87d0-0242ac130003", name: "PETITE SALADE", points: "$3.45", checked:false, supp : 0 }
+                    { key: "1a85000c-dd71-11ea-87d0-0242ac130003", name: "FRITE", checked:false, supp : 0 },
+                    { key: "21e8cbbc-dd71-11ea-87d0-0242ac130003", name: "POTATOS", checked:false, supp : 0 },
+                    { key: "2bd71656-dd71-11ea-87d0-0242ac130003", name: "PETITE SALADE", checked:false, supp : 0 }
                 ]
             },
             {
                 key: "0ba18254-dd71-11ea-87d0-0242ac130003",
                 name: "BOISSON",
                 items: [
-                    { key: "3432bc06-dd71-11ea-87d0-0242ac130003", name: "COCA-COLA", points: "$3.45", checked:false, supp : 0 },
-                    { key: "3a82227c-dd71-11ea-87d0-0242ac130003", name: "COCA-COLA ZERO", points: "$3.45", checked:false, supp : 0 },
-                    { key: "40dd1d2a-dd71-11ea-87d0-0242ac130003", name: "SPRITE", points: "$3.45", checked:false, supp : 0 },
-                    { key: "4530e104-dd71-11ea-87d0-0242ac130003", name: "LIPTON ICE-TEA", points: "$3.45", checked:false, supp : 0 },
-                    { key: "4952cb8a-dd71-11ea-87d0-0242ac130003", name: "EVIAN", points: "$3.45", checked:false, supp : 0 },
-                    { key: "4d4eba14-dd71-11ea-87d0-0242ac130003", name: "JUS D'ORANGE", points: "$3.45", checked:false, supp : 0 }
+                    { key: "3432bc06-dd71-11ea-87d0-0242ac130003", name: "COCA-COLA", hasOption: false, checked:false, supp : 0 },
+                    { key: "3a82227c-dd71-11ea-87d0-0242ac130003", name: "COCA-COLA ZERO", hasOption: true, checked:false, supp : 0, subItem: {name:"AVEC GLAÇONS"} },
+                    { key: "40dd1d2a-dd71-11ea-87d0-0242ac130003", name: "SPRITE", hasOption: true, checked:false, supp : 0 }
                 ]
             }
+        ],
+        subItems: [
+            { elementKey:"0ba18254-dd71-11ea-87d0-0242ac130003", key: "40dd1d2a-dd71-11ea-87d0-0242ac130003", uuid: "40dd1d2a", name:"AVEC GLAÇONS", checked:false },
+            { elementKey:"0ba18254-dd71-11ea-87d0-0242ac130003", key: "40dd1d2a-dd71-11ea-87d0-0242ac130003", uuid: "40dd1d22", name:"SANS GLAÇONS", checked:false }
         ],
         supp: 0
     },

@@ -52,40 +52,43 @@ export default class ChooseAddressModal extends React.Component{
                             style={{
                                 height:160,
                                 width:300,
-                                borderWidth:1,
-                                backgroundColor:'white'
+                                backgroundColor: 'white',
+                                borderWidth: 1, borderColor: '#CCCCCC', borderRadius:5, padding :5
                             }}>
                             <Text style={{
                                 fontFamily: 'Poppins-SemiBold',
-                                fontSize: 20,
+                                fontSize: 15,
                                 textAlign: 'center',
                                 borderBottomWidth: 1,
                                 borderColor: 'rgba(158, 150, 150, .5)',
                                 paddingBottom: 10,
                                 paddingTop: 10
-                            }}>Choose a delivery address</Text>
+                            }}>Choisir une adresse</Text>
 
                             <Text onPress={this.currentLocation} style={{
                                 height:50,
-                                fontFamily:'Poppins-Light',
-                                fontSize: 20,
+                                fontFamily:'Poppins-Medium',
+                                fontSize: 17,
                                 padding:5,
                                 paddingTop:8,
                                 borderBottomWidth:1,
+                                color:'grey',
                                 borderColor: 'rgba(158, 150, 150, .5)'
                             }}>
                                 <Icon name="location-outline" size={25} color="black" style={{marginLeft:10}}/>
-                                <Text>  Current location</Text>
+                                <Text> Ma localisation</Text>
                             </Text>
                             <Text onPress={()=>this.props.toggleAddModal()} style={{
                                 height:50,
-                                fontFamily:'Poppins-Light',
-                                fontSize: 20,
+                                fontFamily:'Poppins-Medium',
+                                fontSize: 17,
                                 padding:5,
                                 paddingTop:8,
+                                borderBottomWidth: 1,
+                                color:'grey'
                             }}>
                                 <Icon name="add-circle-outline" size={25} color="black" onPress={()=>console.log('ggggggg')}/>
-                                <Text>  Add an address</Text>
+                                <Text> Ajouter une adresse</Text>
                             </Text>
                         </View>
                     </TouchableWithoutFeedback>

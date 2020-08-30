@@ -57,7 +57,7 @@ exports.sendNotification = functions.firestore
             client.api.messages
                 .create({
                     body: "Service illico : Commande passée avec succès :D ",
-                    to: "+33662312595",
+                    to: "+212652272228",
                     from: "+12568264790",
                 }).then(function(data) {
                 console.log('Administrator notified');

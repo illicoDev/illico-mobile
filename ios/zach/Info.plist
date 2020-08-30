@@ -39,6 +39,10 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string/>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

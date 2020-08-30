@@ -7,15 +7,12 @@ import {
     Image,
     FlatList,
     TouchableOpacity,
-    ImageBackground,
-    CheckBox
+    ImageBackground
 } from 'react-native';
-import {Card, Title} from "react-native-paper";
 import colors from "../../assets/colors";
 import CustomActionButton from "../../components/CustomActionButton";
 import List from "../../components/accordion/List";
 import Colors from "react-native/Libraries/NewAppScreen/components/Colors";
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import {connect} from "react-redux";
 import uuid from 'react-native-uuid';
 
@@ -89,7 +86,7 @@ class OrderScreen extends Component {
                 menuItem : {...state.menuItem, qte: oldCount + 1,price:  oldPrice + priceAdded },
             }));
     };
-    renderPrice = () => {
+    /*renderPrice = () => {
         let supplements = 0;
         this.props.menu.elements.map( element => {
             element.items.map( item => {
@@ -101,10 +98,10 @@ class OrderScreen extends Component {
         this.setState(state => ({
             menuItem : {...state.menuItem, supp: supplements },
         }));
-    };
+    };*/
     render() {
-        console.log(this.props.menu);
-        console.log(this.state.menuItem);
+        //console.log(this.props.menu);
+        //console.log(this.state.menuItem);
         return (
             <View style={styles.container}>
                 <View style={{flex:1}}>
@@ -156,7 +153,7 @@ class OrderScreen extends Component {
                     </View>
                     <View style={{height:110, alignItems: 'center', justifyContent: 'center', marginBottom:50}}>
                         <View style={{flex:1}}><Text style={{ fontSize: 15, padding: 10,fontFamily: 'Poppins-Medium',}}>Total</Text></View>
-                        <View style={{flex:1}}><Text style={{ fontSize: 25,fontFamily: 'Poppins-Medium', color: colors.bgPrimary}}>{this.state.menuItem.price} Dh</Text></View>
+                        <View style={{flex:1}}><Text style={{ fontSize: 25,fontFamily: 'Poppins-Medium', color: colors.bgPrimary}}>{this.props.menu.price + this.props.menu.supp} Dh</Text></View>
                         <View style={{flex:1}}>
                             <CustomActionButton
                                 onPress={() => this.addToCart(this.state.menuItem)}

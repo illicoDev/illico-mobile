@@ -18,10 +18,10 @@ export default class LoadingModal extends Component {
             >
                 <View style={styles.wrapper}>
                     <View style={styles.loaderContainer}>
-                        {/*<Image
+                        <Image
                             style={styles.loaderImage}
                             source={require('../../../assets/img/greenLoader.gif')}
-                        />*/}
+                        />
                     </View>
                 </View>
             </Modal>
