@@ -185,7 +185,9 @@ class UserScreen extends Component {
                                     </Text>
                                     <View style={{borderBottomColor: '#D8D8D8', borderBottomWidth: 1}}/>
                                     <Text style={{marginTop: 7, marginLeft: 7, marginBottom: 7, fontFamily: 'Poppins-Bold'}}>E-mail :</Text>
-                                    <Text style={{marginLeft: 7, marginBottom: 7,color: 'grey', fontFamily: 'Poppins-Medium'}}>{this.props.currentUser.email}</Text>
+                                    <Text style={{marginLeft: 7, marginBottom: 7,color: 'grey', fontFamily: 'Poppins-Medium'}}>
+                                        {this.props.currentUser.currentUser._user.email}
+                                    </Text>
                                     <View style={{borderBottomColor: '#D8D8D8', borderBottomWidth: 1}}/>
                                     <View style={{flexDirection:'row'}}>
                                         <Text style={{flex:1,marginTop: 7, marginLeft: 7, marginBottom: 7, fontFamily: 'Poppins-Bold'}}>Téléphone :</Text>
