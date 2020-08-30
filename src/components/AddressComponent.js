@@ -14,34 +14,10 @@ class AddressComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state={
-            addresses :{
-                deliveryAddress:{
-                    address:null,
-                    additionalInfo:null,
-                    coords:{longitude:null,latitude:null}
-                },
-                pickupAddress:{
-                    address:null,
-                    additionalInfo:null,
-                    coords:{longitude:null,latitude:null}
-                },
-            }
         }
-    }
-    componentDidMount(prevProps) {
-        this.setState( currentState => {
-            return{...currentState,addresses:{...currentState.addresses,...this.props.auth.addresses.deliveryAddress}};
-        });
     }
 
     setDeliveryAddress = (address,additionalInfo,coords) => {
-        this.setState((currentState) => {
-            return {
-                ...currentState,
-                addresses: {
-                    ...currentState.addresses,
-                    deliveryAddress:{coords:coords,address:address,additionalInfo:additionalInfo}
-                }} });
         this.props.setDeliveryAddress({coords:coords,address:address,additionalInfo:additionalInfo});
         firestore().collection('users')
             .doc(this.props.auth.currentUser.uid)
@@ -56,13 +32,6 @@ class AddressComponent extends React.Component {
                             ,{ merge: true });
     }
     setPickupAddress = (address,additionalInfo,coords) => {
-        this.setState((currentState) => {
-            return {
-                ...currentState,
-                addresses: {
-                    ...currentState.addresses,
-                    pickupAddress:{coords:coords,address:address,additionalInfo:additionalInfo}
-                }} });
         this.props.setPickupAddress({coords:coords,address:address,additionalInfo:additionalInfo});
         firestore().collection('users')
             .doc(this.props.auth.currentUser.uid)
