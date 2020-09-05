@@ -3,7 +3,9 @@ const initialState = {
     totalPrice: 0,
     delivery: 10,
     items: [],
-    cacheMenu: {}
+    cacheMenu: {},
+    modalDisplay: false,
+    modalItemKey: "",
 };
 
 const cart = (state = initialState, action) => {
@@ -75,10 +77,52 @@ const cart = (state = initialState, action) => {
                                              })
                 }
             };
+        case 'ADD_SUB_ITEM':
+            return {
+                ...state,
+                cacheMenu : {...state.cacheMenu,
+                    elements : state.cacheMenu.elements.map(element => {
+                        if(element.key === action.payload.elementKey){
+                            return {...element, items : element.items.map(item => {
+                                    if(item.key === action.payload.key){
+                                        return { ...item, subItem: {name: action.payload.name } };
+                                    }
+                                    return item;
+                                })}
+                        }
+                        return element;
+                    })
+                }
+            };
+        case 'CHECK_SUB_ITEM':
+            return {
+                ...state,
+                cacheMenu: {...state.cacheMenu,
+                    subItems: state.cacheMenu.subItems.map(subItem => {
+                        if((subItem.elementKey === action.payload.elementKey) && (subItem.key === action.payload.key) && (subItem.uuid === action.payload.uuid)){
+                            return { ...subItem, checked: !subItem.checked }
+                        }else
+                            return { ...subItem, checked: false };
+                    })
+                }
+            };
         case 'UPDATE_PRICE':
             return {
                 ...state,
                 cacheMenu: {...state.cacheMenu, supp: action.payload.supplements }
+            };
+        case 'CLOSE_MODAL':
+            return {
+                ...state,
+                modalDisplay: false,
+                modalItemKey: ""
+
+            };
+        case 'OPEN_MODAL':
+            return {
+                ...state,
+                modalDisplay: true,
+                modalItemKey: action.payload.key
             };
         default:
             return state;

@@ -106,7 +106,6 @@ class FoodHomeScreen extends Component {
             .then(data => {
                 let array = snapshotToArray(data);
                 this.setState({services : array });
-                console.log("::: services :: " + array[0].backgroundImage);
             })
             .catch(error => console.error(error));
     };
@@ -148,8 +147,8 @@ class FoodHomeScreen extends Component {
     switchToMerchant = () => {
         this.props.navigation.push('RestaurantScreen');
     };
-    switchToPressing = () => {
-        this.props.navigation.push('PressingScreen');
+    switchToService = (screen) => {
+        this.props.navigation.push(screen);
     };
 
     // address
@@ -242,7 +241,7 @@ class FoodHomeScreen extends Component {
                         renderItem={({ item: rowData }) => {
                             return (
                                 <View style={styles.cardView}>
-                                    <TouchableOpacity onPress={() => this.switchToPressing()}>
+                                    <TouchableOpacity onPress={() => this.switchToService(rowData.screen)}>
                                         <Image style={styles.image} source={{ uri: rowData.backgroundImage }} />
                                         <View style={styles.textView}>
                                             <Text style={styles.itemTitle}> {rowData.name}</Text>

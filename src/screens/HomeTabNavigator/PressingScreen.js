@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {View, Text, ScrollView, TouchableOpacity, StyleSheet, SafeAreaView, Dimensions} from "react-native";
+import {View, Text, ScrollView, TouchableOpacity, StyleSheet, SafeAreaView, Dimensions, Image} from "react-native";
 import {TabView, TabBar, SceneMap, PagerPan} from 'react-native-tab-view';
 import colors from "../../../assets/colors";
 
@@ -38,7 +38,47 @@ class PressingScreen extends Component {
         }
     };
     renderFirstMenu = () => {
-        return <View><Text>Pressing Complet</Text></View>;
+        return (
+        <View>
+            <View style={[styles.menuCard,{marginLeft: 15, marginRight: 15}] }>
+                <View style={{flex:1, flexDirection: 'row'}}>
+                    <View  style={{width: 38, flexDirection: 'column', borderWidth: 1, borderColor: '#CCCCCC', borderRadius:5, alignItems: 'center', justifyContent: 'center'}}>
+                        <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={() => alert("add")}>
+                            <View ><Text>+</Text></View>
+                        </TouchableOpacity>
+                        <View style={{flex:1,alignItems: 'center', justifyContent: 'center'}}><Text>0</Text></View>
+                        <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={() => alert("sub")}>
+                            <View ><Text>-</Text></View>
+                        </TouchableOpacity>
+                    </View>
+                    <View  style={{width: 70, margin: 5}}><Image style={{width: 70, height: 70}} source = {{ uri : 'https://firebasestorage.googleapis.com/v0/b/illico-bd1e8.appspot.com/o/perssing%2Fchemise-cintre.jpg?alt=media&token=7f3bd941-adc2-4bba-b518-7700f4f2c420'}}/></View>
+                    <View   style={{flex: 1}}>
+                        <View   style={{flex: 1,marginBottom: 3}}><Text style={{fontFamily: 'Poppins-SemiBold'}}>Chemise sur cintre (H/F)</Text></View>
+                        <View   style={{flex: 1, marginBottom: 5}}><Text>Votre chemise lavée et repassée à la main vous est livrée sur cintre</Text></View>
+                        <View   style={{flex: 1, marginBottom: 5}}><Text style={{fontFamily: 'Poppins-SemiBold', color:colors.bgPrimary}}>19 Dh</Text></View>
+                    </View>
+                </View>
+                <View style={{borderBottomColor: '#D8D8D8', borderBottomWidth: 1, marginLeft: 20, marginRight: 20, marginTop: 8, marginBottom: 8}}/>
+                <View style={{flex:1, flexDirection: 'row'}}>
+                    <View  style={{width: 38, flexDirection: 'column', borderWidth: 1, borderColor: '#CCCCCC', borderRadius:5, alignItems: 'center', justifyContent: 'center'}}>
+                        <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={() => alert("add")}>
+                            <View ><Text>+</Text></View>
+                        </TouchableOpacity>
+                        <View style={{flex:1,alignItems: 'center', justifyContent: 'center'}}><Text>0</Text></View>
+                        <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={() => alert("sub")}>
+                            <View ><Text>-</Text></View>
+                        </TouchableOpacity>
+                    </View>
+                    <View  style={{width: 70, margin: 5}}><Image style={{width: 70, height: 70}} source = {{ uri : 'https://firebasestorage.googleapis.com/v0/b/illico-bd1e8.appspot.com/o/perssing%2Fchemise-cintre.jpg?alt=media&token=7f3bd941-adc2-4bba-b518-7700f4f2c420'}}/></View>
+                    <View   style={{flex: 1}}>
+                        <View   style={{flex: 1,marginBottom: 3}}><Text style={{fontFamily: 'Poppins-SemiBold'}}>Chemise pliée (H/F)</Text></View>
+                        <View   style={{flex: 1, marginBottom: 5}}><Text></Text></View>
+                        <View   style={{flex: 1, marginBottom: 5}}><Text style={{fontFamily: 'Poppins-SemiBold', color:colors.bgPrimary}}>19 Dh</Text></View>
+                    </View>
+                </View>
+            </View>
+        </View>
+        );
     };
     renderSecondMenu = () => {
         return <View><Text>Repassage</Text></View>;
@@ -115,6 +155,35 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins-Bold',
     },labelViewActive:{
         backgroundColor: colors.bgPrimary
+    },
+    cardContainer:{
+        flexDirection:"row",
+        justifyContent:"space-between",
+        alignItems:"baseline",
+        padding:20
+    },
+    totalContainer:{
+        flex:1,
+        flexDirection:"row",
+        justifyContent:"space-between",
+        paddingTop: 15,
+        paddingLeft: 20,
+        paddingRight: 20
+    },
+    menuCard: {
+        flex: 1,
+        justifyContent: 'center',
+        borderWidth: 0.4,
+        borderColor: 'white',
+        borderRadius: 8,
+        backgroundColor: 'white',
+        padding: 15,
+        marginBottom: 10,
+        borderBottomWidth: 0,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 8,
     }
 });
 function mapStateToProps(state) {

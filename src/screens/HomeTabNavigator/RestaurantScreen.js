@@ -125,7 +125,7 @@ const dummyRestaurant = [
                 key: "0ba18254-dd71-11ea-87d0-0242ac130003",
                 name: "BOISSON",
                 items: [
-                    { key: "3432bc06-dd71-11ea-87d0-0242ac130003", name: "COCA-COLA", hasOption: true, checked:false, supp : 0 },
+                    { key: "3432bc06-dd71-11ea-87d0-0242ac130003", name: "COCA-COLA", hasOption: false, checked:false, supp : 0 },
                     { key: "3a82227c-dd71-11ea-87d0-0242ac130003", name: "COCA-COLA ZERO", hasOption: true, checked:false, supp : 0 },
                     { key: "40dd1d2a-dd71-11ea-87d0-0242ac130003", name: "SPRITE", hasOption: true, checked:false, supp : 0 }
                 ]
@@ -133,7 +133,9 @@ const dummyRestaurant = [
         ],
         subItems: [
             { elementKey:"0ba18254-dd71-11ea-87d0-0242ac130003", key: "40dd1d2a-dd71-11ea-87d0-0242ac130003", uuid: "40dd1d2a", name:"AVEC GLAÇONS", checked:false },
-            { elementKey:"0ba18254-dd71-11ea-87d0-0242ac130003", key: "40dd1d2a-dd71-11ea-87d0-0242ac130003", uuid: "40dd1d22", name:"SANS GLAÇONS", checked:false }
+            { elementKey:"0ba18254-dd71-11ea-87d0-0242ac130003", key: "40dd1d2a-dd71-11ea-87d0-0242ac130003", uuid: "40dd1d22", name:"SANS GLAÇONS", checked:false },
+            { elementKey:"0ba18254-dd71-11ea-87d0-0242ac130003", key: "3a82227c-dd71-11ea-87d0-0242ac130003", uuid: "40dd1d47", name:"AVEC GLAÇONS", checked:false },
+            { elementKey:"0ba18254-dd71-11ea-87d0-0242ac130003", key: "3a82227c-dd71-11ea-87d0-0242ac130003", uuid: "40dd1d46", name:"SANS GLAÇONS", checked:false }
         ],
         supp: 0
     },

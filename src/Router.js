@@ -29,6 +29,7 @@ const Tab = createBottomTabNavigator();
 
 import FoodHomeScreen from "./screens/HomeTabNavigator/FoodHomeScreen";
 import PressingScreen from "./screens/HomeTabNavigator/PressingScreen";
+import FoodScreen from "./screens/HomeTabNavigator/FoodScreen";
 import OrderScreen from "./screens/HomeTabNavigator/OrderScreen";
 import CartScreen from "./screens/HomeTabNavigator/CartScreen";
 import RestaurantScreen from "./screens/HomeTabNavigator/RestaurantScreen";
@@ -150,6 +151,7 @@ const FoodStackNavigator = ({ navigation }) => (
         <FoodStack.Screen name="FoodHomeScreen" component={FoodHomeScreen}/>
         <FoodStack.Screen name="PressingScreen" component={PressingScreen}/>
         <FoodStack.Screen name="RestaurantScreen" component={RestaurantScreen}/>
+        <FoodStack.Screen name="FoodScreen" component={FoodScreen}/>
         <FoodStack.Screen name="OrderScreen" component={OrderScreen}/>
     </FoodStack.Navigator>
 );
