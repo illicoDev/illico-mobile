@@ -7,14 +7,22 @@ import {
     Image,
     FlatList,
     TouchableOpacity,
-    ImageBackground
+    TouchableHighlight,
+    ImageBackground,
+    Dimensions,
+    Alert
 } from 'react-native';
+import Modal from "react-native-modal";
 import colors from "../../assets/colors";
 import CustomActionButton from "../../components/CustomActionButton";
 import List from "../../components/accordion/List";
 import Colors from "react-native/Libraries/NewAppScreen/components/Colors";
 import {connect} from "react-redux";
+import {elementsToOrderList} from "../../helpers/firebaseHelpers";
 import uuid from 'react-native-uuid';
+
+const screen_width = Dimensions.get('window').width;
+const screen_height = Dimensions.get('window').height;
 
 const list1 =  {
     name: "MENU",
@@ -48,6 +56,7 @@ class OrderScreen extends Component {
     constructor() {
         super();
         this.state = {
+            modalVisible: false,
             menuItem: {},
             menu: {
             }
@@ -61,7 +70,9 @@ class OrderScreen extends Component {
     addToCart = async (selectedItem) => {
         try {
             let generatedUUID = uuid.v1();
-            await this.props.addToCart({...selectedItem, uid : generatedUUID });
+            let elementsToCart = elementsToOrderList(selectedItem.elements);
+            let newPrice = selectedItem.price + selectedItem.supp;
+            await this.props.addToCart({...selectedItem, uid : generatedUUID, elements: elementsToCart, price: newPrice });
             this.props.navigation.pop();
         } catch (error) {
             console.log(error);
@@ -99,9 +110,13 @@ class OrderScreen extends Component {
             menuItem : {...state.menuItem, supp: supplements },
         }));
     };*/
+    setModalVisible = (visible) => {
+        this.setState({ modalVisible: visible });
+    };
     render() {
         //console.log(this.props.menu);
         //console.log(this.state.menuItem);
+        const { modalVisible } = this.state;
         return (
             <View style={styles.container}>
                 <View style={{flex:1}}>
@@ -163,6 +178,33 @@ class OrderScreen extends Component {
                             </CustomActionButton>
                         </View>
                     </View>
+
+                    <Modal backdropColor='#C4C4C4' isVisible={this.state.modalVisible}>
+                        <View style={styles.modalView}>
+                            <View style={styles.modalContentView}>
+                                <View>
+                                    <ScrollView>
+                                        <View>
+                                            <Text style={styles.modalTitle}> Choisir l'option </Text>
+                                        </View>
+                                    </ScrollView>
+                                    <View>
+                                        <Text>THIS IS SPARTA !</Text>
+                                    </View>
+                                </View>
+                                <TouchableOpacity style={styles.closeBtn}
+                                                    onPress={() => {
+                                                        this.setModalVisible(!modalVisible);
+                                                    }}
+                                >
+                                    <View>
+                                        <Image source={require('../../../assets/img/close_pop.png')}/>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </Modal>
+
                 </View>
             </View>
         );
@@ -266,5 +308,30 @@ const styles = StyleSheet.create({
             fontWeight: '600',
             textAlign: 'center',
             color: Colors.black,
-    }
+    },circle: {
+        marginEnd: 2,
+        width: 6,
+        height: 6,
+        borderRadius: 3,
+        backgroundColor: 'green'
+    }, modalContentView: {
+        backgroundColor: '#ffffff',
+        width: screen_width * 0.95,
+        borderRadius: 5,
+        height: screen_height * 0.30,
+    }, modalView: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    }, modalTitle:{
+        fontSize: 15,
+        textAlign: 'center',
+        fontFamily: 'Poppins-SemiBold',
+        marginBottom: 20,
+        paddingTop : 25,
+    }, closeBtn: {
+    position: 'absolute',
+        right: 15,
+        top: 15
+}
 });

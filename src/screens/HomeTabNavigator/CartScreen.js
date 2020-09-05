@@ -36,7 +36,9 @@ class CartScreen extends Component {
         orderId: generatedUUID,
         pickupDate: new Date(),
         orderDate: new Date(),
-        customerId: currentUser.email,
+        customerId: this.props.currentUser._user.email,
+        addresses : this.props.addresses,
+        phone: this.props.currentUser.phoneNumber,
         status: 'CONFIRMED',
         items: cart.items,
       };
@@ -163,7 +165,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     cart: state.cart,
-    currentUser: state.auth.currentUser
+    currentUser: state.auth.currentUser,
+    addresses: state.auth.addresses
   };
 };
 

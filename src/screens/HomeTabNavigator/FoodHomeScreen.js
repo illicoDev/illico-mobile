@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {View, StyleSheet, FlatList, ScrollView, Text, Image, Dimensions, SafeAreaView} from "react-native";
+import {View, StyleSheet, FlatList, ScrollView, Text, Image, Dimensions, SafeAreaView, TouchableOpacity} from "react-native";
 import { Appbar, Title, Avatar, Card } from "react-native-paper";
 import Carousel from "react-native-snap-carousel";
 import CarouselContainer from "../../components/Carousel";
@@ -148,6 +148,9 @@ class FoodHomeScreen extends Component {
     switchToMerchant = () => {
         this.props.navigation.push('RestaurantScreen');
     };
+    switchToPressing = () => {
+        this.props.navigation.push('PressingScreen');
+    };
 
     // address
     toggleDeliveryAddressModalRouterActive = () => {
@@ -239,11 +242,13 @@ class FoodHomeScreen extends Component {
                         renderItem={({ item: rowData }) => {
                             return (
                                 <View style={styles.cardView}>
-                                    <Image style={styles.image} source={{ uri: rowData.backgroundImage }} />
-                                    <View style={styles.textView}>
-                                        <Text style={styles.itemTitle}> {rowData.name}</Text>
-                                        <Text style={styles.itemDescription}></Text>
-                                    </View>
+                                    <TouchableOpacity onPress={() => this.switchToPressing()}>
+                                        <Image style={styles.image} source={{ uri: rowData.backgroundImage }} />
+                                        <View style={styles.textView}>
+                                            <Text style={styles.itemTitle}> {rowData.name}</Text>
+                                            <Text style={styles.itemDescription}></Text>
+                                        </View>
+                                    </TouchableOpacity>
                                 </View>
                             );
                         }}

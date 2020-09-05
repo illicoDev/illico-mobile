@@ -8,22 +8,81 @@ import {connect} from "react-redux";
 const dummyRestaurant = [
     {
         uid: "000000001",
+        resto: "MC Donalds",
         title: "BIG TASTY",
         qte: 1,
         price: 53,
         UnitPrice: 53,
-        supp: 0
+        supp: 0,
+        elements: [
+            {
+                key: "ff46bde4-dd70-11ea-87d0-0242ac130003",
+                name: "MENU",
+                items: [
+                    { key: "10549b9c-dd71-11ea-87d0-0242ac130003", name: "BEST OF", checked:false, supp : 0 },
+                    { key: "1551575c-dd71-11ea-87d0-0242ac130003", name: "MAXI BEST OF", checked:false, supp : 7 }
+                ]
+            },
+            {
+                key: "06a5fc12-dd71-11ea-87d0-0242ac130003",
+                name: "ACCOMPAGNEMENT",
+                items: [
+                    { key: "1a85000c-dd71-11ea-87d0-0242ac130003", name: "FRITE", checked:false, supp : 0 },
+                    { key: "21e8cbbc-dd71-11ea-87d0-0242ac130003", name: "POTATOS", checked:false, supp : 0 },
+                    { key: "2bd71656-dd71-11ea-87d0-0242ac130003", name: "PETITE SALADE", checked:false, supp : 0 }
+                ]
+            },
+            {
+                key: "0ba18254-dd71-11ea-87d0-0242ac130003",
+                name: "BOISSON",
+                items: [
+                    { key: "3432bc06-dd71-11ea-87d0-0242ac130003", name: "COCA-COLA", hasOption: true, checked:false, supp : 0 },
+                    { key: "3a82227c-dd71-11ea-87d0-0242ac130003", name: "COCA-COLA ZERO", hasOption: true, checked:false, supp : 0 },
+                    { key: "40dd1d2a-dd71-11ea-87d0-0242ac130003", name: "SPRITE", hasOption: true, checked:false, supp : 0 }
+                ]
+            }
+        ]
     },
     {
         uid: "000000003",
+        resto: "MC Donalds",
         title: "FILLET-O-FISH",
         qte: 1,
         price: 54,
         UnitPrice: 54,
-        supp: 0
+        supp: 0,
+        elements: [
+            {
+                key: "ff46bde4-dd70-11ea-87d0-0242ac130003",
+                name: "MENU",
+                items: [
+                    { key: "10549b9c-dd71-11ea-87d0-0242ac130003", name: "BEST OF", checked:false, supp : 0 },
+                    { key: "1551575c-dd71-11ea-87d0-0242ac130003", name: "MAXI BEST OF", checked:false, supp : 7 }
+                ]
+            },
+            {
+                key: "06a5fc12-dd71-11ea-87d0-0242ac130003",
+                name: "ACCOMPAGNEMENT",
+                items: [
+                    { key: "1a85000c-dd71-11ea-87d0-0242ac130003", name: "FRITE", checked:false, supp : 0 },
+                    { key: "21e8cbbc-dd71-11ea-87d0-0242ac130003", name: "POTATOS", checked:false, supp : 0 },
+                    { key: "2bd71656-dd71-11ea-87d0-0242ac130003", name: "PETITE SALADE", checked:false, supp : 0 }
+                ]
+            },
+            {
+                key: "0ba18254-dd71-11ea-87d0-0242ac130003",
+                name: "BOISSON",
+                items: [
+                    { key: "3432bc06-dd71-11ea-87d0-0242ac130003", name: "COCA-COLA", hasOption: true, checked:false, supp : 0 },
+                    { key: "3a82227c-dd71-11ea-87d0-0242ac130003", name: "COCA-COLA ZERO", hasOption: true, checked:false, supp : 0 },
+                    { key: "40dd1d2a-dd71-11ea-87d0-0242ac130003", name: "SPRITE", hasOption: true, checked:false, supp : 0 }
+                ]
+            }
+        ]
     },
     {
         uid: "000000004",
+        resto: "MC Donalds",
         title: "Le 280",
         qte: 1,
         price: 55,
@@ -66,8 +125,8 @@ const dummyRestaurant = [
                 key: "0ba18254-dd71-11ea-87d0-0242ac130003",
                 name: "BOISSON",
                 items: [
-                    { key: "3432bc06-dd71-11ea-87d0-0242ac130003", name: "COCA-COLA", hasOption: false, checked:false, supp : 0 },
-                    { key: "3a82227c-dd71-11ea-87d0-0242ac130003", name: "COCA-COLA ZERO", hasOption: true, checked:false, supp : 0, subItem: {name:"AVEC GLAÇONS"} },
+                    { key: "3432bc06-dd71-11ea-87d0-0242ac130003", name: "COCA-COLA", hasOption: true, checked:false, supp : 0 },
+                    { key: "3a82227c-dd71-11ea-87d0-0242ac130003", name: "COCA-COLA ZERO", hasOption: true, checked:false, supp : 0 },
                     { key: "40dd1d2a-dd71-11ea-87d0-0242ac130003", name: "SPRITE", hasOption: true, checked:false, supp : 0 }
                 ]
             }
@@ -80,12 +139,40 @@ const dummyRestaurant = [
     },
     {
         uid: "000000002",
-        imageUrl: "http://lorempixel.com/400/200/nightlife",
+        resto: "MC Donalds",
         title: "BIG MAC",
         qte: 1,
         price: 56,
         UnitPrice: 56,
-        supp: 0
+        supp: 0,
+        elements: [
+            {
+                key: "ff46bde4-dd70-11ea-87d0-0242ac130003",
+                name: "MENU",
+                items: [
+                    { key: "10549b9c-dd71-11ea-87d0-0242ac130003", name: "BEST OF", checked:false, supp : 0 },
+                    { key: "1551575c-dd71-11ea-87d0-0242ac130003", name: "MAXI BEST OF", checked:false, supp : 7 }
+                ]
+            },
+            {
+                key: "06a5fc12-dd71-11ea-87d0-0242ac130003",
+                name: "ACCOMPAGNEMENT",
+                items: [
+                    { key: "1a85000c-dd71-11ea-87d0-0242ac130003", name: "FRITE", checked:false, supp : 0 },
+                    { key: "21e8cbbc-dd71-11ea-87d0-0242ac130003", name: "POTATOS", checked:false, supp : 0 },
+                    { key: "2bd71656-dd71-11ea-87d0-0242ac130003", name: "PETITE SALADE", checked:false, supp : 0 }
+                ]
+            },
+            {
+                key: "0ba18254-dd71-11ea-87d0-0242ac130003",
+                name: "BOISSON",
+                items: [
+                    { key: "3432bc06-dd71-11ea-87d0-0242ac130003", name: "COCA-COLA", hasOption: true, checked:false, supp : 0 },
+                    { key: "3a82227c-dd71-11ea-87d0-0242ac130003", name: "COCA-COLA ZERO", hasOption: true, checked:false, supp : 0 },
+                    { key: "40dd1d2a-dd71-11ea-87d0-0242ac130003", name: "SPRITE", hasOption: true, checked:false, supp : 0 }
+                ]
+            }
+        ]
     }
 ];
 

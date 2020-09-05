@@ -59,7 +59,7 @@ class LoginScreen extends Component {
           firestore().collection('users')
               .doc(response.user.uid)
               .get()
-              .then( documentSnapshot => {
+              .then( async documentSnapshot => {
                 this.props.setPickupAddress(documentSnapshot.data().addresses.pickupAddress);
                 this.props.setDeliveryAddress(documentSnapshot.data().addresses.deliveryAddress);
                 this.props.setPhoneNumber(documentSnapshot.data().phoneNumber);
@@ -106,7 +106,7 @@ class LoginScreen extends Component {
           firestore().collection('users')
               .doc(response.user.uid)
               .get()
-              .then( documentSnapshot => {
+              .then( async documentSnapshot => {
                 this.props.setPickupAddress(documentSnapshot.data().addresses.pickupAddress);
                 this.props.setDeliveryAddress(documentSnapshot.data().addresses.deliveryAddress);
                 this.props.setPhoneNumber(documentSnapshot.data().phoneNumber);
@@ -188,13 +188,13 @@ class LoginScreen extends Component {
             >
               <Text style={{ color: 'white', fontSize: 20, fontFamily: 'Poppins-Medium'}}>S'inscrire</Text>
             </CustomActionButton>
-            <CustomActionButton
+            {/*<CustomActionButton
                 onPress={() => onFacebookButtonPress()}
                 style={[styles.loginButtons, { backgroundColor: '#3b5998' }]}
             >
               <Text style={{ color: 'white', fontSize: 20, fontFamily: 'Poppins-Medium'}}>Continuer avec <MaterialCommunityIcons name="facebook" color='white' size={20}/> </Text>
             </CustomActionButton>
-            {/*<CustomActionButton
+            <CustomActionButton
                 onPress={this.onSignUp}
                 style={[styles.loginButtons, { backgroundColor: '#E5E5E5' }]}
             >
@@ -214,6 +214,8 @@ const mapDispatchToProps = dispatch => {
     setRole: role => dispatch({ type: "SET_ROLE", payload: role }),
     setDeliveryAddress: location => dispatch({type: "SET_DELIVERY_ADDRESS", payload:location}),
     setPickupAddress: location => dispatch({type: "SET_PICKUP_ADDRESS", payload:location}),
+    setPhoneNumber: phoneNumber => dispatch({type: "SET_PHONE_NUMBER", payload:phoneNumber}),
+    setName: name => dispatch({type: "SET_NAME", payload:name}),
   };
 };
 export default connect(null, mapDispatchToProps)(LoginScreen);

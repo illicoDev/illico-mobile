@@ -28,6 +28,7 @@ const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
 import FoodHomeScreen from "./screens/HomeTabNavigator/FoodHomeScreen";
+import PressingScreen from "./screens/HomeTabNavigator/PressingScreen";
 import OrderScreen from "./screens/HomeTabNavigator/OrderScreen";
 import CartScreen from "./screens/HomeTabNavigator/CartScreen";
 import RestaurantScreen from "./screens/HomeTabNavigator/RestaurantScreen";
@@ -99,10 +100,7 @@ class Router extends Component {
                         <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerBackTitleVisible: false }}/>
                     </Stack.Navigator>
                 ) :
-                    (this.props.auth.currentUser.role === 'deliveryboy' ? (
-                            <StaffRouter/>
-                        ) : <AppDrawerNavigator />
-                        )
+                    ( this.props.auth.currentUser.role === 'deliveryboy' ? <StaffRouter/> : <AppDrawerNavigator/> )
 
                 }
             </NavigationContainer>
@@ -150,6 +148,7 @@ const FoodStackNavigator = ({ navigation }) => (
         }}
     >
         <FoodStack.Screen name="FoodHomeScreen" component={FoodHomeScreen}/>
+        <FoodStack.Screen name="PressingScreen" component={PressingScreen}/>
         <FoodStack.Screen name="RestaurantScreen" component={RestaurantScreen}/>
         <FoodStack.Screen name="OrderScreen" component={OrderScreen}/>
     </FoodStack.Navigator>

@@ -21,7 +21,7 @@ import { connect } from "react-redux";
 
 
 const Stack = createStackNavigator();
-const FoodStack = createStackNavigator();
+const DeliveryStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 import UserScreen from "./screens/HomeTabNavigator/UserScreen";
@@ -33,11 +33,11 @@ import {snapshotToArray} from "./helpers/firebaseHelpers";
 class StaffRouter extends Component {
     render() {
 
-        return <HomeStackNavigator/>;
+        return <DeliveryStackNavigator/>;
     }
 }
 
-const HomeTabNavigator = () => (
+const DeliveryTabNavigator = () => (
     <Tab.Navigator
         tabBarOptions={{
             style: {
@@ -62,14 +62,14 @@ const HomeTabNavigator = () => (
     </Tab.Navigator>
 );
 
-const HomeStackNavigator = ({ navigation }) => (
-    <FoodStack.Navigator
+const DeliveryStackNavigator = ({ navigation }) => (
+    <DeliveryStack.Navigator
         screenOptions={{
             headerShown : false
         }}
     >
-        <FoodStack.Screen name="StaffHome" component={HomeTabNavigator}/>
-    </FoodStack.Navigator>
+        <DeliveryStack.Screen name="StaffHome" component={DeliveryTabNavigator}/>
+    </DeliveryStack.Navigator>
 );
 const mapStateToProps = state => {
     return {
