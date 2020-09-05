@@ -4,6 +4,7 @@ const initialState = {
     delivery: 10,
     items: [],
     cacheMenu: {},
+    cachePressing: {},
     modalDisplay: false,
     modalItemKey: "",
 };
@@ -123,6 +124,40 @@ const cart = (state = initialState, action) => {
                 ...state,
                 modalDisplay: true,
                 modalItemKey: action.payload.key
+            };
+        case 'PUSH_PRESSING_MENU':
+            return {
+                ...state,
+                cachePressing: action.payload
+            };
+        case 'PROCESS_PRESSING_MENU_PRICE':
+            return {
+                ...state,
+                cachePressing: {...state.cachePressing, price: action.payload }
+            };
+        case 'ADD_PRESSING_ITEM':
+            return {
+                ...state,
+                cachePressing: {...state.cachePressing,
+                    elements: state.cachePressing.elements.map(element => {
+                        if( element.uuid === action.payload ){
+                            return { ...element, qte: element.qte + 1 }
+                        }else
+                            return element;
+                    })
+                }
+            };
+        case 'SUB_PRESSING_ITEM':
+            return {
+                ...state,
+                cachePressing: {...state.cachePressing,
+                    elements: state.cachePressing.elements.map(element => {
+                        if( (element.uuid === action.payload) && element.qte > 0 ){
+                            return { ...element, qte: element.qte - 1 }
+                        }else
+                            return element;
+                    })
+                }
             };
         default:
             return state;

@@ -8,6 +8,9 @@ import firestore from '@react-native-firebase/firestore';
 import uuid from 'react-native-uuid';
 import Item from "../../components/accordion/ListItem";
 
+const mcdoImage = "https://firebasestorage.googleapis.com/v0/b/illico-bd1e8.appspot.com/o/food_cat%2Ffrite.png?alt=media&token=d0613077-c2a2-4833-9920-1e30cfdb39af";
+const pressingImage = "https://firebasestorage.googleapis.com/v0/b/illico-bd1e8.appspot.com/o/food_cat%2Fservice_pressing.jpg?alt=media&token=5e4d42d7-45cc-4105-89fa-a8c067707257";
+
 class CartScreen extends Component {
   deleteItem = async (selectedItem, index) => {
     try {
@@ -80,7 +83,7 @@ class CartScreen extends Component {
                                   <View ><Text>-</Text></View>
                                 </TouchableOpacity>
                               </View>
-                              <View  style={{width: 70, margin: 5}}><Image style={{width: 70, height: 70}} source = {{ uri : 'https://firebasestorage.googleapis.com/v0/b/illico-bd1e8.appspot.com/o/food_cat%2Ffrite.png?alt=media&token=d0613077-c2a2-4833-9920-1e30cfdb39af'}}/></View>
+                              <View  style={{width: 70, margin: 5}}><Image style={{width: 70, height: 70}} source = {{ uri : (rowData.title === "PRESSING" ? pressingImage : mcdoImage)}}/></View>
                               <View   style={{flex: 1}}>
                                 <View   style={{flex: 1,marginBottom: 3}}><Text style={{fontFamily: 'Poppins-SemiBold'}}>{rowData.title}</Text></View>
                                 <View   style={{flex: 1, marginBottom: 5}}><Text style={{fontFamily: 'Poppins-SemiBold', color:colors.bgPrimary}}>{rowData.price} Dh</Text></View>

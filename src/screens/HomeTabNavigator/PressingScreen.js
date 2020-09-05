@@ -14,8 +14,10 @@ import {
 import {TabView, TabBar, SceneMap, PagerPan} from 'react-native-tab-view';
 import colors from "../../../assets/colors";
 import firestore from "@react-native-firebase/firestore";
-import {snapshotToArray} from "../../helpers/firebaseHelpers";
+import {elementsToOrderList, snapshotToArray} from "../../helpers/firebaseHelpers";
 import {Card} from "react-native-paper";
+import CustomActionButton from "../../components/CustomActionButton";
+import uuid from "react-native-uuid";
 
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
@@ -41,20 +43,57 @@ class PressingScreen extends Component {
     }
 
     async componentDidMount() {
-        this.LoadServices();
+        this.LoadPressingList();
     }
 
-    LoadServices = () => {
-        const serviceData = firestore().collection('pressing').get()
+    LoadPressingList = () => {
+        const serviceData = firestore().collection("pressing")
+            .orderBy("title", "asc").get()
             .then(data => {
                 let array = snapshotToArray(data);
-                this.setState({pressingList : array });
+                //this.setState({pressingList : array });
+                this.props.pushPressingMenu({
+                    uid: "331GoCNAAr",
+                    resto: "PRESSING SERVICE",
+                    title: "PRESSING",
+                    qte: 1,
+                    price: 0,
+                    UnitPrice: 0,
+                    supp: 0,
+                    elements: array
+                });
             })
             .catch(error => console.error(error));
     };
 
     changeIndex=(index)=>{
         this.setState({index})
+    };
+
+    addPressingItem = async (uuid) => {
+        await this.props.addPressingItem(uuid);
+        await this.processPrice();
+    };
+    subPressingItem = async (uuid) => {
+        await this.props.subPressingItem(uuid);
+        await this.processPrice();
+    };
+
+    processPrice = () => {
+        let total = 0;
+        this.props.pressingMenu.elements.map( element => {
+            total += (element.price * element.qte);
+        });
+        this.props.processPressingMenuPrice(total);
+    };
+
+    addToCart = async (menu) => {
+        try {
+            let generatedUUID = uuid.v1();
+            await this.props.addToCart({...menu, uid : generatedUUID });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     renderScene = ({route}) => {
@@ -71,11 +110,11 @@ class PressingScreen extends Component {
             <View style={[styles.menuCard,{marginLeft: 15, marginRight: 15}] }>
                 <View style={{flex:1, flexDirection: 'row'}}>
                     <View  style={{width: 38, flexDirection: 'column', borderWidth: 1, borderColor: '#CCCCCC', borderRadius:5, alignItems: 'center', justifyContent: 'center'}}>
-                        <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={() => alert("add")}>
+                        <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={() => null}>
                             <View ><Text>+</Text></View>
                         </TouchableOpacity>
                         <View style={{flex:1,alignItems: 'center', justifyContent: 'center'}}><Text>0</Text></View>
-                        <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={() => alert("sub")}>
+                        <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={() => null}>
                             <View ><Text>-</Text></View>
                         </TouchableOpacity>
                     </View>
@@ -89,15 +128,15 @@ class PressingScreen extends Component {
                 <View style={{borderBottomColor: '#D8D8D8', borderBottomWidth: 1, marginLeft: 20, marginRight: 20, marginTop: 8, marginBottom: 8}}/>
                 <View style={{flex:1, flexDirection: 'row'}}>
                     <View  style={{width: 38, flexDirection: 'column', borderWidth: 1, borderColor: '#CCCCCC', borderRadius:5, alignItems: 'center', justifyContent: 'center'}}>
-                        <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={() => alert("add")}>
+                        <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={() => null}>
                             <View ><Text>+</Text></View>
                         </TouchableOpacity>
                         <View style={{flex:1,alignItems: 'center', justifyContent: 'center'}}><Text>0</Text></View>
-                        <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={() => alert("sub")}>
+                        <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={() => null}>
                             <View ><Text>-</Text></View>
                         </TouchableOpacity>
                     </View>
-                    <View  style={{width: 70, margin: 5}}><Image style={{width: 70, height: 70}} source = {{ uri : 'https://firebasestorage.googleapis.com/v0/b/illico-bd1e8.appspot.com/o/perssing%2Fchemise-cintre.jpg?alt=media&token=7f3bd941-adc2-4bba-b518-7700f4f2c420'}}/></View>
+                    <View  style={{width: 70, margin: 5}}><Image style={{width: 70, height: 70}} source = {{ uri : 'https://firebasestorage.googleapis.com/v0/b/illico-bd1e8.appspot.com/o/perssing%2Fchemise-pliee.jpg?alt=media&token=78aef434-3a61-4b29-b8db-419433b2399f'}}/></View>
                     <View   style={{flex: 1}}>
                         <View   style={{flex: 1,marginBottom: 3}}><Text style={{fontFamily: 'Poppins-SemiBold'}}>Chemise pliée (H/F)</Text></View>
                         <View   style={{flex: 1, marginBottom: 5}}><Text></Text></View>
@@ -114,17 +153,17 @@ class PressingScreen extends Component {
                 <View style={[styles.menuCard,{marginLeft: 15, marginRight: 15}] }>
                     <FlatList
                         showsVerticalScrollIndicator={false}
-                        data={this.state.pressingList}
+                        data={this.props.pressingMenu.elements}
                         renderItem={({ item, index } ) => {
                             return (
                                 <View>
                                     <View style={{flex:1, flexDirection: 'row'}}>
                                         <View  style={{width: 38, flexDirection: 'column', borderWidth: 1, borderColor: '#CCCCCC', borderRadius:5, alignItems: 'center', justifyContent: 'center'}}>
-                                            <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={() => alert("add")}>
+                                            <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={() => this.addPressingItem(item.uuid)}>
                                                 <View ><Text>+</Text></View>
                                             </TouchableOpacity>
-                                            <View style={{flex:1,alignItems: 'center', justifyContent: 'center'}}><Text>0</Text></View>
-                                            <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={() => alert("sub")}>
+                                            <View style={{flex:1,alignItems: 'center', justifyContent: 'center'}}><Text>{item.qte}</Text></View>
+                                            <TouchableOpacity style={{flex:1,alignItems: 'center', justifyContent: 'center'}} onPress={() => this.subPressingItem(item.uuid)}>
                                                 <View ><Text>-</Text></View>
                                             </TouchableOpacity>
                                         </View>
@@ -135,7 +174,7 @@ class PressingScreen extends Component {
                                             <View   style={{flex: 1, marginBottom: 5}}><Text style={{fontFamily: 'Poppins-SemiBold', color:colors.bgPrimary}}>{item.price} Dh</Text></View>
                                         </View>
                                     </View>
-                                    { index !== (this.state.pressingList.length - 1) &&
+                                    { index !== (this.props.pressingMenu.elements.length - 1) &&
                                         <View style={{borderBottomColor: '#D8D8D8', borderBottomWidth: 1, marginLeft: 20, marginRight: 20, marginTop: 8, marginBottom: 8}}/>}
                                 </View>
                             );
@@ -179,6 +218,18 @@ class PressingScreen extends Component {
 
                                 </View>
                             </ScrollView>
+                                    <View style={{height:110, alignItems: 'center', justifyContent: 'center', marginBottom:50}}>
+                                        <View style={{flex:1}}><Text style={{ fontSize: 15, padding: 10,fontFamily: 'Poppins-Medium',}}>Total</Text></View>
+                                        <View style={{flex:1}}><Text style={{ fontSize: 25,fontFamily: 'Poppins-Medium', color: colors.bgPrimary}}>{this.props.pressingMenu.price} Dh</Text></View>
+                                        <View style={{flex:1}}>
+                                            <CustomActionButton
+                                                onPress={() => this.addToCart(this.props.pressingMenu)}
+                                                style={[styles.loginButtons, { borderColor: colors.bgError }]}
+                                            >
+                                                <Text style={{ color: "white",fontFamily: 'Poppins-SemiBold' }}>Ajouter au Panier</Text>
+                                            </CustomActionButton>
+                                        </View>
+                                    </View>
                         </SafeAreaView>
                     </View>
                 </View>
@@ -246,11 +297,29 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 8,
+    },
+    loginButtons: {
+        borderRadius: 8,
+        backgroundColor: colors.bgPrimary,
+        marginTop: 10,
+        marginBottom: 10,
+        width: 200
     }
 });
-function mapStateToProps(state) {
-    return {};
-}
-export default connect(
-    mapStateToProps,
-)(PressingScreen);
+
+const mapStateToProps = state => {
+    return {
+        cart: state.cart,
+        pressingMenu: state.cart.cachePressing
+    };
+};
+const mapDispatchToProps = dispatch => {
+    return {
+        addPressingItem: uuid => dispatch({ type: "ADD_PRESSING_ITEM", payload: uuid }),
+        subPressingItem: uuid => dispatch({ type: "SUB_PRESSING_ITEM", payload: uuid }),
+        pushPressingMenu: menu => dispatch({ type: "PUSH_PRESSING_MENU", payload: menu }),
+        processPressingMenuPrice: total => dispatch({ type: "PROCESS_PRESSING_MENU_PRICE", payload: total }),
+        addToCart: item => dispatch({ type: "ADD_TO_CART", payload: item }),
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(PressingScreen);
